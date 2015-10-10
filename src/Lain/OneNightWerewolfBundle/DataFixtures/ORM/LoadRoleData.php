@@ -3,10 +3,11 @@
 namespace Acme\HelloBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Lain\OneNightWerewolfBundle\Entity\Role;
 
-class LoadRoleData implements FixtureInterface
+class LoadRoleData implements FixtureInterface, OrderedFixtureInterface
 {
     /**
     * {@inheritDoc}
@@ -39,5 +40,13 @@ class LoadRoleData implements FixtureInterface
             $manager->persist($role);
         }
         $manager->flush();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOrder()
+    {
+        return 1;
     }
 }

@@ -9,3 +9,7 @@ rooms:
 roles:
     type:     rest
     resource: Lain\OneNightWerewolfBundle\Controller\RoleController
+
+regulations:
+    type:     rest
+    resource: Lain\OneNightWerewolfBundle\Controller\RegulationController
