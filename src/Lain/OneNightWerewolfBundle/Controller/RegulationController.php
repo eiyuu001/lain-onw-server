@@ -36,6 +36,7 @@ class RegulationController extends FOSRestController implements ClassResourceInt
             $roleCount->setRegulation($regulation);
             $regulation->addRoleCount($roleCount);
         }
+        $regulation->setPlayers($content['players']);
         $objectManager = $this->getDoctrine()->getManager();
         $objectManager->persist($regulation);
         $objectManager->flush();

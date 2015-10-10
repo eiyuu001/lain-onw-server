@@ -40,6 +40,7 @@ class LoadRegulationData implements FixtureInterface, OrderedFixtureInterface, C
                     '怪盗' => 1,
                     '吊人' => 1,
                 ],
+                'players' => 6,
             ],
             [
                 'roles' => [
@@ -49,6 +50,7 @@ class LoadRegulationData implements FixtureInterface, OrderedFixtureInterface, C
                     '怪盗' => 1,
                     '狂人' => 1,
                 ],
+                'players' => 6,
             ],
         ];
         $roleRepository = $this->container->get('doctrine')->getRepository('LainOneNightWerewolfBundle:Role');
@@ -62,6 +64,7 @@ class LoadRegulationData implements FixtureInterface, OrderedFixtureInterface, C
                 $roleCount->setRegulation($regulation);
                 $regulation->addRoleCount($roleCount);
             }
+            $regulation->setPlayers($record['players']);
             $manager->persist($regulation);
         }
         $manager->flush();

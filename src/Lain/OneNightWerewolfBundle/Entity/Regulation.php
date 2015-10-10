@@ -28,6 +28,11 @@ class Regulation
     private $roleCounts;
 
     /**
+     * @ORM\Column(name="players", type="integer", nullable=FALSE)
+     */
+    private $players;
+
+    /**
      * Get id
      *
      * @return integer
@@ -77,5 +82,29 @@ class Regulation
     public function getRoleCounts()
     {
         return $this->roleCounts;
+    }
+
+    /**
+     * Set players
+     *
+     * @param integer $players
+     *
+     * @return Regulation
+     */
+    public function setPlayers($players)
+    {
+        $this->players = $players;
+
+        return $this;
+    }
+
+    /**
+     * Get players
+     *
+     * @return integer
+     */
+    public function getPlayers()
+    {
+        return $this->players;
     }
 }
