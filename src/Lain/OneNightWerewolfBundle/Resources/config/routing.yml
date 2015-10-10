@@ -5,3 +5,7 @@ lain_one_night_werewolf_homepage:
 users:
     type:     rest
     resource: Lain\OneNightWerewolfBundle\Controller\RoomController
+
+roles:
+    type:     rest
+    resource: Lain\OneNightWerewolfBundle\Controller\RoleController
