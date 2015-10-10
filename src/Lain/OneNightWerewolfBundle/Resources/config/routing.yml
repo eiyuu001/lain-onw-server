@@ -1,3 +1,7 @@
 lain_one_night_werewolf_homepage:
     path:     /hello/{name}
     defaults: { _controller: LainOneNightWerewolfBundle:Default:index }
+
+users:
+    type:     rest
+    resource: Lain\OneNightWerewolfBundle\Controller\RoomController
