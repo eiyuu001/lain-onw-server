@@ -1,3 +1,7 @@
+lain_one_night_werewolf:
+    resource: "@LainOneNightWerewolfBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

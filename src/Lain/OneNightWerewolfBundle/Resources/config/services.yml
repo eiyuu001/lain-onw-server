@@ -1,0 +1,4 @@
+services:
+#    lain_one_night_werewolf.example:
+#        class: Lain\OneNightWerewolfBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
