@@ -6,10 +6,27 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Lain\OneNightWerewolfBundle\Entity\Player;
+use Lain\OneNightWerewolfBundle\Entity\Regulation;
+use Lain\OneNightWerewolfBundle\Entity\RoleCount;
 use Lain\OneNightWerewolfBundle\Entity\Room;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class LoadRoomData implements FixtureInterface, OrderedFixtureInterface
+class LoadRoomData implements FixtureInterface, OrderedFixtureInterface, ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     /**
     * {@inheritDoc}
     */
@@ -18,6 +35,13 @@ class LoadRoomData implements FixtureInterface, OrderedFixtureInterface
         $room = new Room();
         $manager->persist($room);
 
+        $this->loadPlayer($manager, $room);
+        $this->loadRegulation($manager, $room);
+
+        $manager->flush();
+    }
+
+    private function loadPlayer(ObjectManager $manager, Room $room) {
         $records = [
             [
                 'name' => 'eiyuu',
@@ -37,8 +61,48 @@ class LoadRoomData implements FixtureInterface, OrderedFixtureInterface
             $room->addPlayer($player);
             $manager->persist($room);
         }
+    }
 
-        $manager->flush();
+    private function loadRegulation(ObjectManager $manager, Room $room) {
+        $records = [
+            [
+                'roles' => [
+                    '人狼' => 2,
+                    '村人' => 3,
+                    '占い師' => 1,
+                    '怪盗' => 1,
+                    '吊人' => 1,
+                ],
+                'players' => 6,
+            ],
+            [
+                'roles' => [
+                    '人狼' => 2,
+                    '村人' => 3,
+                    '占い師' => 1,
+                    '怪盗' => 1,
+                    '狂人' => 1,
+                ],
+                'players' => 6,
+            ],
+        ];
+
+        $roleRepository = $this->container->get('doctrine')->getRepository('LainOneNightWerewolfBundle:Role');
+        foreach($records as $record) {
+            $regulation = new Regulation();
+            foreach($record['roles'] as $roleName => $count) {
+                $roleCount = new RoleCount();
+                $role = $roleRepository->findOneBy(['name' => $roleName]);
+                $roleCount->setRole($role);
+                $roleCount->setCount($count);
+                $roleCount->setRegulation($regulation);
+                $regulation->addRoleCount($roleCount);
+            }
+            $regulation->setPlayers($record['players']);
+            $regulation->setRoom($room);
+            $room->addRegulation($regulation);
+            $manager->persist($regulation);
+        }
     }
 
     /**
@@ -46,6 +110,6 @@ class LoadRoomData implements FixtureInterface, OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 1;
+        return 2;
     }
 }

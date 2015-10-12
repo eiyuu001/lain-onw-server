@@ -6,25 +6,27 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Lain\OneNightWerewolfBundle\Entity\Regulation;
 use Lain\OneNightWerewolfBundle\Entity\RoleCount;
+use Lain\OneNightWerewolfBundle\Entity\Room;
 use Symfony\Component\HttpFoundation\Request;
 
 class RegulationController extends FOSRestController implements ClassResourceInterface
 {
-    public function cgetAction()
-    {
-        return $this->getDoctrine()
-            ->getRepository('LainOneNightWerewolfBundle:Regulation')
-            ->findAll();
+    public function cgetAction($roomId) {
+        /** @var Room $room */
+        $room = $this->getDoctrine()->getRepository('LainOneNightWerewolfBundle:Room')->find($roomId);
+        return $room->getRegulations();
     }
 
-    public function getAction($regulationId)
-    {
-        return $this->getDoctrine()
-            ->getRepository('LainOneNightWerewolfBundle:Regulation')
-            ->find($regulationId);
+    public function getAction($roomId, $regulationId) {
+        /** @var Room $room */
+        $room = $this->getDoctrine()->getRepository('LainOneNightWerewolfBundle:Room')->find($roomId);
+        $regulation = $room->getPlayers()->filter(function(Regulation $regulation) use ($regulationId){
+            return $regulation->getId() === $regulationId;
+        })->first();
+        return $regulation;
     }
 
-    public function postAction(Request $request) {
+    public function postAction(Request $request, $roomId) {
         $content = json_decode($request->getContent(), true);
         $regulation = new Regulation();
         $roleRepository = $this->getDoctrine()->getRepository('LainOneNightWerewolfBundle:Role');
@@ -37,8 +39,12 @@ class RegulationController extends FOSRestController implements ClassResourceInt
             $regulation->addRoleCount($roleCount);
         }
         $regulation->setPlayers($content['players']);
+        /** @var Room $room */
+        $room = $this->getDoctrine()->getRepository('LainOneNightWerewolfBundle:Room')->find($roomId);
+        $regulation->setRoom($room);
+        $room->addRegulation($regulation);
         $objectManager = $this->getDoctrine()->getManager();
-        $objectManager->persist($regulation);
+        $objectManager->persist($room);
         $objectManager->flush();
         return $regulation;
     }

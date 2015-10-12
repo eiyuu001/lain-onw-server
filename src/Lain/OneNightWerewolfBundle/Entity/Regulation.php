@@ -4,6 +4,7 @@ namespace Lain\OneNightWerewolfBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Regulation
@@ -31,6 +32,13 @@ class Regulation
      * @ORM\Column(name="players", type="integer", nullable=FALSE)
      */
     private $players;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Room", inversedBy="Regulations")
+     * @ORM\JoinColumn(name="room_id", referencedColumnName="id", nullable=FALSE)
+     * @JMS\Exclude
+     */
+    private $room;
 
     /**
      * Get id
@@ -106,5 +114,29 @@ class Regulation
     public function getPlayers()
     {
         return $this->players;
+    }
+
+    /**
+     * Set room
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\Room $room
+     *
+     * @return Regulation
+     */
+    public function setRoom(\Lain\OneNightWerewolfBundle\Entity\Room $room)
+    {
+        $this->room = $room;
+
+        return $this;
+    }
+
+    /**
+     * Get room
+     *
+     * @return \Lain\OneNightWerewolfBundle\Entity\Room
+     */
+    public function getRoom()
+    {
+        return $this->room;
     }
 }
