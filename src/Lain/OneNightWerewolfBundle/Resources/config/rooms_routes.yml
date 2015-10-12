@@ -14,5 +14,4 @@ regulations:
 
 games:
     type:     rest
-    parent:   rooms
-    resource: Lain\OneNightWerewolfBundle\Controller\GameController
+    resource: @LainOneNightWerewolfBundle/Resources/config/games_routes.yml

@@ -1,0 +1,8 @@
+games:
+    type:     rest
+    parent:   rooms
+    resource: Lain\OneNightWerewolfBundle\Controller\GameController
+
+player_roles:
+    type:     rest
+    resource: @LainOneNightWerewolfBundle/Resources/config/player_roles_routes.yml
