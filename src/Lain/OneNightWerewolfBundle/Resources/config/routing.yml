@@ -4,7 +4,7 @@ lain_one_night_werewolf_homepage:
 
 rooms:
     type:     rest
-    resource: Lain\OneNightWerewolfBundle\Controller\RoomController
+    resource: @LainOneNightWerewolfBundle/Resources/config/rooms_routes.yml
 
 roles:
     type:     rest

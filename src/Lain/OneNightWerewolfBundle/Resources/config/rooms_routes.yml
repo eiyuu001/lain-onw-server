@@ -1,0 +1,8 @@
+rooms:
+    type:     rest
+    resource: Lain\OneNightWerewolfBundle\Controller\RoomController
+
+players:
+    type:     rest
+    parent:   rooms
+    resource: Lain\OneNightWerewolfBundle\Controller\PlayerController
