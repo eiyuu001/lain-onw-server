@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "63b56ceefcca04fde72ae7abaaff6bfd",
-    "content-hash": "58316179f0381382a4aa259b60fa056d",
+    "hash": "068710ffc83e2d615b656fba861123ed",
+    "content-hash": "66fa157f47050aec2ef0578f9597f043",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -889,12 +889,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "1835bbc948ab5a453e4d692819b0785a0e8268a7"
+                "reference": "c667c8290ff3c6174e3a082f07b0aac21b2ca72a"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/c667c8290ff3c6174e3a082f07b0aac21b2ca72a",
-                "reference": "1835bbc948ab5a453e4d692819b0785a0e8268a7",
+                "reference": "c667c8290ff3c6174e3a082f07b0aac21b2ca72a",
                 "shasum": ""
             },
             "require": {
@@ -963,7 +963,54 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2015-10-07 18:26:51"
+            "time": "2015-10-10 17:36:17"
+        },
+        {
+            "name": "ginq/ginq",
+            "version": "v0.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akanehara/ginq.git",
+                "reference": "723eb5144981de9efe845095606c3123b9092807"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akanehara/ginq/zipball/723eb5144981de9efe845095606c3123b9092807",
+                "reference": "723eb5144981de9efe845095606c3123b9092807",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "symfony/expression-language": "~2.3",
+                "symfony/property-access": "~2.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~3.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Ginq": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Atsushi Kanehara",
+                    "email": "akanehara@gmail.com"
+                }
+            ],
+            "description": "LINQ to Object inspired DSL for PHP",
+            "keywords": [
+                "DSL",
+                "array",
+                "iterator",
+                "linq"
+            ],
+            "time": "2015-07-22 06:29:08"
         },
         {
             "name": "incenteev/composer-parameter-handler",
