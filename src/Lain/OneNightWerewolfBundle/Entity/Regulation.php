@@ -29,11 +29,6 @@ class Regulation
     private $roleCounts;
 
     /**
-     * @ORM\Column(name="players", type="integer", nullable=FALSE)
-     */
-    private $players;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Room", inversedBy="Regulations")
      * @ORM\JoinColumn(name="room_id", referencedColumnName="id", nullable=FALSE)
      * @JMS\Exclude
@@ -90,30 +85,6 @@ class Regulation
     public function getRoleCounts()
     {
         return $this->roleCounts;
-    }
-
-    /**
-     * Set players
-     *
-     * @param integer $players
-     *
-     * @return Regulation
-     */
-    public function setPlayers($players)
-    {
-        $this->players = $players;
-
-        return $this;
-    }
-
-    /**
-     * Get players
-     *
-     * @return integer
-     */
-    public function getPlayers()
-    {
-        return $this->players;
     }
 
     /**

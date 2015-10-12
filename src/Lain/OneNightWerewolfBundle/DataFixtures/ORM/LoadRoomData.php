@@ -73,7 +73,6 @@ class LoadRoomData implements FixtureInterface, OrderedFixtureInterface, Contain
                     '怪盗' => 1,
                     '吊人' => 1,
                 ],
-                'players' => 6,
             ],
             [
                 'roles' => [
@@ -83,7 +82,6 @@ class LoadRoomData implements FixtureInterface, OrderedFixtureInterface, Contain
                     '怪盗' => 1,
                     '狂人' => 1,
                 ],
-                'players' => 6,
             ],
         ];
 
@@ -98,7 +96,6 @@ class LoadRoomData implements FixtureInterface, OrderedFixtureInterface, Contain
                 $roleCount->setRegulation($regulation);
                 $regulation->addRoleCount($roleCount);
             }
-            $regulation->setPlayers($record['players']);
             $regulation->setRoom($room);
             $room->addRegulation($regulation);
             $manager->persist($regulation);

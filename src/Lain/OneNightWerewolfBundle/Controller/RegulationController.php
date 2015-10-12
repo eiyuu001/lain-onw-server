@@ -38,7 +38,6 @@ class RegulationController extends FOSRestController implements ClassResourceInt
             $roleCount->setRegulation($regulation);
             $regulation->addRoleCount($roleCount);
         }
-        $regulation->setPlayers($content['players']);
         /** @var Room $room */
         $room = $this->getDoctrine()->getRepository('LainOneNightWerewolfBundle:Room')->find($roomId);
         $regulation->setRoom($room);
