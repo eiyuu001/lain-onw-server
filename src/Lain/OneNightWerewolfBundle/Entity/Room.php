@@ -35,7 +35,13 @@ class Room
      * @JMS\Exclude
      */
     private $regulations;
-    
+
+    /**
+     * @ORM\OneToMany(targetEntity="Game", mappedBy="room", cascade={"persist", "remove"})
+     * @JMS\Exclude
+     */
+    private $games;
+
     /**
      * Constructor
      */
@@ -43,6 +49,7 @@ class Room
     {
         $this->players = new \Doctrine\Common\Collections\ArrayCollection();
         $this->regulations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->games = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -121,5 +128,39 @@ class Room
     public function getRegulations()
     {
         return $this->regulations;
+    }
+
+    /**
+     * Add game
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\Game $game
+     *
+     * @return Room
+     */
+    public function addGame(\Lain\OneNightWerewolfBundle\Entity\Game $game)
+    {
+        $this->games[] = $game;
+
+        return $this;
+    }
+
+    /**
+     * Remove game
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\Game $game
+     */
+    public function removeGame(\Lain\OneNightWerewolfBundle\Entity\Game $game)
+    {
+        $this->games->removeElement($game);
+    }
+
+    /**
+     * Get games
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGames()
+    {
+        return $this->games;
     }
 }

@@ -11,3 +11,8 @@ regulations:
     type:     rest
     parent:   rooms
     resource: Lain\OneNightWerewolfBundle\Controller\RegulationController
+
+games:
+    type:     rest
+    parent:   rooms
+    resource: Lain\OneNightWerewolfBundle\Controller\GameController
