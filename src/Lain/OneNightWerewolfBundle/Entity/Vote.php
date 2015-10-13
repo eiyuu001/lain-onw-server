@@ -25,7 +25,7 @@ class Vote
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="PlayerRole")
+     * @ORM\OneToOne(targetEntity="PlayerRole", inversedBy="vote")
      * @ORM\JoinColumn(name="src_player_role_id", referencedColumnName="id", nullable=FALSE)
      */
     private $source;

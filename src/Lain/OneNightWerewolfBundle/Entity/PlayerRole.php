@@ -42,6 +42,11 @@ class PlayerRole
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=FALSE)
      */
     private $role;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Vote", mappedBy="source")
+     */
+    private $vote;
     
 
     /**
@@ -124,5 +129,29 @@ class PlayerRole
     public function getRole()
     {
         return $this->role;
+    }
+
+    /**
+     * Set vote
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\Vote $vote
+     *
+     * @return PlayerRole
+     */
+    public function setVote(\Lain\OneNightWerewolfBundle\Entity\Vote $vote = null)
+    {
+        $this->vote = $vote;
+
+        return $this;
+    }
+
+    /**
+     * Get vote
+     *
+     * @return \Lain\OneNightWerewolfBundle\Entity\Vote
+     */
+    public function getVote()
+    {
+        return $this->vote;
     }
 }

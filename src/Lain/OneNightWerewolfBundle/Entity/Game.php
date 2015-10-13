@@ -3,6 +3,7 @@
 namespace Lain\OneNightWerewolfBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ginq\Ginq;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
@@ -40,7 +41,7 @@ class Game
      * @ORM\OneToMany(targetEntity="PlayerRole", mappedBy="game", cascade={"persist", "remove"})
      */
     private $playerRoles;
-    
+
     /**
      * Constructor
      */
@@ -139,5 +140,15 @@ class Game
     public function getPlayerRoles()
     {
         return $this->playerRoles;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasFinished()
+    {
+        return Ginq::from($this->playerRoles)->all(function(PlayerRole $playerRole) {
+            return $playerRole->getVote() !== null;
+        });
     }
 }
