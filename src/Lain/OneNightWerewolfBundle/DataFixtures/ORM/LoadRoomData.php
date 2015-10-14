@@ -67,20 +67,31 @@ class LoadRoomData implements FixtureInterface, OrderedFixtureInterface, Contain
         $records = [
             [
                 'roles' => [
-                    '人狼' => 2,
-                    '村人' => 3,
-                    '占い師' => 1,
-                    '怪盗' => 1,
-                    '吊人' => 1,
-                ],
-            ],
-            [
-                'roles' => [
-                    '人狼' => 2,
-                    '村人' => 3,
-                    '占い師' => 1,
-                    '怪盗' => 1,
-                    '狂人' => 1,
+                    '人狼' => [
+                        'count' => 2,
+                        'rewardAmount' => 3,
+                        'deathDecrease' => 3,
+                    ],
+                    '村人' => [
+                        'count' => 3,
+                        'rewardAmount' => 2,
+                        'deathDecrease' => 1,
+                    ],
+                    '占い師' => [
+                        'count' => 1,
+                        'rewardAmount' => 2,
+                        'deathDecrease' => 1,
+                    ],
+                    '怪盗' => [
+                        'count' => 1,
+                        'rewardAmount' => 2,
+                        'deathDecrease' => 1,
+                    ],
+                    '狂人' => [
+                        'count' => 1,
+                        'rewardAmount' => 3,
+                        'deathDecrease' => 2,
+                    ],
                 ],
             ],
         ];
@@ -88,11 +99,13 @@ class LoadRoomData implements FixtureInterface, OrderedFixtureInterface, Contain
         $roleRepository = $this->container->get('doctrine')->getRepository('LainOneNightWerewolfBundle:Role');
         foreach($records as $record) {
             $regulation = new Regulation();
-            foreach($record['roles'] as $roleName => $count) {
+            foreach($record['roles'] as $roleName => $roleInfo) {
                 $roleCount = new RoleCount();
                 $role = $roleRepository->findOneBy(['name' => $roleName]);
                 $roleCount->setRole($role);
-                $roleCount->setCount($count);
+                $roleCount->setCount($roleInfo['count']);
+                $roleCount->setRewardAmount($roleInfo['rewardAmount']);
+                $roleCount->setDeathDecrease($roleInfo['deathDecrease']);
                 $roleCount->setRegulation($regulation);
                 $regulation->addRoleCount($roleCount);
             }

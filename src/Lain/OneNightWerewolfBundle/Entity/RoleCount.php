@@ -42,6 +42,21 @@ class RoleCount
     private $count;
 
     /**
+     * @var integer
+     * @Assert\NotBlank()
+     * @ORM\Column(name="reward_amount", type="integer")
+     */
+    private $rewardAmount;
+
+    /**
+     * @var integer
+     * @Assert\NotBlank()
+     * @ORM\Column(name="death_decrease", type="integer")
+     */
+    private $deathDecrease;
+
+
+    /**
      * Get id
      *
      * @return integer
@@ -121,5 +136,53 @@ class RoleCount
     public function getRole()
     {
         return $this->role;
+    }
+
+    /**
+     * Set rewardAmount
+     *
+     * @param integer $rewardAmount
+     *
+     * @return RoleCount
+     */
+    public function setRewardAmount($rewardAmount)
+    {
+        $this->rewardAmount = $rewardAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get rewardAmount
+     *
+     * @return integer
+     */
+    public function getRewardAmount()
+    {
+        return $this->rewardAmount;
+    }
+
+    /**
+     * Set deathDecrease
+     *
+     * @param integer $deathDecrease
+     *
+     * @return RoleCount
+     */
+    public function setDeathDecrease($deathDecrease)
+    {
+        $this->deathDecrease = $deathDecrease;
+
+        return $this;
+    }
+
+    /**
+     * Get deathDecrease
+     *
+     * @return integer
+     */
+    public function getDeathDecrease()
+    {
+        return $this->deathDecrease;
     }
 }
