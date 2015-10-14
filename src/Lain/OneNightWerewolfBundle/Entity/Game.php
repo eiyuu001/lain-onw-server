@@ -143,6 +143,9 @@ class Game
     }
 
     /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("finished")
+     *
      * @return bool
      */
     public function hasFinished()
