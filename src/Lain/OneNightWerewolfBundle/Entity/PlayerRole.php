@@ -3,6 +3,8 @@
 namespace Lain\OneNightWerewolfBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ginq\Ginq;
+use Ginq\GroupingGinq;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
@@ -25,6 +27,8 @@ class PlayerRole
     private $id;
 
     /**
+     * @var Game
+     *
      * @ORM\ManyToOne(targetEntity="Game", inversedBy="playerRoles")
      * @ORM\JoinColumn(name="game_id", referencedColumnName="id", nullable=FALSE)
      * @JMS\Exclude
@@ -153,5 +157,35 @@ class PlayerRole
     public function getVote()
     {
         return $this->vote;
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("alive")
+     *
+     * @return bool | null
+     */
+    public function isAlive()
+    {
+        if (!$this->game->hasFinished()) {
+            return true;
+        }
+        $players = $this->game->getPlayerRoles();
+
+        $destinations = Ginq::from($players)->map(function(PlayerRole $player) {
+            return $player->getVote()->getDestination()->getPlayer()->getId();
+        });
+
+        $myObtainedCount = $destinations->filter(function($destination) {
+            return $destination == $this->getPlayer()->getId();
+        })->count();
+
+        $maxObtainedCount = $destinations->groupBy(function($destination) {
+            return $destination;
+        })->map(function(GroupingGinq $g) {
+            return $g->count();
+        })->max();
+
+        return $myObtainedCount < $maxObtainedCount;
     }
 }
