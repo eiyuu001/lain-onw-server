@@ -5,11 +5,9 @@ namespace Lain\OneNightWerewolfBundle\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Lain\OneNightWerewolfBundle\Entity\Game;
-use Lain\OneNightWerewolfBundle\Entity\Player;
 use Lain\OneNightWerewolfBundle\Entity\PlayerRole;
 use Lain\OneNightWerewolfBundle\Entity\Room;
 use Lain\OneNightWerewolfBundle\Entity\Vote;
-use Symfony\Component\HttpFoundation\Request;
 
 class VoteController extends FOSRestController implements ClassResourceInterface
 {
