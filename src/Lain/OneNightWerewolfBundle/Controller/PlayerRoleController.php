@@ -6,7 +6,6 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Lain\OneNightWerewolfBundle\Controller\Traits\EntityGettable;
-use Lain\OneNightWerewolfBundle\Entity\PlayerRole;
 
 /**
  * @RouteResource("Player")
