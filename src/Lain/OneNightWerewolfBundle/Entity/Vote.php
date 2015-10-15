@@ -25,12 +25,6 @@ class Vote
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="PlayerRole", inversedBy="vote")
-     * @ORM\JoinColumn(name="src_player_role_id", referencedColumnName="id", nullable=FALSE)
-     */
-    private $source;
-
-    /**
      * @ORM\ManyToOne(targetEntity="PlayerRole")
      * @ORM\JoinColumn(name="dst_player_role_id", referencedColumnName="id", nullable=FALSE)
      */
@@ -45,30 +39,6 @@ class Vote
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set source
-     *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $source
-     *
-     * @return Vote
-     */
-    public function setSource(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $source)
-    {
-        $this->source = $source;
-
-        return $this;
-    }
-
-    /**
-     * Get source
-     *
-     * @return \Lain\OneNightWerewolfBundle\Entity\PlayerRole
-     */
-    public function getSource()
-    {
-        return $this->source;
     }
 
     /**

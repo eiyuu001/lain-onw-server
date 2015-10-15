@@ -48,7 +48,7 @@ class PlayerRole
     private $role;
 
     /**
-     * @ORM\OneToOne(targetEntity="Vote", mappedBy="source")
+     * @ORM\OneToOne(targetEntity="Vote", cascade={"persist", "remove"})
      */
     private $vote;
     
