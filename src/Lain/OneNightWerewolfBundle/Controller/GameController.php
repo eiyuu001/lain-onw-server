@@ -19,16 +19,15 @@ class GameController extends FOSRestController implements ClassResourceInterface
     public function cgetAction($roomId) {
         /** @var Room $room */
         $room = $this->getDoctrine()->getRepository('LainOneNightWerewolfBundle:Room')->find($roomId);
-        return $room->getPlayers();
+        return $room->getGames();
     }
 
-    public function getAction($roomId, $playerId) {
+    public function getAction($roomId, $gameId) {
         /** @var Room $room */
         $room = $this->getDoctrine()->getRepository('LainOneNightWerewolfBundle:Room')->find($roomId);
-        $player = $room->getPlayers()->filter(function(Player $player) use ($playerId){
-            return $player->getId() === $playerId;
+        return $room->getGames()->filter(function(Player $game) use ($gameId){
+            return $game->getId() === $gameId;
         })->first();
-        return $player;
     }
 
     public function postAction(Request $request, $roomId) {
