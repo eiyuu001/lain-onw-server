@@ -2,10 +2,23 @@ lain_one_night_werewolf_homepage:
     path:     /hello/{name}
     defaults: { _controller: LainOneNightWerewolfBundle:Default:index }
 
-rooms:
+games:
     type:     rest
-    resource: @LainOneNightWerewolfBundle/Resources/config/rooms_routes.yml
+    resource: @LainOneNightWerewolfBundle/Resources/config/games_routes.yml
+
+players:
+    type:     rest
+    resource: Lain\OneNightWerewolfBundle\Controller\PlayerController
+
+regulations:
+    type:     rest
+    resource: Lain\OneNightWerewolfBundle\Controller\RegulationController
 
 roles:
     type:     rest
     resource: Lain\OneNightWerewolfBundle\Controller\RoleController
+
+rooms:
+    type:     rest
+    resource: Lain\OneNightWerewolfBundle\Controller\RoomController
+

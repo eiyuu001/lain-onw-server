@@ -4,21 +4,16 @@ namespace Lain\OneNightWerewolfBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
-use Lain\OneNightWerewolfBundle\Entity\Game;
+use Lain\OneNightWerewolfBundle\Controller\Traits\EntityGettable;
 use Lain\OneNightWerewolfBundle\Entity\PlayerRole;
-use Lain\OneNightWerewolfBundle\Entity\Room;
 use Lain\OneNightWerewolfBundle\Entity\Vote;
 
 class VoteController extends FOSRestController implements ClassResourceInterface
 {
-    public function putAction($roomId, $gameId, $playerId, $destinationId) {
-        /** @var Room $room */
-        $room = $this->getDoctrine()->getRepository('LainOneNightWerewolfBundle:Room')->find($roomId);
-        /** @var Game $game */
-        $game = $room
-            ->getGames()
-            ->filter(function(Game $game) use ($gameId) {return $game->getId() == $gameId;})
-            ->first();
+    use EntityGettable;
+
+    public function putAction($gameId, $playerId, $destinationId) {
+        $game = $this->getGame($gameId);
         /** @var PlayerRole $playerRole */
         $playerRole = $game
             ->getPlayerRoles()
