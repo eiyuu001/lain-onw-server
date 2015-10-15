@@ -83,4 +83,70 @@ trait EntityGettable {
         return $this->getEntity('Vote', $id);
     }
 
+    /**
+     * @param $name
+     * @return array
+     */
+    private function getEntities($name) {
+        return $this->getDoctrine()
+            ->getRepository('LainOneNightWerewolfBundle:' . $name)
+            ->findAll();
+    }
+
+    /**
+     * @return array
+     */
+    private function getGames() {
+        return $this->getEntities('Game');
+    }
+
+    /**
+     * @return array
+     */
+    private function getPlayers() {
+        return $this->getEntities('Game');
+    }
+
+    /**
+     * @return array
+     */
+    private function getPlayerRoles() {
+        return $this->getEntities('Game');
+    }
+
+    /**
+     * @return array
+     */
+    private function getRegulations() {
+        return $this->getEntities('Game');
+    }
+
+    /**
+     * @return array
+     */
+    private function getRoles() {
+        return $this->getEntities('Game');
+    }
+
+    /**
+     * @return array
+     */
+    private function getRoleCounts() {
+        return $this->getEntities('Game');
+    }
+
+    /**
+     * @return array
+     */
+    private function getRooms() {
+        return $this->getEntities('Game');
+    }
+
+    /**
+     * @return array
+     */
+    private function getVotes() {
+        return $this->getEntities('Game');
+    }
+
 }
