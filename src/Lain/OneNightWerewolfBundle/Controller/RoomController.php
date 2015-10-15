@@ -34,7 +34,7 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         return $room;
     }
 
-    public function postRoomAction(Request $request, $roomId) {
+    public function postGameAction(Request $request, $roomId) {
         $content = json_decode($request->getContent(), true);
         $regulation = $this->getRegulation($content['regulationId']);
         $game = new Game();
