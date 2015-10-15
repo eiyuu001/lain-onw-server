@@ -20,7 +20,8 @@
         "friendsofsymfony/rest-bundle": "dev-master",
         "jms/serializer-bundle": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
-        "ginq/ginq": "~0.2.3"
+        "ginq/ginq": "~0.2.3",
+        "phpunit/phpunit": "4.8.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
