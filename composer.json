@@ -17,8 +17,8 @@
         "sensio/distribution-bundle": "~4.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
-        "friendsofsymfony/rest-bundle": "dev-master",
-        "jms/serializer-bundle": "dev-master",
+        "friendsofsymfony/rest-bundle": "1.7.*",
+        "jms/serializer-bundle": "1.0.*",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "ginq/ginq": "~0.2.3",
         "phpunit/phpunit": "4.8.*"

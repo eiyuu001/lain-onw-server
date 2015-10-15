@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1c2a5891f3801344836d1df8fd83fdb9",
-    "content-hash": "2a761803a145f4000b6f3678d1388e5f",
+    "hash": "1a0af0340b0d9fa57bd88958320523b4",
+    "content-hash": "005cba986dc03a55d9beae2247aaf45b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -885,59 +885,61 @@
         },
         {
             "name": "friendsofsymfony/rest-bundle",
-            "version": "dev-master",
+            "version": "1.7.1",
+            "target-dir": "FOS/RestBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "8abf836ecbad5f1037bd1805981068e14a701b50"
+                "reference": "3fb2d30c58cde59213dbddd031bc36171b8b68b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/8abf836ecbad5f1037bd1805981068e14a701b50",
-                "reference": "8abf836ecbad5f1037bd1805981068e14a701b50",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/3fb2d30c58cde59213dbddd031bc36171b8b68b6",
+                "reference": "3fb2d30c58cde59213dbddd031bc36171b8b68b6",
                 "shasum": ""
             },
             "require": {
-                "doctrine/inflector": "^1.0",
-                "php": ">=5.4.0",
-                "psr/log": "^1.0",
-                "symfony/framework-bundle": "^2.7|^3.0",
-                "symfony/routing": "^2.7|^3.0",
-                "willdurand/jsonp-callback-validator": "^1.0",
-                "willdurand/negotiation": "^2.0"
+                "doctrine/inflector": "~1.0",
+                "php": ">=5.3.9",
+                "psr/log": "~1.0",
+                "symfony/framework-bundle": "~2.3",
+                "symfony/http-kernel": "~2.3,>=2.3.24",
+                "willdurand/jsonp-callback-validator": "~1.0",
+                "willdurand/negotiation": "~1.2"
+            },
+            "conflict": {
+                "jms/serializer": "<0.12",
+                "jms/serializer-bundle": "<0.11",
+                "symfony/validator": ">=2.5.0,<2.5.5"
             },
             "require-dev": {
-                "jms/serializer-bundle": "^1.0",
-                "phpoption/phpoption": "^1.1",
-                "sensio/framework-extra-bundle": "^3.0",
-                "sllh/php-cs-fixer-styleci-bridge": "^1.3",
-                "symfony/browser-kit": "^2.7|^3.0",
-                "symfony/css-selector": "^2.7|^3.0",
-                "symfony/dependency-injection": "^2.7|^3.0",
-                "symfony/expression-language": "~2.7|^3.0",
-                "symfony/form": "^2.7|^3.0",
-                "symfony/phpunit-bridge": "~2.7|^3.0",
-                "symfony/security-core": "^2.7|^3.0",
-                "symfony/serializer": "^2.7|^3.0",
-                "symfony/validator": "^2.7|^3.0",
-                "symfony/yaml": "^2.7|^3.0"
+                "jms/serializer": "~0.13",
+                "jms/serializer-bundle": "~0.12",
+                "phpoption/phpoption": "~1.1.0",
+                "sensio/framework-extra-bundle": "~3.0",
+                "symfony/browser-kit": "~2.3",
+                "symfony/dependency-injection": "~2.3",
+                "symfony/form": "~2.3",
+                "symfony/security": "~2.3",
+                "symfony/serializer": "~2.3",
+                "symfony/validator": "~2.3",
+                "symfony/yaml": "~2.3"
             },
             "suggest": {
-                "jms/serializer-bundle": "Add support for advanced serialization capabilities, recommended, requires ^1.0",
-                "sensio/framework-extra-bundle": "Add support for route annotations and the view response listener, requires ^3.0",
-                "symfony/expression-language": "Add support for using the expression language in the routing, requires ^2.7|^3.0",
-                "symfony/serializer": "Add support for basic serialization capabilities and xml decoding, requires ^2.7|^3.0",
-                "symfony/validator": "Add support for validation capabilities in the ParamFetcher, requires ^2.7|^3.0"
+                "jms/serializer-bundle": "Add support for advanced serialization capabilities, recommended, requires ~0.12",
+                "sensio/framework-extra-bundle": "Add support for route annotations and the view response listener, requires ~3.0",
+                "symfony/serializer": "Add support for basic serialization capabilities and xml decoding, requires ~2.3",
+                "symfony/validator": "Add support for validation capabilities in the ParamFetcher, requires ~2.3"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "1.7-dev"
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "FOS\\RestBundle\\": ""
+                "psr-0": {
+                    "FOS\\RestBundle": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -963,7 +965,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2015-10-14 19:53:07"
+            "time": "2015-06-16 08:39:26"
         },
         {
             "name": "ginq/ginq",
@@ -1272,17 +1274,17 @@
         },
         {
             "name": "jms/serializer-bundle",
-            "version": "dev-master",
+            "version": "1.0.0",
             "target-dir": "JMS/SerializerBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSSerializerBundle.git",
-                "reference": "46bb11dd95e3546e048d2d5a083cb427cb289b87"
+                "reference": "0be35615b5bae1ce42567244a321aa1be3ed0280"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/46bb11dd95e3546e048d2d5a083cb427cb289b87",
-                "reference": "46bb11dd95e3546e048d2d5a083cb427cb289b87",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/0be35615b5bae1ce42567244a321aa1be3ed0280",
+                "reference": "0be35615b5bae1ce42567244a321aa1be3ed0280",
                 "shasum": ""
             },
             "require": {
@@ -1310,7 +1312,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "0.13-dev"
                 }
             },
             "autoload": {
@@ -1337,7 +1339,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2015-07-30 15:41:36"
+            "time": "2015-06-23 19:27:08"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -3103,25 +3105,25 @@
         },
         {
             "name": "willdurand/negotiation",
-            "version": "v2.0.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/Negotiation.git",
-                "reference": "a99d19330bfaa050fd09c3b8a10fc8ac258b9a55"
+                "reference": "2a59f2376557303e3fa91465ab691abb82945edf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/Negotiation/zipball/a99d19330bfaa050fd09c3b8a10fc8ac258b9a55",
-                "reference": "a99d19330bfaa050fd09c3b8a10fc8ac258b9a55",
+                "url": "https://api.github.com/repos/willdurand/Negotiation/zipball/2a59f2376557303e3fa91465ab691abb82945edf",
+                "reference": "2a59f2376557303e3fa91465ab691abb82945edf",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4.0"
+                "php": ">=5.3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "1.5-dev"
                 }
             },
             "autoload": {
@@ -3136,7 +3138,7 @@
             "authors": [
                 {
                     "name": "William Durand",
-                    "email": "will+git@drnd.me"
+                    "email": "william.durand1@gmail.com"
                 }
             ],
             "description": "Content Negotiation tools for PHP provided as a standalone library.",
@@ -3148,7 +3150,7 @@
                 "header",
                 "negotiation"
             ],
-            "time": "2015-10-02 12:52:52"
+            "time": "2015-10-01 07:42:40"
         }
     ],
     "packages-dev": [
@@ -3204,8 +3206,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "friendsofsymfony/rest-bundle": 20,
-        "jms/serializer-bundle": 20,
         "doctrine/doctrine-fixtures-bundle": 20
     },
     "prefer-stable": false,
