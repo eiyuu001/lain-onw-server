@@ -84,7 +84,6 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         $room = $this->getRoom($roomId);
         $player = new Player();
         $player->setName($content['name']);
-        $player->setToken(bin2hex(openssl_random_pseudo_bytes(4)));
         $player->setRoom($room);
         $room->addPlayer($player);
         $objectManager->persist($room);

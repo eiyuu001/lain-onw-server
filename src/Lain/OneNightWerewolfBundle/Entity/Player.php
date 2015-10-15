@@ -32,13 +32,6 @@ class Player
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="token", type="string", length=255)
-     */
-    private $token;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Room", inversedBy="Players")
      * @ORM\JoinColumn(name="room_id", referencedColumnName="id", nullable=FALSE)
      * @JMS\Exclude
@@ -77,30 +70,6 @@ class Player
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set token
-     *
-     * @param string $token
-     *
-     * @return Player
-     */
-    public function setToken($token)
-    {
-        $this->token = $token;
-
-        return $this;
-    }
-
-    /**
-     * Get token
-     *
-     * @return string
-     */
-    public function getToken()
-    {
-        return $this->token;
     }
 
     /**

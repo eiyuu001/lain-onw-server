@@ -45,18 +45,15 @@ class LoadRoomData implements FixtureInterface, OrderedFixtureInterface, Contain
         $records = [
             [
                 'name' => 'eiyuu',
-                'token' => '_eiyuu',
             ],
             [
                 'name' => 'longeman',
-                'token' => '_longeman',
             ],
         ];
 
         foreach ($records as $record) {
             $player = new Player();
             $player->setName($record['name']);
-            $player->setToken($record['token']);
             $player->setRoom($room);
             $room->addPlayer($player);
             $manager->persist($room);
