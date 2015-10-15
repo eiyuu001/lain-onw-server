@@ -36,11 +36,17 @@ trait EntityGettable {
     }
 
     /**
-     * @param $id
+     * @param $gameId
+     * @param $playerId
      * @return PlayerRole
      */
-    private function getPlayerRole($id) {
-        return $this->getEntity('PlayerRole', $id);
+    private function getPlayerRole($gameId, $playerId) {
+        return $this->getDoctrine()
+            ->getRepository('LainOneNightWerewolfBundle:PlayerRole')
+            ->findOneBy([
+                'game' => $gameId,
+                'player' => $playerId,
+            ]);
     }
 
     /**

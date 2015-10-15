@@ -16,11 +16,6 @@ class PlayerRoleController extends FOSRestController implements ClassResourceInt
     use EntityGettable;
 
     public function getAction($gameId, $playerId) {
-        return $this->getGame($gameId)
-            ->getPlayerRoles()
-            ->filter(function(PlayerRole $playerRole) use ($playerId) {
-                return $playerRole->getPlayer()->getId() == $playerId;
-            })
-            ->first();
+        return $this->getPlayerRole($gameId, $playerId);
     }
 }
