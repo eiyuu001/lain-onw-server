@@ -4,6 +4,7 @@ namespace Lain\OneNightWerewolfBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use JMS\Serializer\SerializationContext;
 use Lain\OneNightWerewolfBundle\Controller\Traits\EntityGettable;
 
 class GameController extends FOSRestController implements ClassResourceInterface
@@ -15,7 +16,16 @@ class GameController extends FOSRestController implements ClassResourceInterface
     }
 
     public function getAction($gameId) {
-        return $this->getGame($gameId);
+        $game = $this->getGame($gameId);
+        $view = $this->view($game, 200);
+        $groups = ['Default'];
+        if ($game->hasFinished()) {
+            array_push($groups, 'secret');
+        }
+        $view->setSerializationContext(
+            SerializationContext::create()->setGroups($groups)
+        );
+        return $view;
     }
 
 }

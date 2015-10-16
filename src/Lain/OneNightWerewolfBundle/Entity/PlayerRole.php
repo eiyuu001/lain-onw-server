@@ -44,11 +44,13 @@ class PlayerRole
     /**
      * @ORM\ManyToOne(targetEntity="Role")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=FALSE)
+     * @JMS\Groups({"secret"})
      */
     private $role;
 
     /**
      * @ORM\OneToOne(targetEntity="Vote", cascade={"persist", "remove"})
+     * @JMS\Groups({"secret"})
      */
     private $vote;
     
@@ -162,6 +164,7 @@ class PlayerRole
     /**
      * @JMS\VirtualProperty
      * @JMS\SerializedName("alive")
+     * @JMS\Groups({"secret"})
      *
      * @return bool | null
      */
