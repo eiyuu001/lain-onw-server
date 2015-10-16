@@ -13,7 +13,7 @@ use Lain\OneNightWerewolfBundle\Entity\Vote;
 
 trait EntityGettable {
 
-    private function getEntity($name, $id) {
+    protected function getEntity($name, $id) {
         return $this->getDoctrine()
             ->getRepository('LainOneNightWerewolfBundle:' . $name)
             ->find($id);
@@ -23,7 +23,7 @@ trait EntityGettable {
      * @param $id
      * @return Game
      */
-    private function getGame($id) {
+    protected function getGame($id) {
         return $this->getEntity('Game', $id);
     }
 
@@ -31,7 +31,7 @@ trait EntityGettable {
      * @param $id
      * @return Player
      */
-    private function getPlayer($id) {
+    protected function getPlayer($id) {
         return $this->getEntity('Player', $id);
     }
 
@@ -40,7 +40,7 @@ trait EntityGettable {
      * @param $playerId
      * @return PlayerRole
      */
-    private function getPlayerRole($gameId, $playerId) {
+    protected function getPlayerRole($gameId, $playerId) {
         return $this->getDoctrine()
             ->getRepository('LainOneNightWerewolfBundle:PlayerRole')
             ->findOneBy([
@@ -53,7 +53,7 @@ trait EntityGettable {
      * @param $id
      * @return Regulation
      */
-    private function getRegulation($id) {
+    protected function getRegulation($id) {
         return $this->getEntity('Regulation', $id);
     }
 
@@ -61,7 +61,7 @@ trait EntityGettable {
      * @param $id
      * @return Role
      */
-    private function getRole($id) {
+    protected function getRole($id) {
         return $this->getEntity('Role', $id);
     }
 
@@ -69,7 +69,7 @@ trait EntityGettable {
      * @param $id
      * @return RoleCount
      */
-    private function getRoleCount($id) {
+    protected function getRoleCount($id) {
         return $this->getEntity('RoleCount', $id);
     }
 
@@ -77,7 +77,7 @@ trait EntityGettable {
      * @param $id
      * @return Room
      */
-    private function getRoom($id) {
+    protected function getRoom($id) {
         return $this->getEntity('Room', $id);
     }
 
@@ -85,7 +85,7 @@ trait EntityGettable {
      * @param $id
      * @return Vote
      */
-    private function getVote($id) {
+    protected function getVote($id) {
         return $this->getEntity('Vote', $id);
     }
 
@@ -93,7 +93,7 @@ trait EntityGettable {
      * @param $name
      * @return array
      */
-    private function getEntities($name) {
+    protected function getEntities($name) {
         return $this->getDoctrine()
             ->getRepository('LainOneNightWerewolfBundle:' . $name)
             ->findAll();
@@ -102,56 +102,56 @@ trait EntityGettable {
     /**
      * @return array
      */
-    private function getGames() {
+    protected function getGames() {
         return $this->getEntities('Game');
     }
 
     /**
      * @return array
      */
-    private function getPlayers() {
+    protected function getPlayers() {
         return $this->getEntities('Game');
     }
 
     /**
      * @return array
      */
-    private function getPlayerRoles() {
+    protected function getPlayerRoles() {
         return $this->getEntities('Game');
     }
 
     /**
      * @return array
      */
-    private function getRegulations() {
+    protected function getRegulations() {
         return $this->getEntities('Game');
     }
 
     /**
      * @return array
      */
-    private function getRoles() {
+    protected function getRoles() {
         return $this->getEntities('Game');
     }
 
     /**
      * @return array
      */
-    private function getRoleCounts() {
+    protected function getRoleCounts() {
         return $this->getEntities('Game');
     }
 
     /**
      * @return array
      */
-    private function getRooms() {
+    protected function getRooms() {
         return $this->getEntities('Game');
     }
 
     /**
      * @return array
      */
-    private function getVotes() {
+    protected function getVotes() {
         return $this->getEntities('Game');
     }
 
