@@ -119,35 +119,35 @@ trait EntityGettable {
      * @return array
      */
     protected function getPlayers() {
-        return $this->getEntities('Game');
+        return $this->getEntities('Player');
     }
 
     /**
      * @return array
      */
     protected function getPlayerRoles() {
-        return $this->getEntities('Game');
+        return $this->getEntities('PlayerRole');
     }
 
     /**
      * @return array
      */
     protected function getRegulations() {
-        return $this->getEntities('Game');
+        return $this->getEntities('Regulation');
     }
 
     /**
      * @return array
      */
     protected function getRoles() {
-        return $this->getEntities('Game');
+        return $this->getEntities('Role');
     }
 
     /**
      * @return array
      */
     protected function getRoleCounts() {
-        return $this->getEntities('Game');
+        return $this->getEntities('RoleCount');
     }
 
     /**
@@ -161,14 +161,14 @@ trait EntityGettable {
      * @return array
      */
     protected function getRooms() {
-        return $this->getEntities('Game');
+        return $this->getEntities('Room');
     }
 
     /**
      * @return array
      */
     protected function getVotes() {
-        return $this->getEntities('Game');
+        return $this->getEntities('Vote');
     }
 
 }
