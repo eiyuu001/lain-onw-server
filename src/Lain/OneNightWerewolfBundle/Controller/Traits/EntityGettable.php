@@ -8,6 +8,7 @@ use Lain\OneNightWerewolfBundle\Entity\PlayerRole;
 use Lain\OneNightWerewolfBundle\Entity\Regulation;
 use Lain\OneNightWerewolfBundle\Entity\Role;
 use Lain\OneNightWerewolfBundle\Entity\RoleCount;
+use Lain\OneNightWerewolfBundle\Entity\RoleGroup;
 use Lain\OneNightWerewolfBundle\Entity\Room;
 use Lain\OneNightWerewolfBundle\Entity\Vote;
 
@@ -71,6 +72,14 @@ trait EntityGettable {
      */
     protected function getRoleCount($id) {
         return $this->getEntity('RoleCount', $id);
+    }
+
+    /**
+     * @param $id
+     * @return RoleGroup
+     */
+    protected function getRoleGroup($id) {
+        return $this->getEntity('RoleGroup', $id);
     }
 
     /**
@@ -139,6 +148,13 @@ trait EntityGettable {
      */
     protected function getRoleCounts() {
         return $this->getEntities('Game');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getRoleGroups() {
+        return $this->getEntities('RoleGroup');
     }
 
     /**

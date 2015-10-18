@@ -7,12 +7,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * Role
+ * RoleGroup
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class Role
+class RoleGroup
 {
     /**
      * @var integer
@@ -20,6 +20,7 @@ class Role
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Exclude
      */
     private $id;
 
@@ -31,10 +32,10 @@ class Role
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="RoleGroup", inversedBy="roles")
-     * @ORM\JoinColumn(name="role_group_id", referencedColumnName="id", nullable=FALSE)
+     * @ORM\OneToMany(targetEntity="Role", mappedBy="roleGroup", cascade={"persist", "remove"})
+     * @JMS\Exclude
      */
-    private $roleGroup;
+    private $roles;
 
 
     /**
@@ -52,7 +53,7 @@ class Role
      *
      * @param string $name
      *
-     * @return Role
+     * @return RoleGroup
      */
     public function setName($name)
     {
@@ -70,28 +71,45 @@ class Role
     {
         return $this->name;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
-     * Set roleGroup
+     * Add role
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\RoleGroup $roleGroup
+     * @param \Lain\OneNightWerewolfBundle\Entity\Role $role
      *
-     * @return Role
+     * @return RoleGroup
      */
-    public function setRoleGroup(\Lain\OneNightWerewolfBundle\Entity\RoleGroup $roleGroup)
+    public function addRole(\Lain\OneNightWerewolfBundle\Entity\Role $role)
     {
-        $this->roleGroup = $roleGroup;
+        $this->roles[] = $role;
 
         return $this;
     }
 
     /**
-     * Get roleGroup
+     * Remove role
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\RoleGroup
+     * @param \Lain\OneNightWerewolfBundle\Entity\Role $role
      */
-    public function getRoleGroup()
+    public function removeRole(\Lain\OneNightWerewolfBundle\Entity\Role $role)
     {
-        return $this->roleGroup;
+        $this->roles->removeElement($role);
+    }
+
+    /**
+     * Get roles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRoles()
+    {
+        return $this->roles;
     }
 }
