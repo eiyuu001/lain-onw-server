@@ -191,4 +191,55 @@ class PlayerRole
 
         return $myObtainedCount < $maxObtainedCount;
     }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("won")
+     * @JMS\Groups({"secret"})
+     *
+     * @return bool | null
+     */
+    public function isWon()
+    {
+        if (!$this->game->hasFinished()) {
+            return null;
+        }
+        switch ($this->getRole()->getRoleGroup()->getId()) {
+            case 1:
+                return $this->getGame()->isWerewolfWon();
+            case 2:
+                return $this->getGame()->isPeopleWon();
+            case 3:
+                return $this->getGame()->isHangedManWon();
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("reward")
+     * @JMS\Groups({"secret"})
+     *
+     * @return int | null
+     */
+    public function computeReward()
+    {
+        if (!$this->game->hasFinished()) {
+            return null;
+        }
+        if (!$this->isWon()) {
+            return 0;
+        }
+        /** @var RoleCount $roleCount */
+        $roleCount = $this->game->getRegulation()->getRoleCounts()->filter(function(RoleCount $roleCount){
+            return $roleCount->getRole()->getId() == $this->getRole()->getId();
+        })->first();
+        $reward = $roleCount->getRewardAmount();
+        if (!$this->isAlive()) {
+            $reward -= $roleCount->getDeathDecrease();
+        }
+        return $reward;
+    }
+
 }

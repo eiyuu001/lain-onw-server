@@ -154,4 +154,39 @@ class Game
             return $playerRole->getVote() !== null;
         });
     }
+
+    public function isPeopleWon() {
+        if ($this->isHangedManWon()) {
+            return false; // í›êlÇÃèüóòÇÕÇ∑Ç◊ÇƒÇ…óDêÊÇ∑ÇÈ
+        }
+        $oneOrMoreWerewolfWasDead = Ginq::from($this->playerRoles)->filter(function(PlayerRole $playerRole) {
+            return !$playerRole->isAlive();
+        })->any(function(PlayerRole $deadPlayerRole) {
+            return $deadPlayerRole->getRole()->getId() == 1; // êlòT
+        });
+        return $oneOrMoreWerewolfWasDead;
+    }
+
+    public function isWerewolfWon() {
+        if ($this->isHangedManWon()) {
+            return false; // í›êlÇÃèüóòÇÕÇ∑Ç◊ÇƒÇ…óDêÊÇ∑ÇÈ
+        }
+        $oneOrMoreWerewolfWasDead = Ginq::from($this->playerRoles)->filter(function(PlayerRole $playerRole) {
+            return !$playerRole->isAlive();
+        })->any(function(PlayerRole $deadPlayerRole) {
+            return $deadPlayerRole->getRole()->getId() == 1; // êlòT
+        });
+        return !$oneOrMoreWerewolfWasDead;
+    }
+
+    public function isHangedManWon() {
+        $oneOrMoreHangedManWasDead = Ginq::from($this->playerRoles)->filter(function(PlayerRole $playerRole) {
+            return !$playerRole->isAlive();
+        })->any(function(PlayerRole $deadPlayerRole) {
+            return $deadPlayerRole->getRole()->getId() == 6; // í›êl
+        });
+        return $oneOrMoreHangedManWasDead;
+    }
+
+
 }
