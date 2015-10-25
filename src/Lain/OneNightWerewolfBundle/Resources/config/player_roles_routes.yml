@@ -1,9 +1,0 @@
-player_roles:
-    type:     rest
-    parent:   games
-    resource: Lain\OneNightWerewolfBundle\Controller\PlayerRoleController
-
-votes:
-    type:     rest
-    parent:   player_roles
-    resource: Lain\OneNightWerewolfBundle\Controller\VoteController

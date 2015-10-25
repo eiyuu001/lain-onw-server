@@ -49,11 +49,18 @@ class PlayerRole
     private $role;
 
     /**
-     * @ORM\OneToOne(targetEntity="Vote", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="PlayerRole", mappedBy="voteTo", cascade={"persist", "remove"})
+     * @JMS\Exclude
+     */
+    private $votesFrom;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="PlayerRole", inversedBy="votesFrom")
+     * @ORM\JoinColumn(name="vote_player_id", referencedColumnName="id")
      * @JMS\Groups({"secret"})
      */
-    private $vote;
-    
+    private $voteTo;
+
 
     /**
      * Get id
@@ -138,30 +145,6 @@ class PlayerRole
     }
 
     /**
-     * Set vote
-     *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Vote $vote
-     *
-     * @return PlayerRole
-     */
-    public function setVote(\Lain\OneNightWerewolfBundle\Entity\Vote $vote = null)
-    {
-        $this->vote = $vote;
-
-        return $this;
-    }
-
-    /**
-     * Get vote
-     *
-     * @return \Lain\OneNightWerewolfBundle\Entity\Vote
-     */
-    public function getVote()
-    {
-        return $this->vote;
-    }
-
-    /**
      * @JMS\VirtualProperty
      * @JMS\SerializedName("alive")
      * @JMS\Groups({"secret"})
@@ -173,23 +156,13 @@ class PlayerRole
         if (!$this->game->hasFinished()) {
             return true;
         }
+        $myVotedCount = $this->votesFrom->count();
         $players = $this->game->getPlayerRoles();
-
-        $destinations = Ginq::from($players)->map(function(PlayerRole $player) {
-            return $player->getVote()->getDestination()->getPlayer()->getId();
-        });
-
-        $myObtainedCount = $destinations->filter(function($destination) {
-            return $destination == $this->getPlayer()->getId();
-        })->count();
-
-        $maxObtainedCount = $destinations->groupBy(function($destination) {
-            return $destination;
-        })->map(function(GroupingGinq $g) {
-            return $g->count();
+        $maxVotedCount = Ginq::from($players)->map(function(PlayerRole $player) {
+            return $player->getVotesFrom()->count();
         })->max();
 
-        return $myObtainedCount < $maxObtainedCount;
+        return $myVotedCount < $maxVotedCount;
     }
 
     /**
@@ -242,4 +215,69 @@ class PlayerRole
         return $reward;
     }
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->votesFrom = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add votesFrom
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $votesFrom
+     *
+     * @return PlayerRole
+     */
+    public function addVotesFrom(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $votesFrom)
+    {
+        $this->votesFrom[] = $votesFrom;
+
+        return $this;
+    }
+
+    /**
+     * Remove votesFrom
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $votesFrom
+     */
+    public function removeVotesFrom(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $votesFrom)
+    {
+        $this->votesFrom->removeElement($votesFrom);
+    }
+
+    /**
+     * Get votesFrom
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVotesFrom()
+    {
+        return $this->votesFrom;
+    }
+
+    /**
+     * Set voteTo
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteTo
+     *
+     * @return PlayerRole
+     */
+    public function setVoteTo(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteTo = null)
+    {
+        $this->voteTo = $voteTo;
+
+        return $this;
+    }
+
+    /**
+     * Get voteTo
+     *
+     * @return \Lain\OneNightWerewolfBundle\Entity\PlayerRole
+     */
+    public function getVoteTo()
+    {
+        return $this->voteTo;
+    }
 }
