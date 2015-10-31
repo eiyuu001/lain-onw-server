@@ -44,6 +44,13 @@ class PlayerRoleController extends FOSRestController implements ClassResourceInt
         return $this->affectOtherPlayer($request, $gameId, $playerId, 'peep', ['secret']);
     }
 
+    /**
+     * @Put("games/{gameId}/players/{playerId}/swap")
+     */
+    public function putSwapAction(Request $request, $gameId, $playerId) {
+        return $this->affectOtherPlayer($request, $gameId, $playerId, 'swap', ['secret']);
+    }
+
     private function affectOtherPlayer(Request $request, $gameId, $playerId, $action, $extraSerializationGroups = []) {
         $content = json_decode($request->getContent(), true);
         $setDest = 'set' . ucfirst($action) . 'Destination';
@@ -59,7 +66,7 @@ class PlayerRoleController extends FOSRestController implements ClassResourceInt
 
         $view = $this->view($target, 200);
         $view->setSerializationContext(
-            SerializationContext::create()->setGroups(['Default'] + $extraSerializationGroups)
+            SerializationContext::create()->setGroups(array_merge(['Default'], $extraSerializationGroups))
         );
         return $view;
     }

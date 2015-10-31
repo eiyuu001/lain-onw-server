@@ -74,6 +74,20 @@ class PlayerRole
      */
     private $peepDestination;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PlayerRole", mappedBy="swapDestination", cascade={"persist", "remove"})
+     * @JMS\Exclude
+     */
+    private $swapSources;
+
+    /**
+     * @var PlayerRole
+     *
+     * @ORM\ManyToOne(targetEntity="PlayerRole", inversedBy="swapSources")
+     * @ORM\JoinColumn(name="swap_destination_id", referencedColumnName="id")
+     * @JMS\Groups({"secret"})
+     */
+    private $swapDestination;
 
     /**
      * Get id
@@ -159,6 +173,27 @@ class PlayerRole
 
     /**
      * @JMS\VirtualProperty
+     * @JMS\SerializedName("actualRole")
+     * @JMS\Groups({"finished"})
+     *
+     * @return Role | null
+     */
+    public function getActualRole()
+    {
+        if (!$this->game->hasFinished()) {
+            return null;
+        }
+        if ($this->swapDestination !== null) {
+            return $this->swapDestination->getRole();
+        }
+        if (!$this->swapSources->isEmpty()) {
+            return $this->swapSources->first()->getRole();
+        }
+        return $this->role;
+    }
+
+    /**
+     * @JMS\VirtualProperty
      * @JMS\SerializedName("alive")
      * @JMS\Groups({"secret"})
      *
@@ -190,7 +225,7 @@ class PlayerRole
         if (!$this->game->hasFinished()) {
             return null;
         }
-        switch ($this->getRole()->getRoleGroup()->getId()) {
+        switch ($this->getActualRole()->getRoleGroup()->getId()) {
             case 1:
                 return $this->getGame()->isWerewolfWon();
             case 2:
@@ -227,7 +262,7 @@ class PlayerRole
         }
         return $reward;
     }
-    
+
     /**
      * Constructor
      */
@@ -235,6 +270,7 @@ class PlayerRole
     {
         $this->voteSources = new \Doctrine\Common\Collections\ArrayCollection();
         $this->peepSources = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->swapSources = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -351,5 +387,63 @@ class PlayerRole
     public function getPeepDestination()
     {
         return $this->peepDestination;
+    }
+
+    /**
+     * Add swapSource
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $swapSource
+     *
+     * @return PlayerRole
+     */
+    public function addSwapSource(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $swapSource)
+    {
+        $this->swapSources[] = $swapSource;
+
+        return $this;
+    }
+
+    /**
+     * Remove swapSource
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $swapSource
+     */
+    public function removeSwapSource(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $swapSource)
+    {
+        $this->swapSources->removeElement($swapSource);
+    }
+
+    /**
+     * Get swapSources
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSwapSources()
+    {
+        return $this->swapSources;
+    }
+
+    /**
+     * Set swapDestination
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $swapDestination
+     *
+     * @return PlayerRole
+     */
+    public function setSwapDestination(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $swapDestination = null)
+    {
+        $this->swapDestination = $swapDestination;
+
+        return $this;
+    }
+
+    /**
+     * Get swapDestination
+     *
+     * @return \Lain\OneNightWerewolfBundle\Entity\PlayerRole
+     */
+    public function getSwapDestination()
+    {
+        return $this->swapDestination;
     }
 }

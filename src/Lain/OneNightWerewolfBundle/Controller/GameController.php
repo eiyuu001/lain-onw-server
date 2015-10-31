@@ -21,6 +21,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
         $groups = ['Default'];
         if ($game->hasFinished()) {
             array_push($groups, 'secret');
+            array_push($groups, 'finished');
         }
         $view->setSerializationContext(
             SerializationContext::create()->setGroups($groups)
