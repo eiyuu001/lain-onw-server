@@ -204,10 +204,10 @@ class PlayerRole
         if (!$this->game->hasFinished()) {
             return true;
         }
-        $myVotedCount = $this->votesFrom->count();
+        $myVotedCount = $this->voteSources->count();
         $players = $this->game->getPlayerRoles();
         $maxVotedCount = Ginq::from($players)->map(function(PlayerRole $player) {
-            return $player->getVotesFrom()->count();
+            return $player->getVoteSources()->count();
         })->max();
 
         return $myVotedCount < $maxVotedCount;
