@@ -49,17 +49,30 @@ class PlayerRole
     private $role;
 
     /**
-     * @ORM\OneToMany(targetEntity="PlayerRole", mappedBy="voteTo", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="PlayerRole", mappedBy="voteDestination", cascade={"persist", "remove"})
      * @JMS\Exclude
      */
-    private $votesFrom;
+    private $voteSources;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PlayerRole", inversedBy="votesFrom")
-     * @ORM\JoinColumn(name="vote_player_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="PlayerRole", inversedBy="voteSources")
+     * @ORM\JoinColumn(name="vote_destination_id", referencedColumnName="id")
      * @JMS\Groups({"secret"})
      */
-    private $voteTo;
+    private $voteDestination;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PlayerRole", mappedBy="peepDestination", cascade={"persist", "remove"})
+     * @JMS\Exclude
+     */
+    private $peepSources;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="PlayerRole", inversedBy="peepSources")
+     * @ORM\JoinColumn(name="peep_destination_id", referencedColumnName="id")
+     * @JMS\Groups({"secret"})
+     */
+    private $peepDestination;
 
 
     /**
@@ -214,70 +227,129 @@ class PlayerRole
         }
         return $reward;
     }
-
+    
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->votesFrom = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->voteSources = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->peepSources = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Add votesFrom
+     * Add voteSource
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $votesFrom
+     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteSource
      *
      * @return PlayerRole
      */
-    public function addVotesFrom(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $votesFrom)
+    public function addVoteSource(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteSource)
     {
-        $this->votesFrom[] = $votesFrom;
+        $this->voteSources[] = $voteSource;
 
         return $this;
     }
 
     /**
-     * Remove votesFrom
+     * Remove voteSource
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $votesFrom
+     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteSource
      */
-    public function removeVotesFrom(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $votesFrom)
+    public function removeVoteSource(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteSource)
     {
-        $this->votesFrom->removeElement($votesFrom);
+        $this->voteSources->removeElement($voteSource);
     }
 
     /**
-     * Get votesFrom
+     * Get voteSources
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getVotesFrom()
+    public function getVoteSources()
     {
-        return $this->votesFrom;
+        return $this->voteSources;
     }
 
     /**
-     * Set voteTo
+     * Set voteDestination
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteTo
+     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteDestination
      *
      * @return PlayerRole
      */
-    public function setVoteTo(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteTo = null)
+    public function setVoteDestination(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteDestination = null)
     {
-        $this->voteTo = $voteTo;
+        $this->voteDestination = $voteDestination;
 
         return $this;
     }
 
     /**
-     * Get voteTo
+     * Get voteDestination
      *
      * @return \Lain\OneNightWerewolfBundle\Entity\PlayerRole
      */
-    public function getVoteTo()
+    public function getVoteDestination()
     {
-        return $this->voteTo;
+        return $this->voteDestination;
+    }
+
+    /**
+     * Add peepSource
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $peepSource
+     *
+     * @return PlayerRole
+     */
+    public function addPeepSource(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $peepSource)
+    {
+        $this->peepSources[] = $peepSource;
+
+        return $this;
+    }
+
+    /**
+     * Remove peepSource
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $peepSource
+     */
+    public function removePeepSource(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $peepSource)
+    {
+        $this->peepSources->removeElement($peepSource);
+    }
+
+    /**
+     * Get peepSources
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPeepSources()
+    {
+        return $this->peepSources;
+    }
+
+    /**
+     * Set peepDestination
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $peepDestination
+     *
+     * @return PlayerRole
+     */
+    public function setPeepDestination(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $peepDestination = null)
+    {
+        $this->peepDestination = $peepDestination;
+
+        return $this;
+    }
+
+    /**
+     * Get peepDestination
+     *
+     * @return \Lain\OneNightWerewolfBundle\Entity\PlayerRole
+     */
+    public function getPeepDestination()
+    {
+        return $this->peepDestination;
     }
 }

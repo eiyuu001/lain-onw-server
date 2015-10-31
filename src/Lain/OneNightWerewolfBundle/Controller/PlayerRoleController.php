@@ -34,16 +34,33 @@ class PlayerRoleController extends FOSRestController implements ClassResourceInt
      * @Put("games/{gameId}/players/{playerId}/vote")
      */
     public function putVoteAction(Request $request, $gameId, $playerId) {
+        return $this->affectOtherPlayer($request, $gameId, $playerId, 'vote');
+    }
+
+    /**
+     * @Put("games/{gameId}/players/{playerId}/peep")
+     */
+    public function putPeepAction(Request $request, $gameId, $playerId) {
+        return $this->affectOtherPlayer($request, $gameId, $playerId, 'peep', ['secret']);
+    }
+
+    private function affectOtherPlayer(Request $request, $gameId, $playerId, $action, $extraSerializationGroups = []) {
         $content = json_decode($request->getContent(), true);
-        $voteFrom = $this->getPlayerRole($gameId, $playerId);
-        $voteTo = $this->getPlayerRole($gameId, $content['destinationId']);
-        $voteFrom->setVoteTo($voteTo);
-        $voteTo->addVotesFrom($voteFrom);
+        $setDest = 'set' . ucfirst($action) . 'Destination';
+        $addSrc  = 'add' . ucfirst($action) . 'Source';
+        $player = $this->getPlayerRole($gameId, $playerId);
+        $target = $this->getPlayerRole($gameId, $content['target']);
+        $player->$setDest($target);
+        $target->$addSrc($player);
 
         $objectManager = $this->getDoctrine()->getManager();
-        $objectManager->persist($voteTo);
+        $objectManager->persist($target);
         $objectManager->flush();
 
-        return $voteTo;
+        $view = $this->view($target, 200);
+        $view->setSerializationContext(
+            SerializationContext::create()->setGroups(['Default'] + $extraSerializationGroups)
+        );
+        return $view;
     }
 }

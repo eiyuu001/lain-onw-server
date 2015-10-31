@@ -151,7 +151,7 @@ class Game
     public function hasFinished()
     {
         return Ginq::from($this->playerRoles)->all(function(PlayerRole $playerRole) {
-            return $playerRole->getVoteTo() !== null;
+            return $playerRole->getVoteDestination() !== null;
         });
     }
 
