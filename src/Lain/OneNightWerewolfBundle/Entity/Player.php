@@ -3,6 +3,7 @@
 namespace Lain\OneNightWerewolfBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ginq\Ginq;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
@@ -37,6 +38,11 @@ class Player
      * @JMS\Exclude
      */
     private $room;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PlayerRole", mappedBy="player", cascade={"persist", "remove"})
+     */
+    private $playerRoles;
 
     /**
      * Get id
@@ -94,5 +100,59 @@ class Player
     public function getRoom()
     {
         return $this->room;
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("score")
+     *
+     * @return int
+     */
+    public function computeScore() {
+        return Ginq::from($this->getPlayerRoles())->sum(function(PlayerRole $playerRole) {
+            return $playerRole->computeReward();
+        });
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->playerRoles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add playerRole
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $playerRole
+     *
+     * @return Player
+     */
+    public function addPlayerRole(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $playerRole)
+    {
+        $this->playerRoles[] = $playerRole;
+
+        return $this;
+    }
+
+    /**
+     * Remove playerRole
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $playerRole
+     */
+    public function removePlayerRole(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $playerRole)
+    {
+        $this->playerRoles->removeElement($playerRole);
+    }
+
+    /**
+     * Get playerRoles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlayerRoles()
+    {
+        return $this->playerRoles;
     }
 }

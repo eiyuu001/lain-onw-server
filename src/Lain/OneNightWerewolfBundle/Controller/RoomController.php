@@ -47,6 +47,7 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         /** @var PlayerRole $playerRole */
         foreach ($playerRoles as $playerRole) {
             $playerRole->setGame($game);
+            $objectManager->persist($playerRole->getPlayer());
             $game->addPlayerRole($playerRole);
             $objectManager->persist($game);
         }
@@ -73,6 +74,7 @@ class RoomController extends FOSRestController implements ClassResourceInterface
             $player = $this->getPlayer($playerId);
             $playerRole->setPlayer($player);
             $playerRole->setRole($role);
+            $player->addPlayerRole($playerRole);
             return $playerRole;
         }, $roles, $playerIds);
         return $res;
