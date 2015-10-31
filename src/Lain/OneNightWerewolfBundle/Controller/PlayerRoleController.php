@@ -9,6 +9,8 @@ use FOS\RestBundle\Controller\Annotations\Put;
 use JMS\Serializer\SerializationContext;
 use Lain\OneNightWerewolfBundle\Controller\Traits\EntityGettable;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @RouteResource("Player")
@@ -52,7 +54,16 @@ class PlayerRoleController extends FOSRestController implements ClassResourceInt
     }
 
     private function affectOtherPlayer(Request $request, $gameId, $playerId, $action, $extraSerializationGroups = []) {
+        $canAction = 'can' . ucfirst($action);
+        if (!$this->getPlayerRole($gameId, $playerId)->$canAction()) {
+            throw new AccessDeniedHttpException("You don't have ability to $action");
+        }
+
         $content = json_decode($request->getContent(), true);
+        if ($playerId == $content['target']) {
+            throw new BadRequestHttpException("You can't $action to yourself.");
+        }
+
         $setDest = 'set' . ucfirst($action) . 'Destination';
         $addSrc  = 'add' . ucfirst($action) . 'Source';
         $player = $this->getPlayerRole($gameId, $playerId);

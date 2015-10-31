@@ -264,6 +264,27 @@ class PlayerRole
     }
 
     /**
+     * @return bool
+     */
+    public function canVote() {
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function canPeep() {
+        return $this->getRole()->getId() === 4; // è‚¢t
+    }
+
+    /**
+     * @return bool
+     */
+    public function canSwap() {
+        return $this->getRole()->getId() === 5; // ‰ö“
+    }
+
+    /**
      * Constructor
      */
     public function __construct()

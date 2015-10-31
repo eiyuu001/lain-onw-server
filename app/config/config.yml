@@ -84,3 +84,10 @@ fos_rest:
         default_format: json
     view:
         view_response_listener: force
+    exception:
+        codes:
+            'Symfony\Component\HttpKernel\Exception\BadRequestHttpException': 400
+            'Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException': 403
+        messages:
+            'Symfony\Component\HttpKernel\Exception\BadRequestHttpException': true
+            'Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException': true
