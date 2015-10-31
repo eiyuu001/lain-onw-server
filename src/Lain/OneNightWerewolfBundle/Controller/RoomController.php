@@ -19,6 +19,10 @@ class RoomController extends FOSRestController implements ClassResourceInterface
 {
     use EntityGettable;
 
+    public function cgetAction() {
+        return $this->getRooms();
+    }
+
     public function getAction($roomId)
     {
         $room = $this->getDoctrine()->getRepository('LainOneNightWerewolfBundle:Room')->find($roomId);
