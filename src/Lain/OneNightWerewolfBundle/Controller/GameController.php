@@ -20,11 +20,10 @@ class GameController extends FOSRestController implements ClassResourceInterface
         $view = $this->view($game, 200);
         $groups = ['Default'];
         if ($game->hasFinished()) {
-            array_push($groups, 'secret');
             array_push($groups, 'finished');
         }
         $view->setSerializationContext(
-            SerializationContext::create()->setGroups($groups)
+            SerializationContext::create()->setGroups($groups)->enableMaxDepthChecks()
         );
         return $view;
     }

@@ -24,7 +24,7 @@ class PlayerRoleController extends FOSRestController implements ClassResourceInt
         $view = $this->view($playerRole, 200);
         $groups = ['Default'];
         if (true) { // todo: トークンなどにより本人認証が出来る場合のみ'secret'を付加
-            array_push($groups, 'secret');
+            array_push($groups, 'private');
         }
         $view->setSerializationContext(
             SerializationContext::create()->setGroups($groups)
@@ -43,14 +43,14 @@ class PlayerRoleController extends FOSRestController implements ClassResourceInt
      * @Put("games/{gameId}/players/{playerId}/peep")
      */
     public function putPeepAction(Request $request, $gameId, $playerId) {
-        return $this->affectOtherPlayer($request, $gameId, $playerId, 'peep', ['secret']);
+        return $this->affectOtherPlayer($request, $gameId, $playerId, 'peep', ['private']);
     }
 
     /**
      * @Put("games/{gameId}/players/{playerId}/swap")
      */
     public function putSwapAction(Request $request, $gameId, $playerId) {
-        return $this->affectOtherPlayer($request, $gameId, $playerId, 'swap', ['secret']);
+        return $this->affectOtherPlayer($request, $gameId, $playerId, 'swap', ['private']);
     }
 
     private function affectOtherPlayer(Request $request, $gameId, $playerId, $action, $extraSerializationGroups = []) {

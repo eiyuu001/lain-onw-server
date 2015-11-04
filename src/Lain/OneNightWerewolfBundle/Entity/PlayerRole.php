@@ -44,7 +44,7 @@ class PlayerRole
     /**
      * @ORM\ManyToOne(targetEntity="Role")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=FALSE)
-     * @JMS\Groups({"secret"})
+     * @JMS\Groups({"private", "finished"})
      */
     private $role;
 
@@ -57,7 +57,8 @@ class PlayerRole
     /**
      * @ORM\ManyToOne(targetEntity="PlayerRole", inversedBy="voteSources")
      * @ORM\JoinColumn(name="vote_destination_id", referencedColumnName="id")
-     * @JMS\Groups({"secret"})
+     * @JMS\Groups({"finished"})
+     * @JMS\MaxDepth(3)
      */
     private $voteDestination;
 
@@ -70,7 +71,8 @@ class PlayerRole
     /**
      * @ORM\ManyToOne(targetEntity="PlayerRole", inversedBy="peepSources")
      * @ORM\JoinColumn(name="peep_destination_id", referencedColumnName="id")
-     * @JMS\Groups({"secret"})
+     * @JMS\Groups({"finished"})
+     * @JMS\MaxDepth(3)
      */
     private $peepDestination;
 
@@ -85,7 +87,8 @@ class PlayerRole
      *
      * @ORM\ManyToOne(targetEntity="PlayerRole", inversedBy="swapSources")
      * @ORM\JoinColumn(name="swap_destination_id", referencedColumnName="id")
-     * @JMS\Groups({"secret"})
+     * @JMS\Groups({"finished"})
+     * @JMS\MaxDepth(3)
      */
     private $swapDestination;
 
@@ -195,7 +198,7 @@ class PlayerRole
     /**
      * @JMS\VirtualProperty
      * @JMS\SerializedName("alive")
-     * @JMS\Groups({"secret"})
+     * @JMS\Groups({"finished"})
      *
      * @return bool | null
      */
@@ -216,7 +219,7 @@ class PlayerRole
     /**
      * @JMS\VirtualProperty
      * @JMS\SerializedName("won")
-     * @JMS\Groups({"secret"})
+     * @JMS\Groups({"finished"})
      *
      * @return bool | null
      */
@@ -240,7 +243,7 @@ class PlayerRole
     /**
      * @JMS\VirtualProperty
      * @JMS\SerializedName("reward")
-     * @JMS\Groups({"secret"})
+     * @JMS\Groups({"finished"})
      *
      * @return int | null
      */

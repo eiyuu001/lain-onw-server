@@ -41,6 +41,7 @@ class Player
 
     /**
      * @ORM\OneToMany(targetEntity="PlayerRole", mappedBy="player", cascade={"persist", "remove"})
+     * @JMS\Exclude
      */
     private $playerRoles;
 
