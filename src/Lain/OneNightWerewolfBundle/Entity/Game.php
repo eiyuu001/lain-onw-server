@@ -162,7 +162,7 @@ class Game
         $oneOrMoreWerewolfWasDead = Ginq::from($this->playerRoles)->filter(function(PlayerRole $playerRole) {
             return !$playerRole->isAlive();
         })->any(function(PlayerRole $deadPlayerRole) {
-            return $deadPlayerRole->getRole()->getId() == 1; // êlòT
+            return $deadPlayerRole->getActualRole()->getId() == 1; // êlòT
         });
         return $oneOrMoreWerewolfWasDead;
     }
@@ -174,7 +174,7 @@ class Game
         $oneOrMoreWerewolfWasDead = Ginq::from($this->playerRoles)->filter(function(PlayerRole $playerRole) {
             return !$playerRole->isAlive();
         })->any(function(PlayerRole $deadPlayerRole) {
-            return $deadPlayerRole->getRole()->getId() == 1; // êlòT
+            return $deadPlayerRole->getActualRole()->getId() == 1; // êlòT
         });
         return !$oneOrMoreWerewolfWasDead;
     }
@@ -183,7 +183,7 @@ class Game
         $oneOrMoreHangedManWasDead = Ginq::from($this->playerRoles)->filter(function(PlayerRole $playerRole) {
             return !$playerRole->isAlive();
         })->any(function(PlayerRole $deadPlayerRole) {
-            return $deadPlayerRole->getRole()->getId() == 6; // í›êl
+            return $deadPlayerRole->getActualRole()->getId() == 6; // í›êl
         });
         return $oneOrMoreHangedManWasDead;
     }

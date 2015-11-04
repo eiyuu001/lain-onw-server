@@ -257,7 +257,7 @@ class PlayerRole
         }
         /** @var RoleCount $roleCount */
         $roleCount = $this->game->getRegulation()->getRoleCounts()->filter(function(RoleCount $roleCount){
-            return $roleCount->getRole()->getId() == $this->getRole()->getId();
+            return $roleCount->getRole()->getId() == $this->getActualRole()->getId();
         })->first();
         $reward = $roleCount->getRewardAmount();
         if (!$this->isAlive()) {
