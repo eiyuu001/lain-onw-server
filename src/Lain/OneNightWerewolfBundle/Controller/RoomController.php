@@ -105,11 +105,13 @@ class RoomController extends FOSRestController implements ClassResourceInterface
     public function postRegulationAction(Request $request, $roomId) {
         $content = json_decode($request->getContent(), true);
         $regulation = new Regulation();
-        foreach($content['role_counts'] as $roleInfo) {
+        foreach($content['roleCounts'] as $roleInfo) {
             $roleCount = new RoleCount();
             $role = $this->getRole($roleInfo['id']);
             $roleCount->setRole($role);
             $roleCount->setCount($roleInfo['count']);
+			$roleCount->setRewardAmount($roleInfo['rewardAmount']);
+			$roleCount->setDeathDecrease($roleInfo['deathDecrease']);
             $roleCount->setRegulation($regulation);
             $regulation->addRoleCount($roleCount);
         }
