@@ -83,6 +83,11 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         }, $roles, $playerIds);
         return $res;
     }
+	
+	public function getPlayersAction($roomId) {
+		$room = $this->getRoom($roomId);
+		return $room->getPlayers();
+	}
 
     public function postPlayerAction(Request $request, $roomId) {
         $content = json_decode($request->getContent(), true);
