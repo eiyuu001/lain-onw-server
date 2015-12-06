@@ -27,6 +27,7 @@ class RoleConfig
     /**
      * @ORM\ManyToOne(targetEntity="Regulation", inversedBy="roleConfigs")
      * @ORM\JoinColumn(name="regulation_id", referencedColumnName="id", nullable=FALSE)
+     * @JMS\Exclude
      */
     private $regulation;
 
@@ -55,6 +56,15 @@ class RoleConfig
      */
     private $rewardForDead;
 
+    /**
+     * Constructor
+     *
+     * @param Regulation $regulation
+     */
+    public function __construct($regulation)
+    {
+        $this->setRegulation($regulation);
+    }
 
     /**
      * Get id

@@ -285,9 +285,12 @@ class GamePlayer
 
     /**
      * Constructor
+     *
+     * @param Game $game
      */
-    public function __construct()
+    public function __construct($game)
     {
+        $this->setGame($game);
         $this->voteSources = new \Doctrine\Common\Collections\ArrayCollection();
         $this->peepSources = new \Doctrine\Common\Collections\ArrayCollection();
         $this->swapSources = new \Doctrine\Common\Collections\ArrayCollection();

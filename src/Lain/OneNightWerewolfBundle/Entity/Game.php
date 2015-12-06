@@ -44,9 +44,12 @@ class Game
 
     /**
      * Constructor
+     * 
+     * @param Room
      */
-    public function __construct()
+    public function __construct($room)
     {
+        $this->setRoom($room);
         $this->gamePlayers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 

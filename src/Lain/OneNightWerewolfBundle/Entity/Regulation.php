@@ -47,9 +47,12 @@ class Regulation
 
     /**
      * Constructor
+     * 
+     * @param Room $room
      */
-    public function __construct()
+    public function __construct($room)
     {
+        $this->setRoom($room);
         $this->roleConfigs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 

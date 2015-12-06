@@ -25,41 +25,33 @@ class RoomController extends FOSRestController implements ClassResourceInterface
 
     public function getAction($roomId)
     {
-        $room = $this->getDoctrine()->getRepository('LainOneNightWerewolfBundle:Room')->find($roomId);
-        return $room;
+        return $this->getRoom($roomId);
     }
 
     public function postAction()
     {
         $room = new Room();
-        $objectManager = $this->getDoctrine()->getManager();
-        $objectManager->persist($room);
-        $objectManager->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($room);
+        $entityManager->flush();
         return $room;
     }
 
     public function postGameAction(Request $request, $roomId) {
         $content = json_decode($request->getContent(), true);
-        $regulation = $this->getRegulation($content['regulationId']);
-        $game = new Game();
+        $game = new Game($this->getRoom($roomId));
+        $regulation = $this->getRegulation($content['regulation']);
         $game->setRegulation($regulation);
-        $gamePlayers = $this->createGamePlayers(
-            $this->shuffleRoles($regulation),
-            $content['playerIds']
-        );
-        $objectManager = $this->getDoctrine()->getManager();
-        /** @var GamePlayer $gamePlayer */
-        foreach ($gamePlayers as $gamePlayer) {
-            $gamePlayer->setGame($game);
-            $objectManager->persist($gamePlayer->getPlayer());
-            $game->addGamePlayer($gamePlayer);
-            $objectManager->persist($game);
-        }
-        $room = $this->getRoom($roomId);
-        $game->setRoom($room);
-        $room->addGame($game);
-        $objectManager->persist($room);
-        $objectManager->flush();
+        $roles = Ginq::from($this->shuffleRoles($regulation))->take(count($content['players']))->toList();
+        $entityManager = $this->getDoctrine()->getManager();
+        array_map(function(Role $role, $playerId) use ($game, $entityManager) {
+            $gamePlayer = new GamePlayer($game);
+            $gamePlayer->setPlayer($this->getPlayer($playerId));
+            $gamePlayer->setRole($role);
+            $entityManager->persist($gamePlayer);
+        }, $roles, $content['players']);
+        $entityManager->persist($game);
+        $entityManager->flush();
         return $game;
     }
 
@@ -71,56 +63,36 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         return $roles;
     }
 
-    private function createGamePlayers($roles, $playerIds) {
-        $roles = Ginq::from($roles)->take(count($playerIds))->toList();
-        $res = array_map(function(Role $role, $playerId) {
-            $gamePlayer = new GamePlayer();
-            $player = $this->getPlayer($playerId);
-            $gamePlayer->setPlayer($player);
-            $gamePlayer->setRole($role);
-            $player->addGamePlayer($gamePlayer);
-            return $gamePlayer;
-        }, $roles, $playerIds);
-        return $res;
+    public function getPlayersAction($roomId) {
+        $room = $this->getRoom($roomId);
+        return $room->getPlayers();
     }
-	
-	public function getPlayersAction($roomId) {
-		$room = $this->getRoom($roomId);
-		return $room->getPlayers();
-	}
 
     public function postPlayerAction(Request $request, $roomId) {
         $content = json_decode($request->getContent(), true);
-        $objectManager = $this->getDoctrine()->getManager();
-        $room = $this->getRoom($roomId);
-        $player = new Player();
+        $entityManager = $this->getDoctrine()->getManager();
+        $player = new Player($this->getRoom($roomId));
         $player->setName($content['name']);
-        $player->setRoom($room);
-        $room->addPlayer($player);
-        $objectManager->persist($room);
-        $objectManager->flush();
+        $entityManager->persist($player);
+        $entityManager->flush();
         return $player;
     }
 
     public function postRegulationAction(Request $request, $roomId) {
         $content = json_decode($request->getContent(), true);
-        $regulation = new Regulation();
-        foreach($content['roleConfigs'] as $roleInfo) {
-            $roleConfig = new RoleConfig();
-            $role = $this->getRole($roleInfo['id']);
+        $entityManager = $this->getDoctrine()->getManager();
+        $regulation = new Regulation($this->getRoom($roomId));
+        foreach($content['roleConfigs'] as $roleConfigSrc) {
+            $roleConfig = new RoleConfig($regulation);
+            $role = $this->getRole($roleConfigSrc['id']);
             $roleConfig->setRole($role);
-            $roleConfig->setCount($roleInfo['count']);
-			$roleConfig->setRewardForSurvivor($roleInfo['rewardForSurvivor']);
-			$roleConfig->setRewardForDead($roleInfo['rewardForDead']);
-            $roleConfig->setRegulation($regulation);
-            $regulation->addRoleConfig($roleConfig);
+            $roleConfig->setCount($roleConfigSrc['count']);
+            $roleConfig->setRewardForSurvivor($roleConfigSrc['rewardForSurvivor']);
+            $roleConfig->setRewardForDead($roleConfigSrc['rewardForDead']);
+            $entityManager->persist($roleConfig);
         }
-        $room = $this->getRoom($roomId);
-        $regulation->setRoom($room);
-        $room->addRegulation($regulation);
-        $objectManager = $this->getDoctrine()->getManager();
-        $objectManager->persist($room);
-        $objectManager->flush();
+        $entityManager->persist($regulation);
+        $entityManager->flush();
         return $regulation;
     }
 
