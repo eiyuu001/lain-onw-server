@@ -110,8 +110,8 @@ class RoomController extends FOSRestController implements ClassResourceInterface
             $role = $this->getRole($roleInfo['id']);
             $roleCount->setRole($role);
             $roleCount->setCount($roleInfo['count']);
-			$roleCount->setRewardAmount($roleInfo['rewardAmount']);
-			$roleCount->setDeathDecrease($roleInfo['deathDecrease']);
+			$roleCount->setRewardForSurvivor($roleInfo['rewardForSurvivor']);
+			$roleCount->setRewardForDead($roleInfo['rewardForDead']);
             $roleCount->setRegulation($regulation);
             $regulation->addRoleCount($roleCount);
         }

@@ -44,16 +44,16 @@ class RoleCount
     /**
      * @var integer
      * @Assert\NotBlank()
-     * @ORM\Column(name="reward_amount", type="integer")
+     * @ORM\Column(name="reward_for_survivor", type="integer")
      */
-    private $rewardAmount;
+    private $rewardForSurvivor;
 
     /**
      * @var integer
      * @Assert\NotBlank()
-     * @ORM\Column(name="death_decrease", type="integer")
+     * @ORM\Column(name="reward_for_dead", type="integer")
      */
-    private $deathDecrease;
+    private $rewardForDead;
 
 
     /**
@@ -139,50 +139,50 @@ class RoleCount
     }
 
     /**
-     * Set rewardAmount
+     * Set rewardForSurvivor
      *
-     * @param integer $rewardAmount
+     * @param integer $rewardForSurvivor
      *
      * @return RoleCount
      */
-    public function setRewardAmount($rewardAmount)
+    public function setRewardForSurvivor($rewardForSurvivor)
     {
-        $this->rewardAmount = $rewardAmount;
+        $this->rewardForSurvivor = $rewardForSurvivor;
 
         return $this;
     }
 
     /**
-     * Get rewardAmount
+     * Get rewardForSurvivor
      *
      * @return integer
      */
-    public function getRewardAmount()
+    public function getRewardForSurvivor()
     {
-        return $this->rewardAmount;
+        return $this->rewardForSurvivor;
     }
 
     /**
-     * Set deathDecrease
+     * Set rewardForDead
      *
-     * @param integer $deathDecrease
+     * @param integer $rewardForDead
      *
      * @return RoleCount
      */
-    public function setDeathDecrease($deathDecrease)
+    public function setRewardForDead($rewardForDead)
     {
-        $this->deathDecrease = $deathDecrease;
+        $this->rewardForDead = $rewardForDead;
 
         return $this;
     }
 
     /**
-     * Get deathDecrease
+     * Get rewardForDead
      *
      * @return integer
      */
-    public function getDeathDecrease()
+    public function getRewardForDead()
     {
-        return $this->deathDecrease;
+        return $this->rewardForDead;
     }
 }

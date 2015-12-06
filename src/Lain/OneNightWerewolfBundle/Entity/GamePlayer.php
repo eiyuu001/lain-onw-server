@@ -259,11 +259,7 @@ class GamePlayer
         $roleCount = $this->game->getRegulation()->getRoleCounts()->filter(function(RoleCount $roleCount){
             return $roleCount->getRole()->getId() == $this->getActualRole()->getId();
         })->first();
-        $reward = $roleCount->getRewardAmount();
-        if (!$this->isAlive()) {
-            $reward -= $roleCount->getDeathDecrease();
-        }
-        return $reward;
+        return $this->isAlive() ? $roleCount->getRewardForSurvivor() : $roleCount->getRewardForDead();
     }
 
     /**
@@ -277,14 +273,14 @@ class GamePlayer
      * @return bool
      */
     public function canPeep() {
-        return $this->getRole()->getId() === 4; // è‚¢Žt
+        return $this->getRole()->getId() === 4; // ï¿½è‚¢ï¿½t
     }
 
     /**
      * @return bool
      */
     public function canSwap() {
-        return $this->getRole()->getId() === 5; // ‰ö“
+        return $this->getRole()->getId() === 5; // ï¿½ï¿½ï¿½ï¿½
     }
 
     /**
