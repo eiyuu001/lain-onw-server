@@ -255,11 +255,11 @@ class GamePlayer
         if (!$this->isWon()) {
             return 0;
         }
-        /** @var RoleCount $roleCount */
-        $roleCount = $this->game->getRegulation()->getRoleCounts()->filter(function(RoleCount $roleCount){
-            return $roleCount->getRole()->getId() == $this->getActualRole()->getId();
+        /** @var RoleConfig $roleConfig */
+        $roleConfig = $this->game->getRegulation()->getRoleConfigs()->filter(function(RoleConfig $roleConfig){
+            return $roleConfig->getRole()->getId() == $this->getActualRole()->getId();
         })->first();
-        return $this->isAlive() ? $roleCount->getRewardForSurvivor() : $roleCount->getRewardForDead();
+        return $this->isAlive() ? $roleConfig->getRewardForSurvivor() : $roleConfig->getRewardForDead();
     }
 
     /**

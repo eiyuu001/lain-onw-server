@@ -11,7 +11,7 @@ use Lain\OneNightWerewolfBundle\Entity\Player;
 use Lain\OneNightWerewolfBundle\Entity\GamePlayer;
 use Lain\OneNightWerewolfBundle\Entity\Regulation;
 use Lain\OneNightWerewolfBundle\Entity\Role;
-use Lain\OneNightWerewolfBundle\Entity\RoleCount;
+use Lain\OneNightWerewolfBundle\Entity\RoleConfig;
 use Lain\OneNightWerewolfBundle\Entity\Room;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -64,8 +64,8 @@ class RoomController extends FOSRestController implements ClassResourceInterface
     }
 
     private function shuffleRoles(Regulation $regulation) {
-        $roles = Ginq::from($regulation->getRoleCounts())->flatMap(function(RoleCount $roleCount){
-            return Ginq::repeat($roleCount->getRole(), $roleCount->getCount());
+        $roles = Ginq::from($regulation->getRoleConfigs())->flatMap(function(RoleConfig $roleConfig){
+            return Ginq::repeat($roleConfig->getRole(), $roleConfig->getCount());
         })->toList();
         shuffle($roles);
         return $roles;
@@ -105,15 +105,15 @@ class RoomController extends FOSRestController implements ClassResourceInterface
     public function postRegulationAction(Request $request, $roomId) {
         $content = json_decode($request->getContent(), true);
         $regulation = new Regulation();
-        foreach($content['roleCounts'] as $roleInfo) {
-            $roleCount = new RoleCount();
+        foreach($content['roleConfigs'] as $roleInfo) {
+            $roleConfig = new RoleConfig();
             $role = $this->getRole($roleInfo['id']);
-            $roleCount->setRole($role);
-            $roleCount->setCount($roleInfo['count']);
-			$roleCount->setRewardForSurvivor($roleInfo['rewardForSurvivor']);
-			$roleCount->setRewardForDead($roleInfo['rewardForDead']);
-            $roleCount->setRegulation($regulation);
-            $regulation->addRoleCount($roleCount);
+            $roleConfig->setRole($role);
+            $roleConfig->setCount($roleInfo['count']);
+			$roleConfig->setRewardForSurvivor($roleInfo['rewardForSurvivor']);
+			$roleConfig->setRewardForDead($roleInfo['rewardForDead']);
+            $roleConfig->setRegulation($regulation);
+            $regulation->addRoleConfig($roleConfig);
         }
         $room = $this->getRoom($roomId);
         $regulation->setRoom($room);

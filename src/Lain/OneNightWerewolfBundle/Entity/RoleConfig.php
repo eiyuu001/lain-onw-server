@@ -7,12 +7,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * RoleCount
+ * RoleConfig
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class RoleCount
+class RoleConfig
 {
     /**
      * @var integer
@@ -25,7 +25,7 @@ class RoleCount
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Regulation", inversedBy="role_counts")
+     * @ORM\ManyToOne(targetEntity="Regulation", inversedBy="roleConfigs")
      * @ORM\JoinColumn(name="regulation_id", referencedColumnName="id", nullable=FALSE)
      */
     private $regulation;
@@ -71,7 +71,7 @@ class RoleCount
      *
      * @param integer $count
      *
-     * @return RoleCount
+     * @return RoleConfig
      */
     public function setCount($count)
     {
@@ -95,7 +95,7 @@ class RoleCount
      *
      * @param \Lain\OneNightWerewolfBundle\Entity\Regulation $regulation
      *
-     * @return RoleCount
+     * @return RoleConfig
      */
     public function setRegulation(\Lain\OneNightWerewolfBundle\Entity\Regulation $regulation)
     {
@@ -119,7 +119,7 @@ class RoleCount
      *
      * @param \Lain\OneNightWerewolfBundle\Entity\Role $role
      *
-     * @return RoleCount
+     * @return RoleConfig
      */
     public function setRole(\Lain\OneNightWerewolfBundle\Entity\Role $role)
     {
@@ -143,7 +143,7 @@ class RoleCount
      *
      * @param integer $rewardForSurvivor
      *
-     * @return RoleCount
+     * @return RoleConfig
      */
     public function setRewardForSurvivor($rewardForSurvivor)
     {
@@ -167,7 +167,7 @@ class RoleCount
      *
      * @param integer $rewardForDead
      *
-     * @return RoleCount
+     * @return RoleConfig
      */
     public function setRewardForDead($rewardForDead)
     {

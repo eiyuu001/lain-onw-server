@@ -24,9 +24,9 @@ class Regulation
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="RoleCount", mappedBy="regulation", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="RoleConfig", mappedBy="regulation", cascade={"persist", "remove"})
      */
-    private $roleCounts;
+    private $roleConfigs;
 
     /**
      * @ORM\ManyToOne(targetEntity="Room", inversedBy="Regulations")
@@ -50,41 +50,41 @@ class Regulation
      */
     public function __construct()
     {
-        $this->roleCounts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->roleConfigs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Add roleCount
+     * Add roleConfig
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\RoleCount $roleCount
+     * @param \Lain\OneNightWerewolfBundle\Entity\RoleConfig $roleConfig
      *
      * @return Regulation
      */
-    public function addRoleCount(\Lain\OneNightWerewolfBundle\Entity\RoleCount $roleCount)
+    public function addRoleConfig(\Lain\OneNightWerewolfBundle\Entity\RoleConfig $roleConfig)
     {
-        $this->roleCounts[] = $roleCount;
+        $this->roleConfigs[] = $roleConfig;
 
         return $this;
     }
 
     /**
-     * Remove roleCount
+     * Remove roleConfig
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\RoleCount $roleCount
+     * @param \Lain\OneNightWerewolfBundle\Entity\RoleConfig $roleConfig
      */
-    public function removeRoleCount(\Lain\OneNightWerewolfBundle\Entity\RoleCount $roleCount)
+    public function removeRoleConfig(\Lain\OneNightWerewolfBundle\Entity\RoleConfig $roleConfig)
     {
-        $this->roleCounts->removeElement($roleCount);
+        $this->roleConfigs->removeElement($roleConfig);
     }
 
     /**
-     * Get roleCounts
+     * Get roleConfigs
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getRoleCounts()
+    public function getRoleConfigs()
     {
-        return $this->roleCounts;
+        return $this->roleConfigs;
     }
 
     /**
