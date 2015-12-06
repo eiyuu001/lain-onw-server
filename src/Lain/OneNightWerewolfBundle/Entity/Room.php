@@ -15,12 +15,9 @@ use JMS\Serializer\Annotation as JMS;
 class Room
 {
     /**
-     * @var string
-     *
-     * @ORM\Column(name="id", type="string")
+     * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="CUSTOM")
-     * @ORM\CustomIdGenerator(class="Lain\OneNightWerewolfBundle\Utils\Entity\Id\BasicGenerator")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -55,7 +52,7 @@ class Room
     /**
      * Get id
      *
-     * @return string
+     * @return integer
      */
     public function getId()
     {
