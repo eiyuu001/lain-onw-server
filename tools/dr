@@ -1,6 +1,0 @@
-#!/bin/sh
-CONSOLE=$(dirname $0)/../app/console
-mysql -uroot -e 'DROP DATABASE IF EXISTS symfony'
-php $CONSOLE doctrine:database:create
-php $CONSOLE doctrine:schema:create
-php $CONSOLE doctrine:fixtures:load -n
