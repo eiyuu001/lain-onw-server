@@ -10,7 +10,6 @@ use Lain\OneNightWerewolfBundle\Entity\Role;
 use Lain\OneNightWerewolfBundle\Entity\RoleConfig;
 use Lain\OneNightWerewolfBundle\Entity\RoleGroup;
 use Lain\OneNightWerewolfBundle\Entity\Room;
-use Lain\OneNightWerewolfBundle\Entity\Vote;
 
 trait EntityGettable {
 
@@ -91,14 +90,6 @@ trait EntityGettable {
     }
 
     /**
-     * @param $id
-     * @return Vote
-     */
-    protected function getVote($id) {
-        return $this->getEntity('Vote', $id);
-    }
-
-    /**
      * @param $name
      * @return array
      */
@@ -162,13 +153,6 @@ trait EntityGettable {
      */
     protected function getRooms() {
         return $this->getEntities('Room');
-    }
-
-    /**
-     * @return array
-     */
-    protected function getVotes() {
-        return $this->getEntities('Vote');
     }
 
 }
