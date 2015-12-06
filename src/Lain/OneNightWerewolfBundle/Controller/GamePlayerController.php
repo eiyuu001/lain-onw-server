@@ -15,13 +15,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 /**
  * @RouteResource("Player")
  */
-class PlayerRoleController extends FOSRestController implements ClassResourceInterface
+class GamePlayerController extends FOSRestController implements ClassResourceInterface
 {
     use EntityGettable;
 
     public function getAction($gameId, $playerId) {
-        $playerRole = $this->getPlayerRole($gameId, $playerId);
-        $view = $this->view($playerRole, 200);
+        $gamePlayer = $this->getGamePlayer($gameId, $playerId);
+        $view = $this->view($gamePlayer, 200);
         $groups = ['Default'];
         if (true) { // todo: トークンなどにより本人認証が出来る場合のみ'secret'を付加
             array_push($groups, 'private');
@@ -55,7 +55,7 @@ class PlayerRoleController extends FOSRestController implements ClassResourceInt
 
     private function affectOtherPlayer(Request $request, $gameId, $playerId, $action, $extraSerializationGroups = []) {
         $canAction = 'can' . ucfirst($action);
-        if (!$this->getPlayerRole($gameId, $playerId)->$canAction()) {
+        if (!$this->getGamePlayer($gameId, $playerId)->$canAction()) {
             throw new AccessDeniedHttpException("You don't have ability to $action");
         }
 
@@ -66,8 +66,8 @@ class PlayerRoleController extends FOSRestController implements ClassResourceInt
 
         $setDest = 'set' . ucfirst($action) . 'Destination';
         $addSrc  = 'add' . ucfirst($action) . 'Source';
-        $player = $this->getPlayerRole($gameId, $playerId);
-        $target = $this->getPlayerRole($gameId, $content['target']);
+        $player = $this->getGamePlayer($gameId, $playerId);
+        $target = $this->getGamePlayer($gameId, $content['target']);
         $player->$setDest($target);
         $target->$addSrc($player);
 

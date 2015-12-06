@@ -8,7 +8,7 @@ use Ginq\Ginq;
 use Lain\OneNightWerewolfBundle\Controller\Traits\EntityGettable;
 use Lain\OneNightWerewolfBundle\Entity\Game;
 use Lain\OneNightWerewolfBundle\Entity\Player;
-use Lain\OneNightWerewolfBundle\Entity\PlayerRole;
+use Lain\OneNightWerewolfBundle\Entity\GamePlayer;
 use Lain\OneNightWerewolfBundle\Entity\Regulation;
 use Lain\OneNightWerewolfBundle\Entity\Role;
 use Lain\OneNightWerewolfBundle\Entity\RoleCount;
@@ -43,16 +43,16 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         $regulation = $this->getRegulation($content['regulationId']);
         $game = new Game();
         $game->setRegulation($regulation);
-        $playerRoles = $this->createPlayerRoles(
+        $gamePlayers = $this->createGamePlayers(
             $this->shuffleRoles($regulation),
             $content['playerIds']
         );
         $objectManager = $this->getDoctrine()->getManager();
-        /** @var PlayerRole $playerRole */
-        foreach ($playerRoles as $playerRole) {
-            $playerRole->setGame($game);
-            $objectManager->persist($playerRole->getPlayer());
-            $game->addPlayerRole($playerRole);
+        /** @var GamePlayer $gamePlayer */
+        foreach ($gamePlayers as $gamePlayer) {
+            $gamePlayer->setGame($game);
+            $objectManager->persist($gamePlayer->getPlayer());
+            $game->addGamePlayer($gamePlayer);
             $objectManager->persist($game);
         }
         $room = $this->getRoom($roomId);
@@ -71,15 +71,15 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         return $roles;
     }
 
-    private function createPlayerRoles($roles, $playerIds) {
+    private function createGamePlayers($roles, $playerIds) {
         $roles = Ginq::from($roles)->take(count($playerIds))->toList();
         $res = array_map(function(Role $role, $playerId) {
-            $playerRole = new PlayerRole();
+            $gamePlayer = new GamePlayer();
             $player = $this->getPlayer($playerId);
-            $playerRole->setPlayer($player);
-            $playerRole->setRole($role);
-            $player->addPlayerRole($playerRole);
-            return $playerRole;
+            $gamePlayer->setPlayer($player);
+            $gamePlayer->setRole($role);
+            $player->addGamePlayer($gamePlayer);
+            return $gamePlayer;
         }, $roles, $playerIds);
         return $res;
     }

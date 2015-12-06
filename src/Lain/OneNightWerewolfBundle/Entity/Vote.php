@@ -25,7 +25,7 @@ class Vote
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PlayerRole")
+     * @ORM\ManyToOne(targetEntity="GamePlayer")
      * @ORM\JoinColumn(name="dst_player_role_id", referencedColumnName="id", nullable=FALSE)
      */
     private $destination;
@@ -44,11 +44,11 @@ class Vote
     /**
      * Set destination
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $destination
+     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $destination
      *
      * @return Vote
      */
-    public function setDestination(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $destination)
+    public function setDestination(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $destination)
     {
         $this->destination = $destination;
 
@@ -58,7 +58,7 @@ class Vote
     /**
      * Get destination
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\PlayerRole
+     * @return \Lain\OneNightWerewolfBundle\Entity\GamePlayer
      */
     public function getDestination()
     {

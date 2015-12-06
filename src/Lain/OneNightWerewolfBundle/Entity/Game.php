@@ -38,16 +38,16 @@ class Game
     private $regulation;
 
     /**
-     * @ORM\OneToMany(targetEntity="PlayerRole", mappedBy="game", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="GamePlayer", mappedBy="game", cascade={"persist", "remove"})
      */
-    private $playerRoles;
+    private $gamePlayers;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->playerRoles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->gamePlayers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -109,37 +109,37 @@ class Game
     }
 
     /**
-     * Add playerRole
+     * Add gamePlayer
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $playerRole
+     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $gamePlayer
      *
      * @return Game
      */
-    public function addPlayerRole(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $playerRole)
+    public function addGamePlayer(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $gamePlayer)
     {
-        $this->playerRoles[] = $playerRole;
+        $this->gamePlayers[] = $gamePlayer;
 
         return $this;
     }
 
     /**
-     * Remove playerRole
+     * Remove gamePlayer
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $playerRole
+     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $gamePlayer
      */
-    public function removePlayerRole(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $playerRole)
+    public function removeGamePlayer(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $gamePlayer)
     {
-        $this->playerRoles->removeElement($playerRole);
+        $this->gamePlayers->removeElement($gamePlayer);
     }
 
     /**
-     * Get playerRoles
+     * Get gamePlayers
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPlayerRoles()
+    public function getGamePlayers()
     {
-        return $this->playerRoles;
+        return $this->gamePlayers;
     }
 
     /**
@@ -150,8 +150,8 @@ class Game
      */
     public function hasFinished()
     {
-        return Ginq::from($this->playerRoles)->all(function(PlayerRole $playerRole) {
-            return $playerRole->getVoteDestination() !== null;
+        return Ginq::from($this->gamePlayers)->all(function(GamePlayer $gamePlayer) {
+            return $gamePlayer->getVoteDestination() !== null;
         });
     }
 
@@ -159,10 +159,10 @@ class Game
         if ($this->isHangedManWon()) {
             return false; // í›êlÇÃèüóòÇÕÇ∑Ç◊ÇƒÇ…óDêÊÇ∑ÇÈ
         }
-        $oneOrMoreWerewolfWasDead = Ginq::from($this->playerRoles)->filter(function(PlayerRole $playerRole) {
-            return !$playerRole->isAlive();
-        })->any(function(PlayerRole $deadPlayerRole) {
-            return $deadPlayerRole->getActualRole()->getId() == 1; // êlòT
+        $oneOrMoreWerewolfWasDead = Ginq::from($this->gamePlayers)->filter(function(GamePlayer $gamePlayer) {
+            return !$gamePlayer->isAlive();
+        })->any(function(GamePlayer $deadGamePlayer) {
+            return $deadGamePlayer->getActualRole()->getId() == 1; // êlòT
         });
         return $oneOrMoreWerewolfWasDead;
     }
@@ -171,19 +171,19 @@ class Game
         if ($this->isHangedManWon()) {
             return false; // í›êlÇÃèüóòÇÕÇ∑Ç◊ÇƒÇ…óDêÊÇ∑ÇÈ
         }
-        $oneOrMoreWerewolfWasDead = Ginq::from($this->playerRoles)->filter(function(PlayerRole $playerRole) {
-            return !$playerRole->isAlive();
-        })->any(function(PlayerRole $deadPlayerRole) {
-            return $deadPlayerRole->getActualRole()->getId() == 1; // êlòT
+        $oneOrMoreWerewolfWasDead = Ginq::from($this->gamePlayers)->filter(function(GamePlayer $gamePlayer) {
+            return !$gamePlayer->isAlive();
+        })->any(function(GamePlayer $deadGamePlayer) {
+            return $deadGamePlayer->getActualRole()->getId() == 1; // êlòT
         });
         return !$oneOrMoreWerewolfWasDead;
     }
 
     public function isHangedManWon() {
-        $oneOrMoreHangedManWasDead = Ginq::from($this->playerRoles)->filter(function(PlayerRole $playerRole) {
-            return !$playerRole->isAlive();
-        })->any(function(PlayerRole $deadPlayerRole) {
-            return $deadPlayerRole->getActualRole()->getId() == 6; // í›êl
+        $oneOrMoreHangedManWasDead = Ginq::from($this->gamePlayers)->filter(function(GamePlayer $gamePlayer) {
+            return !$gamePlayer->isAlive();
+        })->any(function(GamePlayer $deadGamePlayer) {
+            return $deadGamePlayer->getActualRole()->getId() == 6; // í›êl
         });
         return $oneOrMoreHangedManWasDead;
     }

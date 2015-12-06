@@ -4,7 +4,7 @@ namespace Lain\OneNightWerewolfBundle\Controller\Traits;
 
 use Lain\OneNightWerewolfBundle\Entity\Game;
 use Lain\OneNightWerewolfBundle\Entity\Player;
-use Lain\OneNightWerewolfBundle\Entity\PlayerRole;
+use Lain\OneNightWerewolfBundle\Entity\GamePlayer;
 use Lain\OneNightWerewolfBundle\Entity\Regulation;
 use Lain\OneNightWerewolfBundle\Entity\Role;
 use Lain\OneNightWerewolfBundle\Entity\RoleCount;
@@ -39,11 +39,11 @@ trait EntityGettable {
     /**
      * @param $gameId
      * @param $playerId
-     * @return PlayerRole
+     * @return GamePlayer
      */
-    protected function getPlayerRole($gameId, $playerId) {
+    protected function getGamePlayer($gameId, $playerId) {
         return $this->getDoctrine()
-            ->getRepository('LainOneNightWerewolfBundle:PlayerRole')
+            ->getRepository('LainOneNightWerewolfBundle:GamePlayer')
             ->findOneBy([
                 'game' => $gameId,
                 'player' => $playerId,
@@ -125,8 +125,8 @@ trait EntityGettable {
     /**
      * @return array
      */
-    protected function getPlayerRoles() {
-        return $this->getEntities('PlayerRole');
+    protected function getGamePlayers() {
+        return $this->getEntities('GamePlayer');
     }
 
     /**

@@ -2,7 +2,7 @@ games:
     type:     rest
     resource: Lain\OneNightWerewolfBundle\Controller\GameController
 
-player_roles:
+game_players:
     type:     rest
     parent:   games
-    resource: Lain\OneNightWerewolfBundle\Controller\PlayerRoleController
+    resource: Lain\OneNightWerewolfBundle\Controller\GamePlayerController

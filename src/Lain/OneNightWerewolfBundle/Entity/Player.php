@@ -40,10 +40,10 @@ class Player
     private $room;
 
     /**
-     * @ORM\OneToMany(targetEntity="PlayerRole", mappedBy="player", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="GamePlayer", mappedBy="player", cascade={"persist", "remove"})
      * @JMS\Exclude
      */
-    private $playerRoles;
+    private $gamePlayers;
 
     /**
      * Get id
@@ -110,8 +110,8 @@ class Player
      * @return int
      */
     public function computeScore() {
-        return Ginq::from($this->getPlayerRoles())->sum(function(PlayerRole $playerRole) {
-            return $playerRole->computeReward();
+        return Ginq::from($this->getGamePlayers())->sum(function(GamePlayer $gamePlayer) {
+            return $gamePlayer->computeReward();
         });
     }
 
@@ -120,40 +120,40 @@ class Player
      */
     public function __construct()
     {
-        $this->playerRoles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->gamePlayers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Add playerRole
+     * Add gamePlayer
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $playerRole
+     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $gamePlayer
      *
      * @return Player
      */
-    public function addPlayerRole(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $playerRole)
+    public function addGamePlayer(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $gamePlayer)
     {
-        $this->playerRoles[] = $playerRole;
+        $this->gamePlayers[] = $gamePlayer;
 
         return $this;
     }
 
     /**
-     * Remove playerRole
+     * Remove gamePlayer
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $playerRole
+     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $gamePlayer
      */
-    public function removePlayerRole(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $playerRole)
+    public function removeGamePlayer(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $gamePlayer)
     {
-        $this->playerRoles->removeElement($playerRole);
+        $this->gamePlayers->removeElement($gamePlayer);
     }
 
     /**
-     * Get playerRoles
+     * Get gamePlayers
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPlayerRoles()
+    public function getGamePlayers()
     {
-        return $this->playerRoles;
+        return $this->gamePlayers;
     }
 }

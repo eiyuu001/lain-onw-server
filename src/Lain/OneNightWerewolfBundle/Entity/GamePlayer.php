@@ -9,12 +9,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * PlayerRole
+ * GamePlayer
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class PlayerRole
+class GamePlayer
 {
     /**
      * @var integer
@@ -29,14 +29,14 @@ class PlayerRole
     /**
      * @var Game
      *
-     * @ORM\ManyToOne(targetEntity="Game", inversedBy="playerRoles")
+     * @ORM\ManyToOne(targetEntity="Game", inversedBy="gamePlayers")
      * @ORM\JoinColumn(name="game_id", referencedColumnName="id", nullable=FALSE)
      * @JMS\Exclude
      */
     private $game;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Player", inversedBy="playerRoles")
+     * @ORM\ManyToOne(targetEntity="Player", inversedBy="gamePlayers")
      * @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=FALSE)
      */
     private $player;
@@ -49,13 +49,13 @@ class PlayerRole
     private $role;
 
     /**
-     * @ORM\OneToMany(targetEntity="PlayerRole", mappedBy="voteDestination", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="GamePlayer", mappedBy="voteDestination", cascade={"persist", "remove"})
      * @JMS\Exclude
      */
     private $voteSources;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PlayerRole", inversedBy="voteSources")
+     * @ORM\ManyToOne(targetEntity="GamePlayer", inversedBy="voteSources")
      * @ORM\JoinColumn(name="vote_destination_id", referencedColumnName="id")
      * @JMS\Groups({"finished"})
      * @JMS\MaxDepth(3)
@@ -63,13 +63,13 @@ class PlayerRole
     private $voteDestination;
 
     /**
-     * @ORM\OneToMany(targetEntity="PlayerRole", mappedBy="peepDestination", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="GamePlayer", mappedBy="peepDestination", cascade={"persist", "remove"})
      * @JMS\Exclude
      */
     private $peepSources;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PlayerRole", inversedBy="peepSources")
+     * @ORM\ManyToOne(targetEntity="GamePlayer", inversedBy="peepSources")
      * @ORM\JoinColumn(name="peep_destination_id", referencedColumnName="id")
      * @JMS\Groups({"finished"})
      * @JMS\MaxDepth(3)
@@ -77,15 +77,15 @@ class PlayerRole
     private $peepDestination;
 
     /**
-     * @ORM\OneToMany(targetEntity="PlayerRole", mappedBy="swapDestination", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="GamePlayer", mappedBy="swapDestination", cascade={"persist", "remove"})
      * @JMS\Exclude
      */
     private $swapSources;
 
     /**
-     * @var PlayerRole
+     * @var GamePlayer
      *
-     * @ORM\ManyToOne(targetEntity="PlayerRole", inversedBy="swapSources")
+     * @ORM\ManyToOne(targetEntity="GamePlayer", inversedBy="swapSources")
      * @ORM\JoinColumn(name="swap_destination_id", referencedColumnName="id")
      * @JMS\Groups({"finished"})
      * @JMS\MaxDepth(3)
@@ -107,7 +107,7 @@ class PlayerRole
      *
      * @param \Lain\OneNightWerewolfBundle\Entity\Game $game
      *
-     * @return PlayerRole
+     * @return GamePlayer
      */
     public function setGame(\Lain\OneNightWerewolfBundle\Entity\Game $game)
     {
@@ -131,7 +131,7 @@ class PlayerRole
      *
      * @param \Lain\OneNightWerewolfBundle\Entity\Player $player
      *
-     * @return PlayerRole
+     * @return GamePlayer
      */
     public function setPlayer(\Lain\OneNightWerewolfBundle\Entity\Player $player)
     {
@@ -155,7 +155,7 @@ class PlayerRole
      *
      * @param \Lain\OneNightWerewolfBundle\Entity\Role $role
      *
-     * @return PlayerRole
+     * @return GamePlayer
      */
     public function setRole(\Lain\OneNightWerewolfBundle\Entity\Role $role)
     {
@@ -208,8 +208,8 @@ class PlayerRole
             return true;
         }
         $myVotedCount = $this->voteSources->count();
-        $players = $this->game->getPlayerRoles();
-        $maxVotedCount = Ginq::from($players)->map(function(PlayerRole $player) {
+        $players = $this->game->getGamePlayers();
+        $maxVotedCount = Ginq::from($players)->map(function(GamePlayer $player) {
             return $player->getVoteSources()->count();
         })->max();
 
@@ -300,11 +300,11 @@ class PlayerRole
     /**
      * Add voteSource
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteSource
+     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $voteSource
      *
-     * @return PlayerRole
+     * @return GamePlayer
      */
-    public function addVoteSource(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteSource)
+    public function addVoteSource(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $voteSource)
     {
         $this->voteSources[] = $voteSource;
 
@@ -314,9 +314,9 @@ class PlayerRole
     /**
      * Remove voteSource
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteSource
+     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $voteSource
      */
-    public function removeVoteSource(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteSource)
+    public function removeVoteSource(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $voteSource)
     {
         $this->voteSources->removeElement($voteSource);
     }
@@ -334,11 +334,11 @@ class PlayerRole
     /**
      * Set voteDestination
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteDestination
+     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $voteDestination
      *
-     * @return PlayerRole
+     * @return GamePlayer
      */
-    public function setVoteDestination(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $voteDestination = null)
+    public function setVoteDestination(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $voteDestination = null)
     {
         $this->voteDestination = $voteDestination;
 
@@ -348,7 +348,7 @@ class PlayerRole
     /**
      * Get voteDestination
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\PlayerRole
+     * @return \Lain\OneNightWerewolfBundle\Entity\GamePlayer
      */
     public function getVoteDestination()
     {
@@ -358,11 +358,11 @@ class PlayerRole
     /**
      * Add peepSource
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $peepSource
+     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $peepSource
      *
-     * @return PlayerRole
+     * @return GamePlayer
      */
-    public function addPeepSource(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $peepSource)
+    public function addPeepSource(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $peepSource)
     {
         $this->peepSources[] = $peepSource;
 
@@ -372,9 +372,9 @@ class PlayerRole
     /**
      * Remove peepSource
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $peepSource
+     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $peepSource
      */
-    public function removePeepSource(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $peepSource)
+    public function removePeepSource(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $peepSource)
     {
         $this->peepSources->removeElement($peepSource);
     }
@@ -392,11 +392,11 @@ class PlayerRole
     /**
      * Set peepDestination
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $peepDestination
+     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $peepDestination
      *
-     * @return PlayerRole
+     * @return GamePlayer
      */
-    public function setPeepDestination(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $peepDestination = null)
+    public function setPeepDestination(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $peepDestination = null)
     {
         $this->peepDestination = $peepDestination;
 
@@ -406,7 +406,7 @@ class PlayerRole
     /**
      * Get peepDestination
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\PlayerRole
+     * @return \Lain\OneNightWerewolfBundle\Entity\GamePlayer
      */
     public function getPeepDestination()
     {
@@ -416,11 +416,11 @@ class PlayerRole
     /**
      * Add swapSource
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $swapSource
+     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $swapSource
      *
-     * @return PlayerRole
+     * @return GamePlayer
      */
-    public function addSwapSource(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $swapSource)
+    public function addSwapSource(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $swapSource)
     {
         $this->swapSources[] = $swapSource;
 
@@ -430,9 +430,9 @@ class PlayerRole
     /**
      * Remove swapSource
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $swapSource
+     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $swapSource
      */
-    public function removeSwapSource(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $swapSource)
+    public function removeSwapSource(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $swapSource)
     {
         $this->swapSources->removeElement($swapSource);
     }
@@ -450,11 +450,11 @@ class PlayerRole
     /**
      * Set swapDestination
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\PlayerRole $swapDestination
+     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $swapDestination
      *
-     * @return PlayerRole
+     * @return GamePlayer
      */
-    public function setSwapDestination(\Lain\OneNightWerewolfBundle\Entity\PlayerRole $swapDestination = null)
+    public function setSwapDestination(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $swapDestination = null)
     {
         $this->swapDestination = $swapDestination;
 
@@ -464,7 +464,7 @@ class PlayerRole
     /**
      * Get swapDestination
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\PlayerRole
+     * @return \Lain\OneNightWerewolfBundle\Entity\GamePlayer
      */
     public function getSwapDestination()
     {
