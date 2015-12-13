@@ -91,3 +91,5 @@ fos_rest:
         messages:
             'Symfony\Component\HttpKernel\Exception\BadRequestHttpException': true
             'Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException': true
+
+nelmio_api_doc: ~
