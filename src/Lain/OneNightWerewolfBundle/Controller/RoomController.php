@@ -13,6 +13,7 @@ use Lain\OneNightWerewolfBundle\Entity\Regulation;
 use Lain\OneNightWerewolfBundle\Entity\Role;
 use Lain\OneNightWerewolfBundle\Entity\RoleConfig;
 use Lain\OneNightWerewolfBundle\Entity\Room;
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\Request;
 
 class RoomController extends FOSRestController implements ClassResourceInterface
@@ -53,7 +54,9 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         $entityManager->persist($game);
         $entityManager->flush();
         $entityManager->refresh($game);
-        return $game;
+        $view = $this->view($game, 200);
+        $view->setSerializationContext(SerializationContext::create()->setGroups(['Default']));
+        return $view;
     }
 
     private function shuffleRoles(Regulation $regulation) {
