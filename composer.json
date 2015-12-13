@@ -21,7 +21,8 @@
         "jms/serializer-bundle": "1.0.*",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "ginq/ginq": "~0.2.3",
-        "phpunit/phpunit": "4.8.*"
+        "phpunit/phpunit": "4.8.*",
+        "nelmio/api-doc-bundle": "^2.11"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
