@@ -57,8 +57,7 @@ class GamePlayer
     /**
      * @ORM\ManyToOne(targetEntity="GamePlayer", inversedBy="voteSources")
      * @ORM\JoinColumn(name="vote_destination_id", referencedColumnName="id")
-     * @JMS\Groups({"finished"})
-     * @JMS\MaxDepth(3)
+     * @JMS\Exclude
      */
     private $voteDestination;
 
@@ -71,8 +70,7 @@ class GamePlayer
     /**
      * @ORM\ManyToOne(targetEntity="GamePlayer", inversedBy="peepSources")
      * @ORM\JoinColumn(name="peep_destination_id", referencedColumnName="id")
-     * @JMS\Groups({"finished"})
-     * @JMS\MaxDepth(3)
+     * @JMS\Exclude
      */
     private $peepDestination;
 
@@ -87,8 +85,7 @@ class GamePlayer
      *
      * @ORM\ManyToOne(targetEntity="GamePlayer", inversedBy="swapSources")
      * @ORM\JoinColumn(name="swap_destination_id", referencedColumnName="id")
-     * @JMS\Groups({"finished"})
-     * @JMS\MaxDepth(3)
+     * @JMS\Exclude
      */
     private $swapDestination;
 
@@ -468,5 +465,39 @@ class GamePlayer
     public function getSwapDestination()
     {
         return $this->swapDestination;
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("vote_destination")
+     * @JMS\Groups({"finished"})
+     *
+     * @return array
+     */
+    public function getVoteDestinationsSummary() {
+        return is_null($this->voteDestination) ? null : $this->voteDestination->getPlayer();
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("peep_destination")
+     * @JMS\Groups({"finished"})
+     *
+     * @return array
+     */
+    public function getPeepDestinationsSummary() {
+        file_put_contents('/vagrant/log', gettype($this->peepDestination), FILE_APPEND);
+        return is_null($this->peepDestination) ? null : $this->peepDestination->getPlayer();
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("swap_destination")
+     * @JMS\Groups({"finished"})
+     *
+     * @return array
+     */
+    public function getSwapDestinationsSummary() {
+        return is_null($this->swapDestination) ? null : $this->swapDestination->getPlayer();
     }
 }
