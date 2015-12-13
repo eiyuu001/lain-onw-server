@@ -52,6 +52,7 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         }, $roles, $content['players']);
         $entityManager->persist($game);
         $entityManager->flush();
+        $entityManager->refresh($game);
         return $game;
     }
 
@@ -93,6 +94,7 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         }
         $entityManager->persist($regulation);
         $entityManager->flush();
+        $entityManager->refresh($regulation);
         return $regulation;
     }
 
