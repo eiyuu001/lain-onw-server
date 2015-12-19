@@ -28,16 +28,16 @@ class Room
     private $players;
 
     /**
-     * @ORM\OneToMany(targetEntity="Regulation", mappedBy="room", cascade={"persist", "remove"})
-     * @JMS\Exclude
-     */
-    private $regulations;
-
-    /**
      * @ORM\OneToMany(targetEntity="Game", mappedBy="room", cascade={"persist", "remove"})
      * @JMS\Exclude
      */
     private $games;
+    
+    
+    /**
+     * @ORM\OneToMany(targetEntity="RoleConfig", mappedBy="room", cascade={"persist", "remove"})
+     */
+    private $roleConfigs;
 
     /**
      * Constructor
@@ -45,8 +45,8 @@ class Room
     public function __construct()
     {
         $this->players = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->regulations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->games = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->roleConfigs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -94,40 +94,6 @@ class Room
     }
 
     /**
-     * Add regulation
-     *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Regulation $regulation
-     *
-     * @return Room
-     */
-    public function addRegulation(\Lain\OneNightWerewolfBundle\Entity\Regulation $regulation)
-    {
-        $this->regulations[] = $regulation;
-
-        return $this;
-    }
-
-    /**
-     * Remove regulation
-     *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Regulation $regulation
-     */
-    public function removeRegulation(\Lain\OneNightWerewolfBundle\Entity\Regulation $regulation)
-    {
-        $this->regulations->removeElement($regulation);
-    }
-
-    /**
-     * Get regulations
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getRegulations()
-    {
-        return $this->regulations;
-    }
-
-    /**
      * Add game
      *
      * @param \Lain\OneNightWerewolfBundle\Entity\Game $game
@@ -160,4 +126,40 @@ class Room
     {
         return $this->games;
     }
+    
+    /**
+     * Add roleConfig
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\RoleConfig $roleConfig
+     *
+     * @return Room
+     */
+    public function addRoleConfig(\Lain\OneNightWerewolfBundle\Entity\RoleConfig $roleConfig)
+    {
+        $this->roleConfigs[] = $roleConfig;
+
+        return $this;
+    }
+
+    /**
+     * Remove roleConfig
+     *
+     * @param \Lain\OneNightWerewolfBundle\Entity\RoleConfig $roleConfig
+     */
+    public function removeRoleConfig(\Lain\OneNightWerewolfBundle\Entity\RoleConfig $roleConfig)
+    {
+        $this->roleConfigs->removeElement($roleConfig);
+    }
+
+    /**
+     * Get roleConfigs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRoleConfigs()
+    {
+        return $this->roleConfigs;
+    }
+
+
 }

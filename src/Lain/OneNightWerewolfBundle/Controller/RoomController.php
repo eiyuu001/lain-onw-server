@@ -9,7 +9,6 @@ use Lain\OneNightWerewolfBundle\Controller\Traits\EntityGettable;
 use Lain\OneNightWerewolfBundle\Entity\Game;
 use Lain\OneNightWerewolfBundle\Entity\Player;
 use Lain\OneNightWerewolfBundle\Entity\GamePlayer;
-use Lain\OneNightWerewolfBundle\Entity\Regulation;
 use Lain\OneNightWerewolfBundle\Entity\Role;
 use Lain\OneNightWerewolfBundle\Entity\RoleConfig;
 use Lain\OneNightWerewolfBundle\Entity\Room;
@@ -41,9 +40,7 @@ class RoomController extends FOSRestController implements ClassResourceInterface
     public function postGameAction(Request $request, $roomId) {
         $content = json_decode($request->getContent(), true);
         $game = new Game($this->getRoom($roomId));
-        $regulation = $this->getRegulation($content['regulation']);
-        $game->setRegulation($regulation);
-        $roles = Ginq::from($this->shuffleRoles($regulation))->take(count($content['players']))->toList();
+        $roles = Ginq::from($this->shuffleRoles())->take(count($content['players']))->toList();
         $entityManager = $this->getDoctrine()->getManager();
         array_map(function(Role $role, $playerId) use ($game, $entityManager) {
             $gamePlayer = new GamePlayer($game);
@@ -59,8 +56,8 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         return $view;
     }
 
-    private function shuffleRoles(Regulation $regulation) {
-        $roles = Ginq::from($regulation->getRoleConfigs())->flatMap(function(RoleConfig $roleConfig){
+    private function shuffleRoles() {
+        $roles = Ginq::from($this->getRoleConfigs())->flatMap(function(RoleConfig $roleConfig){
             return Ginq::repeat($roleConfig->getRole(), $roleConfig->getCount());
         })->toList();
         shuffle($roles);
@@ -82,12 +79,12 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         return $player;
     }
 
-    public function postRegulationAction(Request $request, $roomId) {
+    public function putRegulationAction(Request $request, $roomId) {
         $content = json_decode($request->getContent(), true);
         $entityManager = $this->getDoctrine()->getManager();
-        $regulation = new Regulation($this->getRoom($roomId));
+        $room = $this->getRoom($roomId);
         foreach($content['roleConfigs'] as $roleConfigSrc) {
-            $roleConfig = new RoleConfig($regulation);
+            $roleConfig = new RoleConfig($room);
             $role = $this->getRole($roleConfigSrc['id']);
             $roleConfig->setRole($role);
             $roleConfig->setCount($roleConfigSrc['count']);
@@ -95,10 +92,10 @@ class RoomController extends FOSRestController implements ClassResourceInterface
             $roleConfig->setRewardForDead($roleConfigSrc['rewardForDead']);
             $entityManager->persist($roleConfig);
         }
-        $entityManager->persist($regulation);
+        $entityManager->persist($room);
         $entityManager->flush();
-        $entityManager->refresh($regulation);
-        return $regulation;
+        $entityManager->refresh($room);
+        return $room;
     }
 
 }

@@ -5,7 +5,6 @@ namespace Lain\OneNightWerewolfBundle\Controller\Traits;
 use Lain\OneNightWerewolfBundle\Entity\Game;
 use Lain\OneNightWerewolfBundle\Entity\Player;
 use Lain\OneNightWerewolfBundle\Entity\GamePlayer;
-use Lain\OneNightWerewolfBundle\Entity\Regulation;
 use Lain\OneNightWerewolfBundle\Entity\Role;
 use Lain\OneNightWerewolfBundle\Entity\RoleConfig;
 use Lain\OneNightWerewolfBundle\Entity\RoleGroup;
@@ -47,14 +46,6 @@ trait EntityGettable {
                 'game' => $gameId,
                 'player' => $playerId,
             ]);
-    }
-
-    /**
-     * @param $id
-     * @return Regulation
-     */
-    protected function getRegulation($id) {
-        return $this->getEntity('Regulation', $id);
     }
 
     /**
@@ -118,13 +109,6 @@ trait EntityGettable {
      */
     protected function getGamePlayers() {
         return $this->getEntities('GamePlayer');
-    }
-
-    /**
-     * @return array
-     */
-    protected function getRegulations() {
-        return $this->getEntities('Regulation');
     }
 
     /**

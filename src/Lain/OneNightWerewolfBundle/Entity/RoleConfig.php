@@ -25,11 +25,11 @@ class RoleConfig
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Regulation", inversedBy="roleConfigs")
-     * @ORM\JoinColumn(name="regulation_id", referencedColumnName="id", nullable=FALSE)
+     * @ORM\ManyToOne(targetEntity="Room", inversedBy="roleConfigs")
+     * @ORM\JoinColumn(name="room_id", referencedColumnName="id", nullable=FALSE)
      * @JMS\Exclude
      */
-    private $regulation;
+    private $room;
 
     /**
      * @ORM\ManyToOne(targetEntity="Role")
@@ -59,11 +59,11 @@ class RoleConfig
     /**
      * Constructor
      *
-     * @param Regulation $regulation
+     * @param Room $room
      */
-    public function __construct($regulation)
+    public function __construct($room)
     {
-        $this->setRegulation($regulation);
+        $this->setRoom($room);
     }
 
     /**
@@ -101,27 +101,27 @@ class RoleConfig
     }
 
     /**
-     * Set regulation
+     * Set room
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Regulation $regulation
+     * @param \Lain\OneNightWerewolfBundle\Entity\Room $room
      *
      * @return RoleConfig
      */
-    public function setRegulation(\Lain\OneNightWerewolfBundle\Entity\Regulation $regulation)
+    public function setRoom(\Lain\OneNightWerewolfBundle\Entity\Room $room)
     {
-        $this->regulation = $regulation;
+        $this->room = $room;
 
         return $this;
     }
 
     /**
-     * Get regulation
+     * Get room
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\Regulation
+     * @return \Lain\OneNightWerewolfBundle\Entity\Room
      */
-    public function getRegulation()
+    public function getRoom()
     {
-        return $this->regulation;
+        return $this->room;
     }
 
     /**

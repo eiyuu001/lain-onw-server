@@ -253,7 +253,7 @@ class GamePlayer
             return 0;
         }
         /** @var RoleConfig $roleConfig */
-        $roleConfig = $this->game->getRegulation()->getRoleConfigs()->filter(function(RoleConfig $roleConfig){
+        $roleConfig = $this->game->getRoom()->getRoleConfigs()->filter(function(RoleConfig $roleConfig){
             return $roleConfig->getRole()->getId() == $this->getActualRole()->getId();
         })->first();
         return $this->isAlive() ? $roleConfig->getRewardForSurvivor() : $roleConfig->getRewardForDead();
