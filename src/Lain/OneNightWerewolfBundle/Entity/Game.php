@@ -33,6 +33,7 @@ class Game
 
     /**
      * @ORM\OneToMany(targetEntity="GamePlayer", mappedBy="game", cascade={"persist", "remove"})
+     * @JMS\SerializedName("players")
      */
     private $gamePlayers;
 
