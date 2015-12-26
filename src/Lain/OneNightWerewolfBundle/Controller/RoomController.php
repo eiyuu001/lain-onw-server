@@ -45,7 +45,10 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         $entityManager->persist($room);
         $entityManager->flush();
         $entityManager->refresh($room);
-        return $room;
+        $view = $this->view($room, 201, [
+            'Location' => $this->generateUrl('get_room', ['roomId' => $room->getId()])
+        ]);
+        return $view;
     }
 
     public function postGameAction(Room $room) {
@@ -55,7 +58,9 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         $entityManager->persist($game);
         $entityManager->flush();
         $entityManager->refresh($game);
-        $view = $this->view($game, 200);
+        $view = $this->view($game, 201, [
+            'Location' => $this->generateUrl('get_game', ['gameId' => $game->getId()])
+        ]);
         $view->setSerializationContext(SerializationContext::create()->setGroups(['Default']));
         return $view;
     }
@@ -67,7 +72,10 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         $player->setName($content['name']);
         $entityManager->persist($player);
         $entityManager->flush();
-        return $player;
+        $view = $this->view($player, 201, [
+            'Location' => $this->generateUrl('get_player', ['playerId' => $player->getId()])
+        ]);
+        return $view;
     }
 
 }
