@@ -6,6 +6,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use JMS\Serializer\SerializationContext;
 use Lain\OneNightWerewolfBundle\Controller\Traits\EntityGettable;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class GameController extends FOSRestController implements ClassResourceInterface
 {
@@ -18,14 +19,19 @@ class GameController extends FOSRestController implements ClassResourceInterface
     public function getAction($gameId) {
         $game = $this->getGame($gameId);
         $view = $this->view($game, 200);
-        $groups = ['Default'];
-        if ($game->hasFinished()) {
-            array_push($groups, 'finished');
-        }
-        $view->setSerializationContext(
-            SerializationContext::create()->setGroups($groups)->enableMaxDepthChecks()
-        );
         return $view;
     }
 
+    public function getResultAction($gameId) {
+        $game = $this->getGame($gameId);
+        if (!$game->hasFinished()) {
+            throw new ResourceNotFoundException();
+        }
+        $view = $this->view($game, 200);
+        $groups = ['Default', 'finished'];
+        $view->setSerializationContext(
+            SerializationContext::create()->setGroups($groups)
+        );
+        return $view;
+    }
 }

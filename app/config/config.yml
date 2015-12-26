@@ -88,6 +88,7 @@ fos_rest:
         codes:
             'Symfony\Component\HttpKernel\Exception\BadRequestHttpException': 400
             'Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException': 403
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
         messages:
             'Symfony\Component\HttpKernel\Exception\BadRequestHttpException': true
             'Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException': true
