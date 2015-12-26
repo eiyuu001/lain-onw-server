@@ -23,7 +23,6 @@ class Room
 
     /**
      * @ORM\OneToMany(targetEntity="Player", mappedBy="room", cascade={"persist", "remove"})
-     * @JMS\Exclude
      */
     private $players;
 
