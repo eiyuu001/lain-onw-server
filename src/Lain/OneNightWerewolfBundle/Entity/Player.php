@@ -29,6 +29,7 @@ class Player
      *
      * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255)
+     * @JMS\Groups({"Default", "postPlayer"})
      */
     private $name;
 

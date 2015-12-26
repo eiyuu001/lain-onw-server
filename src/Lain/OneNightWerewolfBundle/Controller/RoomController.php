@@ -14,20 +14,45 @@ use Lain\OneNightWerewolfBundle\Entity\RoleConfig;
 use Lain\OneNightWerewolfBundle\Entity\Room;
 use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class RoomController extends FOSRestController implements ClassResourceInterface
 {
     use EntityGettable;
 
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns a collection of Room"
+     * )
+     */
     public function cgetAction() {
         return $this->getRooms();
     }
 
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns a Room object specified by roomId",
+     *  requirements={
+     *      {"name"="roomId", "dataType"="integer", "requirement"="\d+", "description"="room id"}
+     *  }
+     * )
+     */
     public function getAction($roomId)
     {
         return $this->getRoom($roomId);
     }
 
+    /**
+     * @ApiDoc(
+     *  description="Create a new room",
+     *  input={
+     *    "class"="Lain\OneNightWerewolfBundle\Entity\Room",
+     *    "groups"={"postRoom"}
+     *  }
+     * )
+     */
     public function postAction(Request $request)
     {
         $content = json_decode($request->getContent(), true);
@@ -51,8 +76,16 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         return $view;
     }
 
-    public function postGameAction(Room $room) {
-        $game = new Game($room);
+    /**
+     * @ApiDoc(
+     *  description="Create a new game",
+     *  requirements={
+     *      {"name"="roomId", "dataType"="integer", "requirement"="\d+", "description"="room id"}
+     *  }
+     * )
+     */
+    public function postGameAction($roomId) {
+        $game = new Game($this->getRoom($roomId));
         $game->castRoles();
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($game);
@@ -65,6 +98,18 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         return $view;
     }
 
+    /**
+     * @ApiDoc(
+     *  description="Create a new player",
+     *  requirements={
+     *      {"name"="roomId", "dataType"="integer", "requirement"="\d+", "description"="room id"}
+     *  },
+     *  input={
+     *    "class"="Lain\OneNightWerewolfBundle\Entity\Player",
+     *    "groups"={"postPlayer"}
+     *  }
+     * )
+     */
     public function postPlayerAction(Request $request, $roomId) {
         $content = json_decode($request->getContent(), true);
         $entityManager = $this->getDoctrine()->getManager();
