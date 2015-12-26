@@ -37,17 +37,16 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         return $room;
     }
 
-    public function postGameAction(Request $request, $roomId) {
-        $content = json_decode($request->getContent(), true);
-        $game = new Game($this->getRoom($roomId));
-        $roles = Ginq::from($this->shuffleRoles())->take(count($content['players']))->toList();
+    public function postGameAction(Room $room) {
+        $game = new Game($room);
+        $roles = Ginq::from($this->shuffleRoles())->take($room->getPlayers()->count())->toList();
         $entityManager = $this->getDoctrine()->getManager();
-        array_map(function(Role $role, $playerId) use ($game, $entityManager) {
+        array_map(function(Role $role, Player $player) use ($game, $entityManager) {
             $gamePlayer = new GamePlayer($game);
-            $gamePlayer->setPlayer($this->getPlayer($playerId));
+            $gamePlayer->setPlayer($player);
             $gamePlayer->setRole($role);
             $entityManager->persist($gamePlayer);
-        }, $roles, $content['players']);
+        }, $roles, $room->getPlayers()->getValues());
         $entityManager->persist($game);
         $entityManager->flush();
         $entityManager->refresh($game);
