@@ -28,12 +28,23 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         return $this->getRoom($roomId);
     }
 
-    public function postAction()
+    public function postAction(Request $request)
     {
-        $room = new Room();
+        $content = json_decode($request->getContent(), true);
         $entityManager = $this->getDoctrine()->getManager();
+        $room = new Room();
+        foreach($content['roleConfigs'] as $roleConfigSrc) {
+            $roleConfig = new RoleConfig($room);
+            $role = $this->getRole($roleConfigSrc['id']);
+            $roleConfig->setRole($role);
+            $roleConfig->setCount($roleConfigSrc['count']);
+            $roleConfig->setRewardForSurvivor($roleConfigSrc['rewardForSurvivor']);
+            $roleConfig->setRewardForDead($roleConfigSrc['rewardForDead']);
+            $entityManager->persist($roleConfig);
+        }
         $entityManager->persist($room);
         $entityManager->flush();
+        $entityManager->refresh($room);
         return $room;
     }
 
@@ -76,25 +87,6 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         $entityManager->persist($player);
         $entityManager->flush();
         return $player;
-    }
-
-    public function putRegulationAction(Request $request, $roomId) {
-        $content = json_decode($request->getContent(), true);
-        $entityManager = $this->getDoctrine()->getManager();
-        $room = $this->getRoom($roomId);
-        foreach($content['roleConfigs'] as $roleConfigSrc) {
-            $roleConfig = new RoleConfig($room);
-            $role = $this->getRole($roleConfigSrc['id']);
-            $roleConfig->setRole($role);
-            $roleConfig->setCount($roleConfigSrc['count']);
-            $roleConfig->setRewardForSurvivor($roleConfigSrc['rewardForSurvivor']);
-            $roleConfig->setRewardForDead($roleConfigSrc['rewardForDead']);
-            $entityManager->persist($roleConfig);
-        }
-        $entityManager->persist($room);
-        $entityManager->flush();
-        $entityManager->refresh($room);
-        return $room;
     }
 
 }
