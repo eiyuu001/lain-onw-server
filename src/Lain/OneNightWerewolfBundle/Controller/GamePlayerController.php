@@ -11,6 +11,7 @@ use Lain\OneNightWerewolfBundle\Controller\Traits\EntityGettable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * @RouteResource("Player")
@@ -19,6 +20,16 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
 {
     use EntityGettable;
 
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns a Player object on a game specified by gameId and playerId",
+     *  requirements={
+     *      {"name"="gameId", "dataType"="integer", "requirement"="\d+", "description"="game id"},
+     *      {"name"="playerId", "dataType"="integer", "requirement"="\d+", "description"="player id"}
+     *  },
+     * )
+     */
     public function getAction($gameId, $playerId) {
         $gamePlayer = $this->getGamePlayer($gameId, $playerId);
         $view = $this->view($gamePlayer, 200);
@@ -34,6 +45,17 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
 
     /**
      * @Put("games/{gameId}/players/{playerId}/vote")
+     *
+     * @ApiDoc(
+     *  description="Vote to an other player",
+     *  requirements={
+     *      {"name"="gameId", "dataType"="integer", "requirement"="\d+", "description"="game id"},
+     *      {"name"="playerId", "dataType"="integer", "requirement"="\d+", "description"="player id"}
+     *  },
+     *  statusCodes={
+     *      400="Returned when you try to vote to yourself."
+     *  }
+     * )
      */
     public function putVoteAction(Request $request, $gameId, $playerId) {
         return $this->affectOtherPlayer($request, $gameId, $playerId, 'vote');
@@ -41,6 +63,18 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
 
     /**
      * @Put("games/{gameId}/players/{playerId}/peep")
+     *
+     * @ApiDoc(
+     *  description="Peep a role of an other player",
+     *  requirements={
+     *      {"name"="gameId", "dataType"="integer", "requirement"="\d+", "description"="game id"},
+     *      {"name"="playerId", "dataType"="integer", "requirement"="\d+", "description"="player id"}
+     *  },
+     *  statusCodes={
+     *      400="Returned when you try to peep yourself.",
+     *      403="Returned when you don't have ability to peep."
+     *  }
+     * )
      */
     public function putPeepAction(Request $request, $gameId, $playerId) {
         return $this->affectOtherPlayer($request, $gameId, $playerId, 'peep', ['private']);
@@ -48,6 +82,18 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
 
     /**
      * @Put("games/{gameId}/players/{playerId}/swap")
+     *
+     * @ApiDoc(
+     *  description="Swap roles with an other player",
+     *  requirements={
+     *      {"name"="gameId", "dataType"="integer", "requirement"="\d+", "description"="game id"},
+     *      {"name"="playerId", "dataType"="integer", "requirement"="\d+", "description"="player id"}
+     *  },
+     *  statusCodes={
+     *      400="Returned when you try to swap roles with yourself.",
+     *      403="Returned when you don't have ability to swap."
+     *  }
+     * )
      */
     public function putSwapAction(Request $request, $gameId, $playerId) {
         return $this->affectOtherPlayer($request, $gameId, $playerId, 'swap', ['private']);
