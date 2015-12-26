@@ -25,6 +25,8 @@ class Game
     private $id;
 
     /**
+     * @var Room
+     *
      * @ORM\ManyToOne(targetEntity="Room", inversedBy="games")
      * @ORM\JoinColumn(name="room_id", referencedColumnName="id", nullable=FALSE)
      * @JMS\Exclude
@@ -162,4 +164,21 @@ class Game
         return $oneOrMoreHangedManWasDead;
     }
 
+    public function castRoles() {
+        $roles = Ginq::from($this->shuffleRoles())->take($this->room->getPlayers()->count())->toList();
+        array_map(function(Role $role, Player $player) {
+            $gamePlayer = new GamePlayer($this);
+            $gamePlayer->setPlayer($player);
+            $gamePlayer->setRole($role);
+            $this->addGamePlayer($gamePlayer);
+        }, $roles, $this->room->getPlayers()->getValues());
+    }
+
+    private function shuffleRoles() {
+        $roles = Ginq::from($this->room->getRoleConfigs())->flatMap(function(RoleConfig $roleConfig){
+            return Ginq::repeat($roleConfig->getRole(), $roleConfig->getCount());
+        })->toList();
+        shuffle($roles);
+        return $roles;
+    }
 }
