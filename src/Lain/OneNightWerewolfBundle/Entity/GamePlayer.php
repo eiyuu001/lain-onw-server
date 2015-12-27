@@ -4,7 +4,6 @@ namespace Lain\OneNightWerewolfBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ginq\Ginq;
-use Ginq\GroupingGinq;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 

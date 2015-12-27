@@ -4,12 +4,9 @@ namespace Lain\OneNightWerewolfBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
-use Ginq\Ginq;
 use Lain\OneNightWerewolfBundle\Controller\Traits\EntityGettable;
 use Lain\OneNightWerewolfBundle\Entity\Game;
 use Lain\OneNightWerewolfBundle\Entity\Player;
-use Lain\OneNightWerewolfBundle\Entity\GamePlayer;
-use Lain\OneNightWerewolfBundle\Entity\Role;
 use Lain\OneNightWerewolfBundle\Entity\RoleConfig;
 use Lain\OneNightWerewolfBundle\Entity\Room;
 use JMS\Serializer\SerializationContext;
