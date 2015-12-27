@@ -25,6 +25,8 @@ class RoleConfig
     private $id;
 
     /**
+     * @var Room
+     *
      * @ORM\ManyToOne(targetEntity="Room", inversedBy="roleConfigs")
      * @ORM\JoinColumn(name="room_id", referencedColumnName="id", nullable=FALSE)
      * @JMS\Exclude
@@ -32,29 +34,40 @@ class RoleConfig
     private $room;
 
     /**
+     * @var Role
+     *
      * @ORM\ManyToOne(targetEntity="Role")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=FALSE)
+     * @JMS\Inline()
      */
     private $role;
 
     /**
-     * @ORM\Column(type="integer", name="count")
+     * @var integer
+     *
+     * @Assert\NotBlank()
+     * @ORM\Column(name="count", type="integer")
+     * @JMS\Groups({"Default", "postRoom"})
      */
     private $count;
 
     /**
      * @var integer
+     *
      * @Assert\NotBlank()
      * @ORM\Column(name="reward_for_survivor", type="integer")
      * @JMS\SerializedName("rewardForSurvivor")
+     * @JMS\Groups({"Default", "postRoom"})
      */
     private $rewardForSurvivor;
 
     /**
      * @var integer
+     *
      * @Assert\NotBlank()
      * @ORM\Column(name="reward_for_dead", type="integer")
      * @JMS\SerializedName("rewardForDead")
+     * @JMS\Groups({"Default", "postRoom"})
      */
     private $rewardForDead;
 
