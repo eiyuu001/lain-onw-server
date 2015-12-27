@@ -52,6 +52,9 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
      *      {"name"="gameId", "dataType"="integer", "requirement"="\d+", "description"="game id"},
      *      {"name"="playerId", "dataType"="integer", "requirement"="\d+", "description"="player id"}
      *  },
+     *  parameters={
+     *      {"name"="target", "dataType"="integer", "requirement"="\d+", "description"="target player id"}
+     *  },
      *  statusCodes={
      *      400="Returned when you try to vote to yourself."
      *  }
@@ -69,6 +72,9 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
      *  requirements={
      *      {"name"="gameId", "dataType"="integer", "requirement"="\d+", "description"="game id"},
      *      {"name"="playerId", "dataType"="integer", "requirement"="\d+", "description"="player id"}
+     *  },
+     *  parameters={
+     *      {"name"="target", "dataType"="integer", "requirement"="\d+", "description"="target player id"}
      *  },
      *  statusCodes={
      *      400="Returned when you try to peep yourself.",
@@ -88,6 +94,9 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
      *  requirements={
      *      {"name"="gameId", "dataType"="integer", "requirement"="\d+", "description"="game id"},
      *      {"name"="playerId", "dataType"="integer", "requirement"="\d+", "description"="player id"}
+     *  },
+     *  parameters={
+     *      {"name"="target", "dataType"="integer", "requirement"="\d+", "description"="target player id"}
      *  },
      *  statusCodes={
      *      400="Returned when you try to swap roles with yourself.",
