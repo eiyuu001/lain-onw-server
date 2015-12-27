@@ -38,6 +38,7 @@ class GamePlayer
     /**
      * @ORM\ManyToOne(targetEntity="Player", inversedBy="gamePlayers")
      * @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=FALSE)
+     * @JMS\Inline()
      */
     private $player;
 
