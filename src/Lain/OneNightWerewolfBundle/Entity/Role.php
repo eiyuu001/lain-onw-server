@@ -33,6 +33,7 @@ class Role
     /**
      * @ORM\ManyToOne(targetEntity="RoleGroup", inversedBy="roles")
      * @ORM\JoinColumn(name="role_group_id", referencedColumnName="id", nullable=FALSE)
+     * @JMS\SerializedName("roleGroup")
      */
     private $roleGroup;
 

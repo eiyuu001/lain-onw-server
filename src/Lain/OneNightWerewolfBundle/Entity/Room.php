@@ -36,6 +36,7 @@ class Room
     /**
      * @ORM\OneToMany(targetEntity="RoleConfig", mappedBy="room", cascade={"persist", "remove"})
      * @JMS\Groups({"Default", "postRoom"})
+     * @JMS\SerializedName("roleConfigs")
      */
     private $roleConfigs;
 

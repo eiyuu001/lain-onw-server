@@ -469,7 +469,7 @@ class GamePlayer
 
     /**
      * @JMS\VirtualProperty
-     * @JMS\SerializedName("vote_destination")
+     * @JMS\SerializedName("voteDestination")
      * @JMS\Groups({"finished"})
      *
      * @return array
@@ -480,7 +480,7 @@ class GamePlayer
 
     /**
      * @JMS\VirtualProperty
-     * @JMS\SerializedName("peep_destination")
+     * @JMS\SerializedName("peepDestination")
      * @JMS\Groups({"finished"})
      *
      * @return array
@@ -492,7 +492,7 @@ class GamePlayer
 
     /**
      * @JMS\VirtualProperty
-     * @JMS\SerializedName("swap_destination")
+     * @JMS\SerializedName("swapDestination")
      * @JMS\Groups({"finished"})
      *
      * @return array

@@ -46,6 +46,7 @@ class RoleConfig
      * @var integer
      * @Assert\NotBlank()
      * @ORM\Column(name="reward_for_survivor", type="integer")
+     * @JMS\SerializedName("rewardForSurvivor")
      */
     private $rewardForSurvivor;
 
@@ -53,6 +54,7 @@ class RoleConfig
      * @var integer
      * @Assert\NotBlank()
      * @ORM\Column(name="reward_for_dead", type="integer")
+     * @JMS\SerializedName("rewardForDead")
      */
     private $rewardForDead;
 
