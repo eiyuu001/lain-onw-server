@@ -115,7 +115,7 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
         $player = $this->getGamePlayer($gameId, $playerId);
         $canAction = 'can' . ucfirst($actionName);
         if (!$player->$canAction()) {
-            throw new AccessDeniedHttpException("You don't have ability to $actionName");
+            throw new AccessDeniedHttpException("You don't have ability to $actionName.");
         }
 
         $getter = 'get' . ucfirst($actionName) . 'Destination';

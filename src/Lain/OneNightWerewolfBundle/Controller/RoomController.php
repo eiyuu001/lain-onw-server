@@ -111,7 +111,7 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         $room = $this->getRoom($roomId);
         $capacity = $room->computeCapacity();
         if ($room->getPlayers()->count() >= $capacity) {
-            throw new BadRequestHttpException("The room's capacity of $capacity is exceeded");
+            throw new BadRequestHttpException("The room's capacity of $capacity is exceeded.");
         }
         $content = json_decode($request->getContent(), true);
         $player = new Player($room);
