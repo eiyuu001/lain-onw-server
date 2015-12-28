@@ -167,10 +167,8 @@ class Game
     public function castRoles() {
         $roles = Ginq::from($this->shuffleRoles())->take($this->room->getPlayers()->count())->toList();
         array_map(function(Role $role, Player $player) {
-            $gamePlayer = new GamePlayer($this);
-            $gamePlayer->setPlayer($player);
+            $gamePlayer = new GamePlayer($this, $player);
             $gamePlayer->setRole($role);
-            $this->addGamePlayer($gamePlayer);
         }, $roles, $this->room->getPlayers()->getValues());
     }
 
