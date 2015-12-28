@@ -30,7 +30,9 @@ class RoomController extends FOSRestController implements ClassResourceInterface
      * )
      */
     public function cgetAction() {
-        return $this->getRooms();
+        $rooms = $this->getRooms();
+        return $this->view($rooms, Codes::HTTP_OK)
+            ->setSerializationContext(SerializationContext::create()->setGroups(['getRoom']));
     }
 
     /**
@@ -44,7 +46,9 @@ class RoomController extends FOSRestController implements ClassResourceInterface
      */
     public function getAction($roomId)
     {
-        return $this->getRoom($roomId);
+        $room = $this->getRoom($roomId);
+        return $this->view($room, Codes::HTTP_OK)
+            ->setSerializationContext(SerializationContext::create()->setGroups(['getRoom']));
     }
 
     /**

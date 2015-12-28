@@ -23,6 +23,7 @@ class Room
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Groups({"getRoom"})
      */
     private $id;
 
@@ -30,6 +31,7 @@ class Room
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Player", mappedBy="room", cascade={"persist", "remove"})
+     * @JMS\Groups({"getRoom"})
      */
     private $players;
 
@@ -37,7 +39,7 @@ class Room
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Game", mappedBy="room", cascade={"persist", "remove"})
-     * @JMS\Exclude
+     * @JMS\Groups({"getRoom"})
      */
     private $games;
     
@@ -46,7 +48,7 @@ class Room
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="RoleConfig", mappedBy="room", cascade={"persist", "remove"})
-     * @JMS\Groups({"Default", "postRoom"})
+     * @JMS\Groups({"getRoom", "postRoom"})
      * @JMS\SerializedName("roleConfigs")
      */
     private $roleConfigs;

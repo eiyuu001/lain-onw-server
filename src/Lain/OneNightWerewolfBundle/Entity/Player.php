@@ -23,6 +23,7 @@ class Player
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Groups({"Default", "getRoom"})
      */
     private $id;
 
@@ -31,7 +32,7 @@ class Player
      *
      * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255)
-     * @JMS\Groups({"Default", "postPlayer"})
+     * @JMS\Groups({"Default", "postPlayer", "getRoom"})
      */
     private $name;
 
@@ -124,6 +125,7 @@ class Player
     /**
      * @JMS\VirtualProperty
      * @JMS\SerializedName("score")
+     * @JMS\Groups({"Default", "getRoom"})
      *
      * @return int
      */

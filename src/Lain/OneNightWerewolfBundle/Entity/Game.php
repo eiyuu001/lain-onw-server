@@ -24,6 +24,7 @@ class Game
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Groups({"Default", "getRoom"})
      */
     private $id;
 
@@ -126,6 +127,7 @@ class Game
     /**
      * @JMS\VirtualProperty
      * @JMS\SerializedName("finished")
+     * @JMS\Groups({"Default", "getRoom"})
      *
      * @return bool
      */

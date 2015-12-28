@@ -38,6 +38,7 @@ class RoleConfig
      *
      * @ORM\ManyToOne(targetEntity="Role")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=FALSE)
+     * @JMS\Groups({"Default", "getRoom"})
      * @JMS\Inline()
      */
     private $role;
@@ -47,7 +48,7 @@ class RoleConfig
      *
      * @Assert\NotBlank()
      * @ORM\Column(name="count", type="integer")
-     * @JMS\Groups({"Default", "postRoom"})
+     * @JMS\Groups({"Default", "getRoom", "postRoom"})
      */
     private $count;
 
@@ -57,7 +58,7 @@ class RoleConfig
      * @Assert\NotBlank()
      * @ORM\Column(name="reward_for_survivor", type="integer")
      * @JMS\SerializedName("rewardForSurvivor")
-     * @JMS\Groups({"Default", "postRoom"})
+     * @JMS\Groups({"Default", "getRoom", "postRoom"})
      */
     private $rewardForSurvivor;
 
@@ -67,7 +68,7 @@ class RoleConfig
      * @Assert\NotBlank()
      * @ORM\Column(name="reward_for_dead", type="integer")
      * @JMS\SerializedName("rewardForDead")
-     * @JMS\Groups({"Default", "postRoom"})
+     * @JMS\Groups({"Default", "getRoom", "postRoom"})
      */
     private $rewardForDead;
 
