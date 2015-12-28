@@ -4,6 +4,7 @@ namespace Lain\OneNightWerewolfBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ginq\Ginq;
+use Lain\OneNightWerewolfBundle\Util\Roles;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
@@ -270,14 +271,14 @@ class GamePlayer
      * @return bool
      */
     public function canPeep() {
-        return $this->getRole()->getId() === 4; // �肢�t
+        return $this->getRole()->getId() == Roles::FORTUNE_TELLER;
     }
 
     /**
      * @return bool
      */
     public function canSwap() {
-        return $this->getRole()->getId() === 5; // ����
+        return $this->getRole()->getId() == Roles::PHANTOM_THIEF;
     }
 
     public function action($actionName, GamePlayer $target) {

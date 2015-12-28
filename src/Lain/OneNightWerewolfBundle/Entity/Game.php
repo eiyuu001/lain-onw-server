@@ -4,6 +4,7 @@ namespace Lain\OneNightWerewolfBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ginq\Ginq;
+use Lain\OneNightWerewolfBundle\Util\Roles;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
@@ -133,24 +134,24 @@ class Game
 
     public function isPeopleWon() {
         if ($this->isHangedManWon()) {
-            return false; // �ݐl�̏����͂��ׂĂɗD�悷��
+            return false;
         }
         $oneOrMoreWerewolfWasDead = Ginq::from($this->gamePlayers)->filter(function(GamePlayer $gamePlayer) {
             return !$gamePlayer->isAlive();
         })->any(function(GamePlayer $deadGamePlayer) {
-            return $deadGamePlayer->getActualRole()->getId() == 1; // �l�T
+            return $deadGamePlayer->getActualRole()->getId() == Roles::WEREWOLF;
         });
         return $oneOrMoreWerewolfWasDead;
     }
 
     public function isWerewolfWon() {
         if ($this->isHangedManWon()) {
-            return false; // �ݐl�̏����͂��ׂĂɗD�悷��
+            return false;
         }
         $oneOrMoreWerewolfWasDead = Ginq::from($this->gamePlayers)->filter(function(GamePlayer $gamePlayer) {
             return !$gamePlayer->isAlive();
         })->any(function(GamePlayer $deadGamePlayer) {
-            return $deadGamePlayer->getActualRole()->getId() == 1; // �l�T
+            return $deadGamePlayer->getActualRole()->getId() == Roles::WEREWOLF;
         });
         return !$oneOrMoreWerewolfWasDead;
     }
@@ -159,7 +160,7 @@ class Game
         $oneOrMoreHangedManWasDead = Ginq::from($this->gamePlayers)->filter(function(GamePlayer $gamePlayer) {
             return !$gamePlayer->isAlive();
         })->any(function(GamePlayer $deadGamePlayer) {
-            return $deadGamePlayer->getActualRole()->getId() == 6; // �ݐl
+            return $deadGamePlayer->getActualRole()->getId() == Roles::HANGED_MAN;
         });
         return $oneOrMoreHangedManWasDead;
     }
