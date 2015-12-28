@@ -5,6 +5,7 @@ namespace Lain\OneNightWerewolfBundle\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
+use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Util\Codes;
 use JMS\Serializer\SerializationContext;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 /**
  * @RouteResource("Player")
@@ -44,6 +46,75 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
             SerializationContext::create()->setGroups($groups)
         );
         return $view;
+    }
+
+    /**
+     * @Get("games/{gameId}/players/{playerId}/vote")
+     *
+     * @ApiDoc(
+     *  description="Returns information of voting target player.",
+     *  requirements={
+     *      {"name"="gameId", "dataType"="integer", "requirement"="\d+", "description"="game id"},
+     *      {"name"="playerId", "dataType"="integer", "requirement"="\d+", "description"="player id"}
+     *  },
+     *  statusCodes={
+     *      404="Returned when you have not voted yet."
+     *  }
+     * )
+     */
+    public function getVoteAction($gameId, $playerId) {
+        return $this->getActionResult($gameId, $playerId, 'vote', 'voted');
+    }
+
+    /**
+     * @Get("games/{gameId}/players/{playerId}/peep")
+     *
+     * @ApiDoc(
+     *  description="Returns information of peeping target player.",
+     *  requirements={
+     *      {"name"="gameId", "dataType"="integer", "requirement"="\d+", "description"="game id"},
+     *      {"name"="playerId", "dataType"="integer", "requirement"="\d+", "description"="player id"}
+     *  },
+     *  statusCodes={
+     *      404="Returned when you have not peeped yet."
+     *  }
+     * )
+     */
+    public function getPeepAction($gameId, $playerId) {
+        return $this->getActionResult($gameId, $playerId, 'peep', 'peeped', ['private']);
+    }
+
+    /**
+     * @Get("games/{gameId}/players/{playerId}/swap")
+     *
+     * @ApiDoc(
+     *  description="Returns information of swapping target player.",
+     *  requirements={
+     *      {"name"="gameId", "dataType"="integer", "requirement"="\d+", "description"="game id"},
+     *      {"name"="playerId", "dataType"="integer", "requirement"="\d+", "description"="player id"}
+     *  },
+     *  statusCodes={
+     *      404="Returned when you have not swapped yet."
+     *  }
+     * )
+     */
+    public function getSwapAction($gameId, $playerId) {
+        return $this->getActionResult($gameId, $playerId, 'swap', 'swapped', ['private']);
+    }
+
+    private function getActionResult($gameId, $playerId, $actionName, $pastParticipleFormActionName, $extraSerializationGroups = []) {
+        $player = $this->getGamePlayer($gameId, $playerId);
+
+        $hasActioned = 'has' . ucfirst($pastParticipleFormActionName);
+        if (!$player->$hasActioned()) {
+            throw new ResourceNotFoundException("You have not $pastParticipleFormActionName yet.");
+        }
+
+        $getter = 'get' . ucfirst($actionName) . 'Destination';
+        $actionResult = $player->$getter();
+        $groups = array_merge(['Default'], $extraSerializationGroups);
+        return $this->view($actionResult, Codes::HTTP_OK)
+            ->setSerializationContext(SerializationContext::create()->setGroups($groups));
     }
 
     /**
