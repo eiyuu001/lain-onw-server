@@ -41,6 +41,14 @@ class RoleGroup
 
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->roles = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -72,13 +80,6 @@ class RoleGroup
     public function getName()
     {
         return $this->name;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->roles = new ArrayCollection();
     }
 
     /**

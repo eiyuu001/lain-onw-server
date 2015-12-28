@@ -94,6 +94,25 @@ class GamePlayer
     private $swapDestination;
 
     /**
+     * Constructor
+     *
+     * @param Game $game
+     * @param Player $player
+     */
+    public function __construct(Game $game, Player $player)
+    {
+        $this->setGame($game);
+        $game->addGamePlayer($this);
+
+        $this->setPlayer($player);
+        $player->addGamePlayer($this);
+
+        $this->voteSources = new ArrayCollection();
+        $this->peepSources = new ArrayCollection();
+        $this->swapSources = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -289,25 +308,6 @@ class GamePlayer
         $addSrc  = 'add' . ucfirst($actionName) . 'Source';
         $this->$setDest($target);
         $target->$addSrc($this);
-    }
-
-    /**
-     * Constructor
-     *
-     * @param Game $game
-     * @param Player $player
-     */
-    public function __construct(Game $game, Player $player)
-    {
-        $this->setGame($game);
-        $game->addGamePlayer($this);
-
-        $this->setPlayer($player);
-        $player->addGamePlayer($this);
-
-        $this->voteSources = new ArrayCollection();
-        $this->peepSources = new ArrayCollection();
-        $this->swapSources = new ArrayCollection();
     }
 
     /**

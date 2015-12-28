@@ -49,6 +49,17 @@ class Player
     private $gamePlayers;
 
     /**
+     * Constructor
+     *
+     * @param Room $room
+     */
+    public function __construct($room)
+    {
+        $this->setRoom($room);
+        $this->gamePlayers = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -116,17 +127,6 @@ class Player
         return Ginq::from($this->getGamePlayers())->sum(function(GamePlayer $gamePlayer) {
             return $gamePlayer->computeReward();
         });
-    }
-
-    /**
-     * Constructor
-     * 
-     * @param Room $room
-     */
-    public function __construct($room)
-    {
-        $this->setRoom($room);
-        $this->gamePlayers = new ArrayCollection();
     }
 
     /**
