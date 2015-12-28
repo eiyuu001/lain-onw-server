@@ -122,11 +122,11 @@ class RoleConfig
     /**
      * Set room
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Room $room
+     * @param Room $room
      *
      * @return RoleConfig
      */
-    public function setRoom(\Lain\OneNightWerewolfBundle\Entity\Room $room)
+    public function setRoom(Room $room)
     {
         $this->room = $room;
 
@@ -136,7 +136,7 @@ class RoleConfig
     /**
      * Get room
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\Room
+     * @return Room
      */
     public function getRoom()
     {
@@ -146,11 +146,11 @@ class RoleConfig
     /**
      * Set role
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Role $role
+     * @param Role $role
      *
      * @return RoleConfig
      */
-    public function setRole(\Lain\OneNightWerewolfBundle\Entity\Role $role)
+    public function setRole(Role $role)
     {
         $this->role = $role;
 
@@ -160,7 +160,7 @@ class RoleConfig
     /**
      * Get role
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\Role
+     * @return Role
      */
     public function getRole()
     {

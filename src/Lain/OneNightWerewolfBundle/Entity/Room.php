@@ -2,6 +2,8 @@
 
 namespace Lain\OneNightWerewolfBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
@@ -45,9 +47,9 @@ class Room
      */
     public function __construct()
     {
-        $this->players = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->games = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->roleConfigs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->players = new ArrayCollection();
+        $this->games = new ArrayCollection();
+        $this->roleConfigs = new ArrayCollection();
     }
 
     /**
@@ -63,11 +65,11 @@ class Room
     /**
      * Add player
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Player $player
+     * @param Player $player
      *
      * @return Room
      */
-    public function addPlayer(\Lain\OneNightWerewolfBundle\Entity\Player $player)
+    public function addPlayer(Player $player)
     {
         $this->players[] = $player;
 
@@ -77,9 +79,9 @@ class Room
     /**
      * Remove player
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Player $player
+     * @param Player $player
      */
-    public function removePlayer(\Lain\OneNightWerewolfBundle\Entity\Player $player)
+    public function removePlayer(Player $player)
     {
         $this->players->removeElement($player);
     }
@@ -87,7 +89,7 @@ class Room
     /**
      * Get players
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getPlayers()
     {
@@ -97,11 +99,11 @@ class Room
     /**
      * Add game
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Game $game
+     * @param Game $game
      *
      * @return Room
      */
-    public function addGame(\Lain\OneNightWerewolfBundle\Entity\Game $game)
+    public function addGame(Game $game)
     {
         $this->games[] = $game;
 
@@ -111,9 +113,9 @@ class Room
     /**
      * Remove game
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Game $game
+     * @param Game $game
      */
-    public function removeGame(\Lain\OneNightWerewolfBundle\Entity\Game $game)
+    public function removeGame(Game $game)
     {
         $this->games->removeElement($game);
     }
@@ -121,7 +123,7 @@ class Room
     /**
      * Get games
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getGames()
     {
@@ -131,11 +133,11 @@ class Room
     /**
      * Add roleConfig
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\RoleConfig $roleConfig
+     * @param RoleConfig $roleConfig
      *
      * @return Room
      */
-    public function addRoleConfig(\Lain\OneNightWerewolfBundle\Entity\RoleConfig $roleConfig)
+    public function addRoleConfig(RoleConfig $roleConfig)
     {
         $this->roleConfigs[] = $roleConfig;
 
@@ -145,9 +147,9 @@ class Room
     /**
      * Remove roleConfig
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\RoleConfig $roleConfig
+     * @param RoleConfig $roleConfig
      */
-    public function removeRoleConfig(\Lain\OneNightWerewolfBundle\Entity\RoleConfig $roleConfig)
+    public function removeRoleConfig(RoleConfig $roleConfig)
     {
         $this->roleConfigs->removeElement($roleConfig);
     }
@@ -155,7 +157,7 @@ class Room
     /**
      * Get roleConfigs
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getRoleConfigs()
     {

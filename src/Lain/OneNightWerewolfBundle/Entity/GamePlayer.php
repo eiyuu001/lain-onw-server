@@ -2,6 +2,8 @@
 
 namespace Lain\OneNightWerewolfBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ginq\Ginq;
 use Lain\OneNightWerewolfBundle\Util\Roles;
@@ -104,11 +106,11 @@ class GamePlayer
     /**
      * Set game
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Game $game
+     * @param Game $game
      *
      * @return GamePlayer
      */
-    public function setGame(\Lain\OneNightWerewolfBundle\Entity\Game $game)
+    public function setGame(Game $game)
     {
         $this->game = $game;
 
@@ -118,7 +120,7 @@ class GamePlayer
     /**
      * Get game
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\Game
+     * @return Game
      */
     public function getGame()
     {
@@ -128,11 +130,11 @@ class GamePlayer
     /**
      * Set player
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Player $player
+     * @param Player $player
      *
      * @return GamePlayer
      */
-    public function setPlayer(\Lain\OneNightWerewolfBundle\Entity\Player $player)
+    public function setPlayer(Player $player)
     {
         $this->player = $player;
 
@@ -142,7 +144,7 @@ class GamePlayer
     /**
      * Get player
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\Player
+     * @return Player
      */
     public function getPlayer()
     {
@@ -152,11 +154,11 @@ class GamePlayer
     /**
      * Set role
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Role $role
+     * @param Role $role
      *
      * @return GamePlayer
      */
-    public function setRole(\Lain\OneNightWerewolfBundle\Entity\Role $role)
+    public function setRole(Role $role)
     {
         $this->role = $role;
 
@@ -166,7 +168,7 @@ class GamePlayer
     /**
      * Get role
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\Role
+     * @return Role
      */
     public function getRole()
     {
@@ -303,19 +305,19 @@ class GamePlayer
         $this->setPlayer($player);
         $player->addGamePlayer($this);
 
-        $this->voteSources = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->peepSources = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->swapSources = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->voteSources = new ArrayCollection();
+        $this->peepSources = new ArrayCollection();
+        $this->swapSources = new ArrayCollection();
     }
 
     /**
      * Add voteSource
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $voteSource
+     * @param GamePlayer $voteSource
      *
      * @return GamePlayer
      */
-    public function addVoteSource(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $voteSource)
+    public function addVoteSource(GamePlayer $voteSource)
     {
         $this->voteSources[] = $voteSource;
 
@@ -325,9 +327,9 @@ class GamePlayer
     /**
      * Remove voteSource
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $voteSource
+     * @param GamePlayer $voteSource
      */
-    public function removeVoteSource(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $voteSource)
+    public function removeVoteSource(GamePlayer $voteSource)
     {
         $this->voteSources->removeElement($voteSource);
     }
@@ -335,7 +337,7 @@ class GamePlayer
     /**
      * Get voteSources
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getVoteSources()
     {
@@ -345,11 +347,11 @@ class GamePlayer
     /**
      * Set voteDestination
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $voteDestination
+     * @param GamePlayer $voteDestination
      *
      * @return GamePlayer
      */
-    public function setVoteDestination(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $voteDestination = null)
+    public function setVoteDestination(GamePlayer $voteDestination = null)
     {
         $this->voteDestination = $voteDestination;
 
@@ -359,7 +361,7 @@ class GamePlayer
     /**
      * Get voteDestination
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\GamePlayer
+     * @return GamePlayer
      */
     public function getVoteDestination()
     {
@@ -369,11 +371,11 @@ class GamePlayer
     /**
      * Add peepSource
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $peepSource
+     * @param GamePlayer $peepSource
      *
      * @return GamePlayer
      */
-    public function addPeepSource(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $peepSource)
+    public function addPeepSource(GamePlayer $peepSource)
     {
         $this->peepSources[] = $peepSource;
 
@@ -383,9 +385,9 @@ class GamePlayer
     /**
      * Remove peepSource
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $peepSource
+     * @param GamePlayer $peepSource
      */
-    public function removePeepSource(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $peepSource)
+    public function removePeepSource(GamePlayer $peepSource)
     {
         $this->peepSources->removeElement($peepSource);
     }
@@ -393,7 +395,7 @@ class GamePlayer
     /**
      * Get peepSources
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getPeepSources()
     {
@@ -403,11 +405,11 @@ class GamePlayer
     /**
      * Set peepDestination
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $peepDestination
+     * @param GamePlayer $peepDestination
      *
      * @return GamePlayer
      */
-    public function setPeepDestination(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $peepDestination = null)
+    public function setPeepDestination(GamePlayer $peepDestination = null)
     {
         $this->peepDestination = $peepDestination;
 
@@ -417,7 +419,7 @@ class GamePlayer
     /**
      * Get peepDestination
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\GamePlayer
+     * @return GamePlayer
      */
     public function getPeepDestination()
     {
@@ -427,11 +429,11 @@ class GamePlayer
     /**
      * Add swapSource
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $swapSource
+     * @param GamePlayer $swapSource
      *
      * @return GamePlayer
      */
-    public function addSwapSource(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $swapSource)
+    public function addSwapSource(GamePlayer $swapSource)
     {
         $this->swapSources[] = $swapSource;
 
@@ -441,9 +443,9 @@ class GamePlayer
     /**
      * Remove swapSource
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $swapSource
+     * @param GamePlayer $swapSource
      */
-    public function removeSwapSource(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $swapSource)
+    public function removeSwapSource(GamePlayer $swapSource)
     {
         $this->swapSources->removeElement($swapSource);
     }
@@ -451,7 +453,7 @@ class GamePlayer
     /**
      * Get swapSources
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getSwapSources()
     {
@@ -461,11 +463,11 @@ class GamePlayer
     /**
      * Set swapDestination
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $swapDestination
+     * @param GamePlayer $swapDestination
      *
      * @return GamePlayer
      */
-    public function setSwapDestination(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $swapDestination = null)
+    public function setSwapDestination(GamePlayer $swapDestination = null)
     {
         $this->swapDestination = $swapDestination;
 
@@ -475,7 +477,7 @@ class GamePlayer
     /**
      * Get swapDestination
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\GamePlayer
+     * @return GamePlayer
      */
     public function getSwapDestination()
     {

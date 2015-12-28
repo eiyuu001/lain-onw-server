@@ -2,6 +2,8 @@
 
 namespace Lain\OneNightWerewolfBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ginq\Ginq;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -83,11 +85,11 @@ class Player
     /**
      * Set room
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Room $room
+     * @param Room $room
      *
      * @return Player
      */
-    public function setRoom(\Lain\OneNightWerewolfBundle\Entity\Room $room)
+    public function setRoom(Room $room)
     {
         $this->room = $room;
 
@@ -97,7 +99,7 @@ class Player
     /**
      * Get room
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\Room
+     * @return Room
      */
     public function getRoom()
     {
@@ -124,17 +126,17 @@ class Player
     public function __construct($room)
     {
         $this->setRoom($room);
-        $this->gamePlayers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->gamePlayers = new ArrayCollection();
     }
 
     /**
      * Add gamePlayer
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $gamePlayer
+     * @param GamePlayer $gamePlayer
      *
      * @return Player
      */
-    public function addGamePlayer(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $gamePlayer)
+    public function addGamePlayer(GamePlayer $gamePlayer)
     {
         $this->gamePlayers[] = $gamePlayer;
 
@@ -144,9 +146,9 @@ class Player
     /**
      * Remove gamePlayer
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\GamePlayer $gamePlayer
+     * @param GamePlayer $gamePlayer
      */
-    public function removeGamePlayer(\Lain\OneNightWerewolfBundle\Entity\GamePlayer $gamePlayer)
+    public function removeGamePlayer(GamePlayer $gamePlayer)
     {
         $this->gamePlayers->removeElement($gamePlayer);
     }
@@ -154,7 +156,7 @@ class Player
     /**
      * Get gamePlayers
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getGamePlayers()
     {

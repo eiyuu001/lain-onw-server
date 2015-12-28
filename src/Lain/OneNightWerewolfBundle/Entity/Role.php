@@ -75,11 +75,11 @@ class Role
     /**
      * Set roleGroup
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\RoleGroup $roleGroup
+     * @param RoleGroup $roleGroup
      *
      * @return Role
      */
-    public function setRoleGroup(\Lain\OneNightWerewolfBundle\Entity\RoleGroup $roleGroup)
+    public function setRoleGroup(RoleGroup $roleGroup)
     {
         $this->roleGroup = $roleGroup;
 
@@ -89,7 +89,7 @@ class Role
     /**
      * Get roleGroup
      *
-     * @return \Lain\OneNightWerewolfBundle\Entity\RoleGroup
+     * @return RoleGroup
      */
     public function getRoleGroup()
     {

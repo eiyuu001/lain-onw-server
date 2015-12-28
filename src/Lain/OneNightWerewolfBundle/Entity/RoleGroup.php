@@ -2,6 +2,8 @@
 
 namespace Lain\OneNightWerewolfBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
@@ -76,17 +78,17 @@ class RoleGroup
      */
     public function __construct()
     {
-        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     /**
      * Add role
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Role $role
+     * @param Role $role
      *
      * @return RoleGroup
      */
-    public function addRole(\Lain\OneNightWerewolfBundle\Entity\Role $role)
+    public function addRole(Role $role)
     {
         $this->roles[] = $role;
 
@@ -96,9 +98,9 @@ class RoleGroup
     /**
      * Remove role
      *
-     * @param \Lain\OneNightWerewolfBundle\Entity\Role $role
+     * @param Role $role
      */
-    public function removeRole(\Lain\OneNightWerewolfBundle\Entity\Role $role)
+    public function removeRole(Role $role)
     {
         $this->roles->removeElement($role);
     }
@@ -106,7 +108,7 @@ class RoleGroup
     /**
      * Get roles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getRoles()
     {
