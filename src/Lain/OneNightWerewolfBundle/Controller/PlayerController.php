@@ -14,16 +14,6 @@ class PlayerController extends FOSRestController implements ClassResourceInterfa
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="Returns a collection of Player"
-     * )
-     */
-    public function cgetAction() {
-        return $this->getPlayers();
-    }
-
-    /**
-     * @ApiDoc(
-     *  resource=true,
      *  description="Returns a Player object specified by playerId",
      *  requirements={
      *      {"name"="playerId", "dataType"="integer", "requirement"="\d+", "description"="player id"}

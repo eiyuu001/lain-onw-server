@@ -17,16 +17,6 @@ class GameController extends FOSRestController implements ClassResourceInterface
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="Returns a collection of Game"
-     * )
-     */
-    public function cgetAction() {
-        return $this->getGames();
-    }
-
-    /**
-     * @ApiDoc(
-     *  resource=true,
      *  description="Returns a Game object specified by gameId",
      *  requirements={
      *      {"name"="gameId", "dataType"="integer", "requirement"="\d+", "description"="game id"}
