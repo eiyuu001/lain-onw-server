@@ -1,8 +1,8 @@
 {
-    "name": "symfony/framework-standard-edition",
+    "name": "lain/one-night-werewolf-api",
     "license": "MIT",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "An one night werewolf api server",
     "autoload": {
         "psr-4": { "": "src/" }
     },
@@ -54,9 +54,6 @@
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
-        },
-        "branch-alias": {
-            "dev-master": "2.7-dev"
         }
     }
 }
