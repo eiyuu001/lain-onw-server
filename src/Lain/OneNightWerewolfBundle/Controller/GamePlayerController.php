@@ -59,12 +59,12 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
      *      {"name"="target", "dataType"="integer", "requirement"="\d+", "description"="target player id"}
      *  },
      *  statusCodes={
-     *      400="Returned when you try to vote to yourself."
+     *      400="Returned when you have already voted or you try to vote to yourself."
      *  }
      * )
      */
     public function putVoteAction(Request $request, $gameId, $playerId) {
-        return $this->affectOtherPlayer($request, $gameId, $playerId, 'vote');
+        return $this->affectOtherPlayer($request, $gameId, $playerId, 'vote', 'voted');
     }
 
     /**
@@ -80,13 +80,13 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
      *      {"name"="target", "dataType"="integer", "requirement"="\d+", "description"="target player id"}
      *  },
      *  statusCodes={
-     *      400="Returned when you try to peep yourself.",
+     *      400="Returned when you have already peeped or you try to peep yourself.",
      *      403="Returned when you don't have ability to peep."
      *  }
      * )
      */
     public function putPeepAction(Request $request, $gameId, $playerId) {
-        return $this->affectOtherPlayer($request, $gameId, $playerId, 'peep', ['private']);
+        return $this->affectOtherPlayer($request, $gameId, $playerId, 'peep', 'peeped', ['private']);
     }
 
     /**
@@ -102,20 +102,25 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
      *      {"name"="target", "dataType"="integer", "requirement"="\d+", "description"="target player id"}
      *  },
      *  statusCodes={
-     *      400="Returned when you try to swap roles with yourself.",
+     *      400="Returned when you have already swapped roles or you try to swap roles with yourself.",
      *      403="Returned when you don't have ability to swap."
      *  }
      * )
      */
     public function putSwapAction(Request $request, $gameId, $playerId) {
-        return $this->affectOtherPlayer($request, $gameId, $playerId, 'swap', ['private']);
+        return $this->affectOtherPlayer($request, $gameId, $playerId, 'swap', 'swapped', ['private']);
     }
 
-    private function affectOtherPlayer(Request $request, $gameId, $playerId, $actionName, $extraSerializationGroups = []) {
+    private function affectOtherPlayer(Request $request, $gameId, $playerId, $actionName, $pastParticipleFormActionName, $extraSerializationGroups = []) {
         $player = $this->getGamePlayer($gameId, $playerId);
         $canAction = 'can' . ucfirst($actionName);
         if (!$player->$canAction()) {
             throw new AccessDeniedHttpException("You don't have ability to $actionName");
+        }
+
+        $getter = 'get' . ucfirst($actionName) . 'Destination';
+        if (!empty($player->$getter())) {
+            throw new BadRequestHttpException("You have already $pastParticipleFormActionName.");
         }
 
         $content = json_decode($request->getContent(), true);
