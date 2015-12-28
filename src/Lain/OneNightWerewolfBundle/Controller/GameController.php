@@ -54,7 +54,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
     public function getResultAction($gameId) {
         $game = $this->getGame($gameId);
         if (!$game->hasFinished()) {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException('The game has not been finished.');
         }
         return $view = $this->view($game, Codes::HTTP_OK)
             ->setSerializationContext(SerializationContext::create()->setGroups(['Default', 'finished']));
