@@ -39,6 +39,8 @@ class GamePlayer
     private $game;
 
     /**
+     * @var Player
+     *
      * @ORM\ManyToOne(targetEntity="Player", inversedBy="gamePlayers")
      * @ORM\JoinColumn(name="player_id", referencedColumnName="id", nullable=FALSE)
      * @JMS\Inline()
@@ -46,6 +48,8 @@ class GamePlayer
     private $player;
 
     /**
+     * @var Role
+     *
      * @ORM\ManyToOne(targetEntity="Role")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=FALSE)
      * @JMS\Groups({"private", "finished"})
@@ -53,12 +57,16 @@ class GamePlayer
     private $role;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="GamePlayer", mappedBy="voteDestination", cascade={"persist", "remove"})
      * @JMS\Exclude
      */
     private $voteSources;
 
     /**
+     * @var GamePlayer
+     *
      * @ORM\ManyToOne(targetEntity="GamePlayer", inversedBy="voteSources")
      * @ORM\JoinColumn(name="vote_destination_id", referencedColumnName="id")
      * @JMS\Exclude
@@ -66,12 +74,16 @@ class GamePlayer
     private $voteDestination;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="GamePlayer", mappedBy="peepDestination", cascade={"persist", "remove"})
      * @JMS\Exclude
      */
     private $peepSources;
 
     /**
+     * @var GamePlayer
+     *
      * @ORM\ManyToOne(targetEntity="GamePlayer", inversedBy="peepSources")
      * @ORM\JoinColumn(name="peep_destination_id", referencedColumnName="id")
      * @JMS\Exclude
@@ -79,6 +91,8 @@ class GamePlayer
     private $peepDestination;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="GamePlayer", mappedBy="swapDestination", cascade={"persist", "remove"})
      * @JMS\Exclude
      */

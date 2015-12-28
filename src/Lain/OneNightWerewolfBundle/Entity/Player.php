@@ -36,6 +36,8 @@ class Player
     private $name;
 
     /**
+     * @var Room
+     *
      * @ORM\ManyToOne(targetEntity="Room", inversedBy="Players")
      * @ORM\JoinColumn(name="room_id", referencedColumnName="id", nullable=FALSE)
      * @JMS\Exclude
@@ -43,6 +45,8 @@ class Player
     private $room;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="GamePlayer", mappedBy="player", cascade={"persist", "remove"})
      * @JMS\Exclude
      */

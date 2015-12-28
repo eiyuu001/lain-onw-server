@@ -25,12 +25,15 @@ class Role
 
     /**
      * @var string
+     *
      * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
+     * @var RoleGroup
+     *
      * @ORM\ManyToOne(targetEntity="RoleGroup", inversedBy="roles")
      * @ORM\JoinColumn(name="role_group_id", referencedColumnName="id", nullable=FALSE)
      * @JMS\SerializedName("roleGroup")

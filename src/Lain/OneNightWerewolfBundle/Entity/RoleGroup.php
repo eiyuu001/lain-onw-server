@@ -28,12 +28,15 @@ class RoleGroup
 
     /**
      * @var string
+     *
      * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="Role", mappedBy="roleGroup", cascade={"persist", "remove"})
      * @JMS\Exclude
      */

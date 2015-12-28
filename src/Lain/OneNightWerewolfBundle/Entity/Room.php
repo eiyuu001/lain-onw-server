@@ -17,6 +17,8 @@ use JMS\Serializer\Annotation as JMS;
 class Room
 {
     /**
+     * @var integer
+     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -24,11 +26,15 @@ class Room
     private $id;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="Player", mappedBy="room", cascade={"persist", "remove"})
      */
     private $players;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="Game", mappedBy="room", cascade={"persist", "remove"})
      * @JMS\Exclude
      */
@@ -36,6 +42,8 @@ class Room
     
     
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="RoleConfig", mappedBy="room", cascade={"persist", "remove"})
      * @JMS\Groups({"Default", "postRoom"})
      * @JMS\SerializedName("roleConfigs")
