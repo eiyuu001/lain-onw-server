@@ -60,13 +60,10 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         $content = json_decode($request->getContent(), true);
         $room = new Room();
         foreach($content['roleConfigs'] as $roleId => $roleConfigSrc) {
-            $roleConfig = new RoleConfig($room);
-            $role = $this->getRole($roleId);
-            $roleConfig->setRole($role);
+            $roleConfig = new RoleConfig($room, $this->getRole($roleId));
             $roleConfig->setCount($roleConfigSrc['count']);
             $roleConfig->setRewardForSurvivor($roleConfigSrc['rewardForSurvivor']);
             $roleConfig->setRewardForDead($roleConfigSrc['rewardForDead']);
-            $this->persist($roleConfig, false);
         }
         $this->persist($room);
         $this->refresh($room);

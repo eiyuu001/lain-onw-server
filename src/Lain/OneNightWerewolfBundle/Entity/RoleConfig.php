@@ -75,10 +75,14 @@ class RoleConfig
      * Constructor
      *
      * @param Room $room
+     * @param Role $role
      */
-    public function __construct($room)
+    public function __construct(Room $room, Role $role)
     {
         $this->setRoom($room);
+        $room->addRoleConfig($this);
+
+        $this->setRole($role);
     }
 
     /**
