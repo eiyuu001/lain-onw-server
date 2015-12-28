@@ -5,6 +5,7 @@ namespace Lain\OneNightWerewolfBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Ginq\Ginq;
 use Lain\OneNightWerewolfBundle\Util\Roles;
+use Lain\OneNightWerewolfBundle\Util\RoleGroups;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
@@ -227,11 +228,11 @@ class GamePlayer
             return null;
         }
         switch ($this->getActualRole()->getRoleGroup()->getId()) {
-            case 1:
+            case RoleGroups::WEREWOLF:
                 return $this->getGame()->isWerewolfGroupWon();
-            case 2:
+            case RoleGroups::VILLAGER:
                 return $this->getGame()->isVillagerGroupWon();
-            case 3:
+            case RoleGroups::HANGED_MAN:
                 return $this->getGame()->isHangedManGroupWon();
             default:
                 return null;
