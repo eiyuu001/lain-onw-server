@@ -317,6 +317,27 @@ class GamePlayer
         return $this->getRole()->getId() == Roles::PHANTOM_THIEF;
     }
 
+    /**
+     * @return bool
+     */
+    public function hasVoted() {
+        return !empty($this->voteDestination);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPeeped() {
+        return !empty($this->peepDestination);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasSwapped() {
+        return !empty($this->swapDestination);
+    }
+
     public function action($actionName, GamePlayer $target) {
         $setDest = 'set' . ucfirst($actionName) . 'Destination';
         $addSrc  = 'add' . ucfirst($actionName) . 'Source';

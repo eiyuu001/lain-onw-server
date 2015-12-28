@@ -118,8 +118,8 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
             throw new AccessDeniedHttpException("You don't have ability to $actionName.");
         }
 
-        $getter = 'get' . ucfirst($actionName) . 'Destination';
-        if (!empty($player->$getter())) {
+        $hasActioned = 'has' . ucfirst($pastParticipleFormActionName);
+        if ($player->$hasActioned()) {
             throw new BadRequestHttpException("You have already $pastParticipleFormActionName.");
         }
 
