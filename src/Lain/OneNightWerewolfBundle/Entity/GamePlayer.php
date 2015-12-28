@@ -280,6 +280,13 @@ class GamePlayer
         return $this->getRole()->getId() === 5; // ����
     }
 
+    public function action($actionName, GamePlayer $target) {
+        $setDest = 'set' . ucfirst($actionName) . 'Destination';
+        $addSrc  = 'add' . ucfirst($actionName) . 'Source';
+        $this->$setDest($target);
+        $target->$addSrc($this);
+    }
+
     /**
      * Constructor
      *

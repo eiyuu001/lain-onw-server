@@ -108,23 +108,20 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
         return $this->affectOtherPlayer($request, $gameId, $playerId, 'swap', ['private']);
     }
 
-    private function affectOtherPlayer(Request $request, $gameId, $playerId, $action, $extraSerializationGroups = []) {
-        $canAction = 'can' . ucfirst($action);
-        if (!$this->getGamePlayer($gameId, $playerId)->$canAction()) {
-            throw new AccessDeniedHttpException("You don't have ability to $action");
+    private function affectOtherPlayer(Request $request, $gameId, $playerId, $actionName, $extraSerializationGroups = []) {
+        $player = $this->getGamePlayer($gameId, $playerId);
+        $canAction = 'can' . ucfirst($actionName);
+        if (!$player->$canAction()) {
+            throw new AccessDeniedHttpException("You don't have ability to $actionName");
         }
 
         $content = json_decode($request->getContent(), true);
         if ($playerId == $content['target']) {
-            throw new BadRequestHttpException("You can't $action to yourself.");
+            throw new BadRequestHttpException("You can't $actionName to yourself.");
         }
 
-        $setDest = 'set' . ucfirst($action) . 'Destination';
-        $addSrc  = 'add' . ucfirst($action) . 'Source';
-        $player = $this->getGamePlayer($gameId, $playerId);
         $target = $this->getGamePlayer($gameId, $content['target']);
-        $player->$setDest($target);
-        $target->$addSrc($player);
+        $player->action($actionName, $target);
 
         $objectManager = $this->getDoctrine()->getManager();
         $objectManager->persist($target);
