@@ -6,6 +6,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\Annotations\Put;
+use FOS\RestBundle\Util\Codes;
 use JMS\Serializer\SerializationContext;
 use Lain\OneNightWerewolfBundle\Controller\Traits\EntityGettable;
 use Lain\OneNightWerewolfBundle\Controller\Traits\EntityPersistable;
@@ -34,7 +35,7 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
      */
     public function getAction($gameId, $playerId) {
         $gamePlayer = $this->getGamePlayer($gameId, $playerId);
-        $view = $this->view($gamePlayer, 200);
+        $view = $this->view($gamePlayer, Codes::HTTP_OK);
         $groups = ['Default'];
         if (true) { // todo: トークンなどにより本人認証が出来る場合のみ'secret'を付加
             array_push($groups, 'private');
@@ -126,7 +127,7 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
         $player->action($actionName, $target);
         $this->persist($target);
 
-        $view = $this->view($target, 201);
+        $view = $this->view($target, Codes::HTTP_CREATED);
         $view->setSerializationContext(
             SerializationContext::create()->setGroups(array_merge(['Default'], $extraSerializationGroups))
         );
