@@ -35,6 +35,10 @@ class GameController extends FOSRestController implements ClassResourceInterface
     public function getAction($gameId) {
         $game = $this->getGame($gameId);
         $view = $this->view($game, 200);
+        $groups = ['Default'];
+        $view->setSerializationContext(
+            SerializationContext::create()->setGroups($groups)
+        );
         return $view;
     }
 
