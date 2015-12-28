@@ -165,7 +165,9 @@ class Game
     }
 
     public function castRoles() {
-        $roles = Ginq::from($this->shuffleRoles())->take($this->room->getPlayers()->count())->toList();
+        $roles = Ginq::from($this->shuffleRoles())
+            ->take($this->room->getPlayers()->count())
+            ->toList();
         $pairs = array_map(null, $roles, $this->room->getPlayers()->getValues());
         foreach($pairs as list($role, $player)) {
             $gamePlayer = new GamePlayer($this, $player);
