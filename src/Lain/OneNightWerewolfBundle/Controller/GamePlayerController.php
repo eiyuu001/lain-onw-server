@@ -127,10 +127,8 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
         $player->action($actionName, $target);
         $this->persist($target);
 
-        $view = $this->view($target, Codes::HTTP_CREATED);
-        $view->setSerializationContext(
-            SerializationContext::create()->setGroups(array_merge(['Default'], $extraSerializationGroups))
-        );
-        return $view;
+        $groups = array_merge(['Default'], $extraSerializationGroups);
+        return $this->view($target, Codes::HTTP_CREATED)
+            ->setSerializationContext(SerializationContext::create()->setGroups($groups));
     }
 }

@@ -35,12 +35,8 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function getAction($gameId) {
         $game = $this->getGame($gameId);
-        $view = $this->view($game, Codes::HTTP_OK);
-        $groups = ['Default'];
-        $view->setSerializationContext(
-            SerializationContext::create()->setGroups($groups)
-        );
-        return $view;
+        return $this->view($game, Codes::HTTP_OK)
+            ->setSerializationContext(SerializationContext::create()->setGroups(['Default']));
     }
 
     /**
@@ -60,11 +56,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
         if (!$game->hasFinished()) {
             throw new ResourceNotFoundException();
         }
-        $view = $this->view($game, Codes::HTTP_OK);
-        $groups = ['Default', 'finished'];
-        $view->setSerializationContext(
-            SerializationContext::create()->setGroups($groups)
-        );
-        return $view;
+        return $view = $this->view($game, Codes::HTTP_OK)
+            ->setSerializationContext(SerializationContext::create()->setGroups(['Default', 'finished']));
     }
 }

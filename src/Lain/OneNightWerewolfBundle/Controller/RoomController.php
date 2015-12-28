@@ -70,9 +70,8 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         }
         $this->persist($room);
         $this->refresh($room);
-        $view = $this->view($room, Codes::HTTP_CREATED);
-        $view->setLocation($this->generateUrl('get_room', ['roomId' => $room->getId()]));
-        return $view;
+        return $this->view($room, Codes::HTTP_CREATED)
+            ->setLocation($this->generateUrl('get_room', ['roomId' => $room->getId()]));
     }
 
     /**
@@ -88,10 +87,9 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         $game->castRoles();
         $this->persist($game);
         $this->refresh($game);
-        $view = $this->view($game, Codes::HTTP_CREATED);
-        $view->setLocation($this->generateUrl('get_game', ['gameId' => $game->getId()]));
-        $view->setSerializationContext(SerializationContext::create()->setGroups(['Default']));
-        return $view;
+        return $this->view($game, Codes::HTTP_CREATED)
+            ->setLocation($this->generateUrl('get_game', ['gameId' => $game->getId()]))
+            ->setSerializationContext(SerializationContext::create()->setGroups(['Default']));
     }
 
     /**
@@ -111,9 +109,8 @@ class RoomController extends FOSRestController implements ClassResourceInterface
         $player = new Player($this->getRoom($roomId));
         $player->setName($content['name']);
         $this->persist($player);
-        $view = $this->view($player, Codes::HTTP_CREATED);
-        $view->setLocation($this->generateUrl('get_player', ['playerId' => $player->getId()]));
-        return $view;
+        return $this->view($player, Codes::HTTP_CREATED)
+            ->setLocation($this->generateUrl('get_player', ['playerId' => $player->getId()]));
     }
 
 }
