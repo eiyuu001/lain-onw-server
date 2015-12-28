@@ -228,11 +228,11 @@ class GamePlayer
         }
         switch ($this->getActualRole()->getRoleGroup()->getId()) {
             case 1:
-                return $this->getGame()->isWerewolfWon();
+                return $this->getGame()->isWerewolfGroupWon();
             case 2:
-                return $this->getGame()->isPeopleWon();
+                return $this->getGame()->isVillagerGroupWon();
             case 3:
-                return $this->getGame()->isHangedManWon();
+                return $this->getGame()->isHangedManGroupWon();
             default:
                 return null;
         }

@@ -132,8 +132,8 @@ class Game
         });
     }
 
-    public function isPeopleWon() {
-        if ($this->isHangedManWon()) {
+    public function isVillagerGroupWon() {
+        if ($this->isHangedManGroupWon()) {
             return false;
         }
         $oneOrMoreWerewolfWasDead = Ginq::from($this->gamePlayers)->filter(function(GamePlayer $gamePlayer) {
@@ -144,8 +144,8 @@ class Game
         return $oneOrMoreWerewolfWasDead;
     }
 
-    public function isWerewolfWon() {
-        if ($this->isHangedManWon()) {
+    public function isWerewolfGroupWon() {
+        if ($this->isHangedManGroupWon()) {
             return false;
         }
         $oneOrMoreWerewolfWasDead = Ginq::from($this->gamePlayers)->filter(function(GamePlayer $gamePlayer) {
@@ -156,7 +156,7 @@ class Game
         return !$oneOrMoreWerewolfWasDead;
     }
 
-    public function isHangedManWon() {
+    public function isHangedManGroupWon() {
         $oneOrMoreHangedManWasDead = Ginq::from($this->gamePlayers)->filter(function(GamePlayer $gamePlayer) {
             return !$gamePlayer->isAlive();
         })->any(function(GamePlayer $deadGamePlayer) {
