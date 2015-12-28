@@ -15,6 +15,7 @@ use Lain\OneNightWerewolfBundle\Entity\Room;
 use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class RoomController extends FOSRestController implements ClassResourceInterface
 {
@@ -100,12 +101,20 @@ class RoomController extends FOSRestController implements ClassResourceInterface
      *  input={
      *    "class"="Lain\OneNightWerewolfBundle\Entity\Player",
      *    "groups"={"postPlayer"}
+     *  },
+     *  statusCodes={
+     *      400="Returned when you try to add player beyond the room's capacity.",
      *  }
      * )
      */
     public function postPlayerAction(Request $request, $roomId) {
+        $room = $this->getRoom($roomId);
+        $capacity = $room->computeCapacity();
+        if ($room->getPlayers()->count() >= $capacity) {
+            throw new BadRequestHttpException("The room's capacity of $capacity is exceeded");
+        }
         $content = json_decode($request->getContent(), true);
-        $player = new Player($this->getRoom($roomId));
+        $player = new Player($room);
         $player->setName($content['name']);
         $this->persist($player);
         return $this->view($player, Codes::HTTP_CREATED)

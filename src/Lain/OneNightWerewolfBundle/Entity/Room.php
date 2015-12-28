@@ -5,6 +5,7 @@ namespace Lain\OneNightWerewolfBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Ginq\Ginq;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
@@ -172,5 +173,17 @@ class Room
         return $this->roleConfigs;
     }
 
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("capacity")
+     *
+     * @return integer
+     */
+    public function computeCapacity()
+    {
+        return Ginq::from($this->roleConfigs)
+            ->map(function(RoleConfig $roleConfig){return $roleConfig->getCount();})
+            ->sum();
+    }
 
 }
