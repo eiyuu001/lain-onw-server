@@ -8,6 +8,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\Annotations\Put;
 use JMS\Serializer\SerializationContext;
 use Lain\OneNightWerewolfBundle\Controller\Traits\EntityGettable;
+use Lain\OneNightWerewolfBundle\Controller\Traits\EntityPersistable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -19,6 +20,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 class GamePlayerController extends FOSRestController implements ClassResourceInterface
 {
     use EntityGettable;
+    use EntityPersistable;
 
     /**
      * @ApiDoc(
@@ -122,10 +124,7 @@ class GamePlayerController extends FOSRestController implements ClassResourceInt
 
         $target = $this->getGamePlayer($gameId, $content['target']);
         $player->action($actionName, $target);
-
-        $objectManager = $this->getDoctrine()->getManager();
-        $objectManager->persist($target);
-        $objectManager->flush();
+        $this->persist($target);
 
         $view = $this->view($target, 201);
         $view->setSerializationContext(

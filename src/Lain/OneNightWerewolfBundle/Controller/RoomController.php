@@ -5,6 +5,8 @@ namespace Lain\OneNightWerewolfBundle\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Lain\OneNightWerewolfBundle\Controller\Traits\EntityGettable;
+use Lain\OneNightWerewolfBundle\Controller\Traits\EntityPersistable;
+use Lain\OneNightWerewolfBundle\Controller\Traits\EntityRefreshable;
 use Lain\OneNightWerewolfBundle\Entity\Game;
 use Lain\OneNightWerewolfBundle\Entity\Player;
 use Lain\OneNightWerewolfBundle\Entity\RoleConfig;
@@ -16,6 +18,8 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 class RoomController extends FOSRestController implements ClassResourceInterface
 {
     use EntityGettable;
+    use EntityPersistable;
+    use EntityRefreshable;
 
     /**
      * @ApiDoc(
@@ -53,7 +57,6 @@ class RoomController extends FOSRestController implements ClassResourceInterface
     public function postAction(Request $request)
     {
         $content = json_decode($request->getContent(), true);
-        $entityManager = $this->getDoctrine()->getManager();
         $room = new Room();
         foreach($content['roleConfigs'] as $roleId => $roleConfigSrc) {
             $roleConfig = new RoleConfig($room);
@@ -62,11 +65,10 @@ class RoomController extends FOSRestController implements ClassResourceInterface
             $roleConfig->setCount($roleConfigSrc['count']);
             $roleConfig->setRewardForSurvivor($roleConfigSrc['rewardForSurvivor']);
             $roleConfig->setRewardForDead($roleConfigSrc['rewardForDead']);
-            $entityManager->persist($roleConfig);
+            $this->persist($roleConfig, false);
         }
-        $entityManager->persist($room);
-        $entityManager->flush();
-        $entityManager->refresh($room);
+        $this->persist($room);
+        $this->refresh($room);
         $view = $this->view($room, 201, [
             'Location' => $this->generateUrl('get_room', ['roomId' => $room->getId()])
         ]);
@@ -84,10 +86,8 @@ class RoomController extends FOSRestController implements ClassResourceInterface
     public function postGameAction($roomId) {
         $game = new Game($this->getRoom($roomId));
         $game->castRoles();
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($game);
-        $entityManager->flush();
-        $entityManager->refresh($game);
+        $this->persist($game);
+        $this->refresh($game);
         $view = $this->view($game, 201, [
             'Location' => $this->generateUrl('get_game', ['gameId' => $game->getId()])
         ]);
@@ -109,11 +109,9 @@ class RoomController extends FOSRestController implements ClassResourceInterface
      */
     public function postPlayerAction(Request $request, $roomId) {
         $content = json_decode($request->getContent(), true);
-        $entityManager = $this->getDoctrine()->getManager();
         $player = new Player($this->getRoom($roomId));
         $player->setName($content['name']);
-        $entityManager->persist($player);
-        $entityManager->flush();
+        $this->persist($player);
         $view = $this->view($player, 201, [
             'Location' => $this->generateUrl('get_player', ['playerId' => $player->getId()])
         ]);
