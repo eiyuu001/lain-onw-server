@@ -300,21 +300,21 @@ class GamePlayer
      * @return bool
      */
     public function canVote() {
-        return true;
+        return $this->getRole()->getVotable();
     }
 
     /**
      * @return bool
      */
     public function canPeep() {
-        return $this->getRole()->getId() == Roles::FORTUNE_TELLER;
+        return $this->getRole()->getPeepable();
     }
 
     /**
      * @return bool
      */
     public function canSwap() {
-        return $this->getRole()->getId() == Roles::PHANTOM_THIEF;
+        return $this->getRole()->getSwappable();
     }
 
     /**

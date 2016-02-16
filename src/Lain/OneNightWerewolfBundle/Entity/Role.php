@@ -32,6 +32,30 @@ class Role
     private $name;
 
     /**
+     * @var bool
+     *
+     * @Assert\NotBlank()
+     * @ORM\Column(name="votable", type="boolean", length=255)
+     */
+    private $votable;
+
+    /**
+     * @var bool
+     *
+     * @Assert\NotBlank()
+     * @ORM\Column(name="peepable", type="boolean", length=255)
+     */
+    private $peepable;
+
+    /**
+     * @var bool
+     *
+     * @Assert\NotBlank()
+     * @ORM\Column(name="swappable", type="boolean", length=255)
+     */
+    private $swappable;
+
+    /**
      * @var RoleGroup
      *
      * @ORM\ManyToOne(targetEntity="RoleGroup", inversedBy="roles")
@@ -97,5 +121,77 @@ class Role
     public function getRoleGroup()
     {
         return $this->roleGroup;
+    }
+
+    /**
+     * Set votable
+     *
+     * @param boolean $votable
+     *
+     * @return Role
+     */
+    public function setVotable($votable)
+    {
+        $this->votable = $votable;
+
+        return $this;
+    }
+
+    /**
+     * Get votable
+     *
+     * @return boolean
+     */
+    public function getVotable()
+    {
+        return $this->votable;
+    }
+
+    /**
+     * Set peepable
+     *
+     * @param boolean $peepable
+     *
+     * @return Role
+     */
+    public function setPeepable($peepable)
+    {
+        $this->peepable = $peepable;
+
+        return $this;
+    }
+
+    /**
+     * Get peepable
+     *
+     * @return boolean
+     */
+    public function getPeepable()
+    {
+        return $this->peepable;
+    }
+
+    /**
+     * Set swappable
+     *
+     * @param boolean $swappable
+     *
+     * @return Role
+     */
+    public function setSwappable($swappable)
+    {
+        $this->swappable = $swappable;
+
+        return $this;
+    }
+
+    /**
+     * Get swappable
+     *
+     * @return boolean
+     */
+    public function getSwappable()
+    {
+        return $this->swappable;
     }
 }
